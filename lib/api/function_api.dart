@@ -11,8 +11,8 @@
 part of hanzoai.cloud;
 
 
-class FunctionsApi {
-  FunctionsApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
+class FunctionApi {
+  FunctionApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
 
   final ApiClient apiClient;
 
@@ -26,9 +26,9 @@ class FunctionsApi {
   ///
   /// * [String] name (required):
   ///   Name is the function the URL names.
-  Future<Response> deleteFunctionsByNameWithHttpInfo(String name,) async {
+  Future<Response> deleteFunctionByNameWithHttpInfo(String name,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/functions/{name}'
+    final path = r'/v1/function/{name}'
       .replaceAll('{name}', name);
 
     // ignore: prefer_final_locals
@@ -60,8 +60,8 @@ class FunctionsApi {
   ///
   /// * [String] name (required):
   ///   Name is the function the URL names.
-  Future<void> deleteFunctionsByName(String name,) async {
-    final response = await deleteFunctionsByNameWithHttpInfo(name,);
+  Future<void> deleteFunctionByName(String name,) async {
+    final response = await deleteFunctionByNameWithHttpInfo(name,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -72,9 +72,9 @@ class FunctionsApi {
   /// Is every serverless function the caller's org has published, each with its real 7-day rollup.  A row carries the function's runtime, resource limits, deployment target and its invoke endpoint, plus envCount — how many secrets it mounts. The rollup fields are ABSENT rather than zero when the function has not run in the window, so a console renders \"—\" instead of a fabricated 0.  Requires a validated principal; the listing is scoped to its org.
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getFunctionsWithHttpInfo() async {
+  Future<Response> getFunctionWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/functions';
+    final path = r'/v1/function';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -100,8 +100,8 @@ class FunctionsApi {
   /// Is every serverless function the caller's org has published, each with its real 7-day rollup.
   ///
   /// Is every serverless function the caller's org has published, each with its real 7-day rollup.  A row carries the function's runtime, resource limits, deployment target and its invoke endpoint, plus envCount — how many secrets it mounts. The rollup fields are ABSENT rather than zero when the function has not run in the window, so a console renders \"—\" instead of a fabricated 0.  Requires a validated principal; the listing is scoped to its org.
-  Future<FnList?> getFunctions() async {
-    final response = await getFunctionsWithHttpInfo();
+  Future<FnList?> getFunction() async {
+    final response = await getFunctionWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -125,9 +125,9 @@ class FunctionsApi {
   ///
   /// * [String] name (required):
   ///   Name is the function the URL names.
-  Future<Response> getFunctionsByNameWithHttpInfo(String name,) async {
+  Future<Response> getFunctionByNameWithHttpInfo(String name,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/functions/{name}'
+    final path = r'/v1/function/{name}'
       .replaceAll('{name}', name);
 
     // ignore: prefer_final_locals
@@ -159,8 +159,8 @@ class FunctionsApi {
   ///
   /// * [String] name (required):
   ///   Name is the function the URL names.
-  Future<FunctionDetail?> getFunctionsByName(String name,) async {
-    final response = await getFunctionsByNameWithHttpInfo(name,);
+  Future<FunctionDetail?> getFunctionByName(String name,) async {
+    final response = await getFunctionByNameWithHttpInfo(name,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -187,9 +187,9 @@ class FunctionsApi {
   ///
   /// * [int] limit:
   ///   Limit caps the page, defaulting to 100.
-  Future<Response> getFunctionsByNameInvocationsWithHttpInfo(String name, { int? limit, }) async {
+  Future<Response> getFunctionByNameInvocationsWithHttpInfo(String name, { int? limit, }) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/functions/{name}/invocations'
+    final path = r'/v1/function/{name}/invocations'
       .replaceAll('{name}', name);
 
     // ignore: prefer_final_locals
@@ -228,8 +228,8 @@ class FunctionsApi {
   ///
   /// * [int] limit:
   ///   Limit caps the page, defaulting to 100.
-  Future<InvocationList?> getFunctionsByNameInvocations(String name, { int? limit, }) async {
-    final response = await getFunctionsByNameInvocationsWithHttpInfo(name,  limit: limit, );
+  Future<InvocationList?> getFunctionByNameInvocations(String name, { int? limit, }) async {
+    final response = await getFunctionByNameInvocationsWithHttpInfo(name,  limit: limit, );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -253,9 +253,9 @@ class FunctionsApi {
   ///
   /// * [String] name (required):
   ///   Name is the function the URL names.
-  Future<Response> getFunctionsByNameLogsWithHttpInfo(String name,) async {
+  Future<Response> getFunctionByNameLogsWithHttpInfo(String name,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/functions/{name}/logs'
+    final path = r'/v1/function/{name}/logs'
       .replaceAll('{name}', name);
 
     // ignore: prefer_final_locals
@@ -287,8 +287,8 @@ class FunctionsApi {
   ///
   /// * [String] name (required):
   ///   Name is the function the URL names.
-  Future<LogLines?> getFunctionsByNameLogs(String name,) async {
-    final response = await getFunctionsByNameLogsWithHttpInfo(name,);
+  Future<LogLines?> getFunctionByNameLogs(String name,) async {
+    final response = await getFunctionByNameLogsWithHttpInfo(name,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -307,9 +307,9 @@ class FunctionsApi {
   /// Is what is live right now — each function's current record IS its live deployment, so this is the deployment inventory.  There is no deployment history behind it: a function has one record, and publishing replaces it. The 7-day rollup is deliberately absent here, because this read is about what is deployed rather than about how it has performed.
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getFunctionsDeploymentsWithHttpInfo() async {
+  Future<Response> getFunctionDeploymentsWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/functions/deployments';
+    final path = r'/v1/function/deployments';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -335,8 +335,8 @@ class FunctionsApi {
   /// Is what is live right now — each function's current record IS its live deployment, so this is the deployment inventory.
   ///
   /// Is what is live right now — each function's current record IS its live deployment, so this is the deployment inventory.  There is no deployment history behind it: a function has one record, and publishing replaces it. The 7-day rollup is deliberately absent here, because this read is about what is deployed rather than about how it has performed.
-  Future<FnList?> getFunctionsDeployments() async {
-    final response = await getFunctionsDeploymentsWithHttpInfo();
+  Future<FnList?> getFunctionDeployments() async {
+    final response = await getFunctionDeploymentsWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -360,9 +360,9 @@ class FunctionsApi {
   ///
   /// * [String] range:
   ///   Range is 1H, 6H, 24H (the default), 7D or 30D. Anything else falls back to 24H rather than failing.
-  Future<Response> getFunctionsMetricsWithHttpInfo({ String? range, }) async {
+  Future<Response> getFunctionMetricsWithHttpInfo({ String? range, }) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/functions/metrics';
+    final path = r'/v1/function/metrics';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -397,8 +397,8 @@ class FunctionsApi {
   ///
   /// * [String] range:
   ///   Range is 1H, 6H, 24H (the default), 7D or 30D. Anything else falls back to 24H rather than failing.
-  Future<Usage?> getFunctionsMetrics({ String? range, }) async {
-    final response = await getFunctionsMetricsWithHttpInfo( range: range, );
+  Future<Usage?> getFunctionMetrics({ String? range, }) async {
+    final response = await getFunctionMetricsWithHttpInfo( range: range, );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -417,9 +417,9 @@ class FunctionsApi {
   /// Is the NAMES of the secrets the caller org's functions mount.  Values are NEVER read or returned — this surface knows which names a function asks for and nothing about what is behind them, which is what makes it safe to list at all. One row per distinct (namespace, name).
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getFunctionsSecretsWithHttpInfo() async {
+  Future<Response> getFunctionSecretsWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/functions/secrets';
+    final path = r'/v1/function/secrets';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -445,8 +445,8 @@ class FunctionsApi {
   /// Is the NAMES of the secrets the caller org's functions mount.
   ///
   /// Is the NAMES of the secrets the caller org's functions mount.  Values are NEVER read or returned — this surface knows which names a function asks for and nothing about what is behind them, which is what makes it safe to list at all. One row per distinct (namespace, name).
-  Future<SecretList?> getFunctionsSecrets() async {
-    final response = await getFunctionsSecretsWithHttpInfo();
+  Future<SecretList?> getFunctionSecrets() async {
+    final response = await getFunctionSecretsWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -465,9 +465,9 @@ class FunctionsApi {
   /// Is what calls the caller org's functions — one row per function.  Every function has exactly one trigger today, its HTTP invoke endpoint, so this is the function list read as \"how is each of these reached\".
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getFunctionsTriggersWithHttpInfo() async {
+  Future<Response> getFunctionTriggersWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/functions/triggers';
+    final path = r'/v1/function/triggers';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -493,8 +493,8 @@ class FunctionsApi {
   /// Is what calls the caller org's functions — one row per function.
   ///
   /// Is what calls the caller org's functions — one row per function.  Every function has exactly one trigger today, its HTTP invoke endpoint, so this is the function list read as \"how is each of these reached\".
-  Future<TriggerList?> getFunctionsTriggers() async {
-    final response = await getFunctionsTriggersWithHttpInfo();
+  Future<TriggerList?> getFunctionTriggers() async {
+    final response = await getFunctionTriggersWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -517,9 +517,9 @@ class FunctionsApi {
   /// Parameters:
   ///
   /// * [Definition] definition (required):
-  Future<Response> postFunctionsWithHttpInfo(Definition definition,) async {
+  Future<Response> postFunctionWithHttpInfo(Definition definition,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/functions';
+    final path = r'/v1/function';
 
     // ignore: prefer_final_locals
     Object? postBody = definition;
@@ -549,8 +549,8 @@ class FunctionsApi {
   /// Parameters:
   ///
   /// * [Definition] definition (required):
-  Future<FunctionView?> postFunctions(Definition definition,) async {
-    final response = await postFunctionsWithHttpInfo(definition,);
+  Future<FunctionView?> postFunction(Definition definition,) async {
+    final response = await postFunctionWithHttpInfo(definition,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -575,9 +575,9 @@ class FunctionsApi {
   /// * [String] name (required):
   ///
   /// * [InvokeReq] invokeReq (required):
-  Future<Response> postFunctionsByNameInvokeWithHttpInfo(String name, InvokeReq invokeReq,) async {
+  Future<Response> postFunctionByNameInvokeWithHttpInfo(String name, InvokeReq invokeReq,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/functions/{name}/invoke'
+    final path = r'/v1/function/{name}/invoke'
       .replaceAll('{name}', name);
 
     // ignore: prefer_final_locals
@@ -610,8 +610,8 @@ class FunctionsApi {
   /// * [String] name (required):
   ///
   /// * [InvokeReq] invokeReq (required):
-  Future<InvocationView?> postFunctionsByNameInvoke(String name, InvokeReq invokeReq,) async {
-    final response = await postFunctionsByNameInvokeWithHttpInfo(name, invokeReq,);
+  Future<InvocationView?> postFunctionByNameInvoke(String name, InvokeReq invokeReq,) async {
+    final response = await postFunctionByNameInvokeWithHttpInfo(name, invokeReq,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }

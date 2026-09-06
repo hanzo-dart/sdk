@@ -11,8 +11,8 @@
 part of hanzoai.cloud;
 
 
-class AgentsApi {
-  AgentsApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
+class AgentApi {
+  AgentApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
 
   final ApiClient apiClient;
 
@@ -26,9 +26,9 @@ class AgentsApi {
   ///
   /// * [String] ref (required):
   ///   Ref is the agent's public id (the agent_… handle create and list return) or its org-unique name, from the path. Either resolves the same agent.
-  Future<Response> deleteAgentsByRefWithHttpInfo(String ref,) async {
+  Future<Response> deleteAgentByRefWithHttpInfo(String ref,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/{ref}'
+    final path = r'/v1/agent/{ref}'
       .replaceAll('{ref}', ref);
 
     // ignore: prefer_final_locals
@@ -60,8 +60,8 @@ class AgentsApi {
   ///
   /// * [String] ref (required):
   ///   Ref is the agent's public id (the agent_… handle create and list return) or its org-unique name, from the path. Either resolves the same agent.
-  Future<void> deleteAgentsByRef(String ref,) async {
-    final response = await deleteAgentsByRefWithHttpInfo(ref,);
+  Future<void> deleteAgentByRef(String ref,) async {
+    final response = await deleteAgentByRefWithHttpInfo(ref,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -77,9 +77,9 @@ class AgentsApi {
   ///
   /// * [String] id (required):
   ///   ID is the target to act on, from the path.
-  Future<Response> deleteAgentsTargetsByIdWithHttpInfo(String id,) async {
+  Future<Response> deleteAgentTargetsByIdWithHttpInfo(String id,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/targets/{id}'
+    final path = r'/v1/agent/targets/{id}'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -111,8 +111,8 @@ class AgentsApi {
   ///
   /// * [String] id (required):
   ///   ID is the target to act on, from the path.
-  Future<TargetDeleted?> deleteAgentsTargetsById(String id,) async {
-    final response = await deleteAgentsTargetsByIdWithHttpInfo(id,);
+  Future<TargetDeleted?> deleteAgentTargetsById(String id,) async {
+    final response = await deleteAgentTargetsByIdWithHttpInfo(id,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -131,9 +131,9 @@ class AgentsApi {
   /// Returns every agent defined in the caller's org, each with the number of runs recorded against it.
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getAgentsWithHttpInfo() async {
+  Future<Response> getAgentWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents';
+    final path = r'/v1/agent';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -159,8 +159,8 @@ class AgentsApi {
   /// Returns every agent defined in the caller's org, each with the number of runs recorded against it.
   ///
   /// Returns every agent defined in the caller's org, each with the number of runs recorded against it.
-  Future<AgentList?> getAgents() async {
-    final response = await getAgentsWithHttpInfo();
+  Future<AgentList?> getAgent() async {
+    final response = await getAgentWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -179,9 +179,9 @@ class AgentsApi {
   /// Serves the org-wide recent-activity feed. Events are REAL: each recorded run is an invoked (ok) or failed (error) event; each agent's own create/update timestamps are created/updated events. Merged, newest first, capped. Nothing is invented — an org with no agents and no runs gets [].
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getAgentsActivityWithHttpInfo() async {
+  Future<Response> getAgentActivityWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/activity';
+    final path = r'/v1/agent/activity';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -207,8 +207,8 @@ class AgentsApi {
   /// Serves the org-wide recent-activity feed.
   ///
   /// Serves the org-wide recent-activity feed. Events are REAL: each recorded run is an invoked (ok) or failed (error) event; each agent's own create/update timestamps are created/updated events. Merged, newest first, capped. Nothing is invented — an org with no agents and no runs gets [].
-  Future<ActivityFeed?> getAgentsActivity() async {
-    final response = await getAgentsActivityWithHttpInfo();
+  Future<ActivityFeed?> getAgentActivity() async {
+    final response = await getAgentActivityWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -232,9 +232,9 @@ class AgentsApi {
   ///
   /// * [int] limit:
   ///   Limit caps the page. Absent, zero or over 500 reads as 100.
-  Future<Response> getAgentsBuildsWithHttpInfo({ int? limit, }) async {
+  Future<Response> getAgentBuildsWithHttpInfo({ int? limit, }) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/builds';
+    final path = r'/v1/agent/builds';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -269,8 +269,8 @@ class AgentsApi {
   ///
   /// * [int] limit:
   ///   Limit caps the page. Absent, zero or over 500 reads as 100.
-  Future<BuildList?> getAgentsBuilds({ int? limit, }) async {
-    final response = await getAgentsBuildsWithHttpInfo( limit: limit, );
+  Future<BuildList?> getAgentBuilds({ int? limit, }) async {
+    final response = await getAgentBuildsWithHttpInfo( limit: limit, );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -286,7 +286,7 @@ class AgentsApi {
 
   /// Returns the readable build of one product: the agent session that produced it, turn by turn — the prompts, the reasoning, the commits each turn produced — plus the exact `git log` that re-derives every commit binding from git itself, so nothing here has to be taken on trust.
   ///
-  /// Returns the readable build of one product: the agent session that produced it, turn by turn — the prompts, the reasoning, the commits each turn produced — plus the exact `git log` that re-derives every commit binding from git itself, so nothing here has to be taken on trust.  PUBLIC, no tenancy: it answers only for a session its author explicitly published, which is what makes it safe to be anonymous. An unpublished session is invisible here no matter who asks; its owner reads it through the org-scoped /v1/agents/sessions routes, which need a validated principal.
+  /// Returns the readable build of one product: the agent session that produced it, turn by turn — the prompts, the reasoning, the commits each turn produced — plus the exact `git log` that re-derives every commit binding from git itself, so nothing here has to be taken on trust.  PUBLIC, no tenancy: it answers only for a session its author explicitly published, which is what makes it safe to be anonymous. An unpublished session is invisible here no matter who asks; its owner reads it through the org-scoped /v1/agent/sessions routes, which need a validated principal.
   ///
   /// Note: This method returns the HTTP [Response].
   ///
@@ -297,9 +297,9 @@ class AgentsApi {
   ///
   /// * [String] project (required):
   ///   Project is the product's slug, from the path.
-  Future<Response> getAgentsBuildsByOrgByProjectWithHttpInfo(String org, String project,) async {
+  Future<Response> getAgentBuildsByOrgByProjectWithHttpInfo(String org, String project,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/builds/{org}/{project}'
+    final path = r'/v1/agent/builds/{org}/{project}'
       .replaceAll('{org}', org)
       .replaceAll('{project}', project);
 
@@ -326,7 +326,7 @@ class AgentsApi {
 
   /// Returns the readable build of one product: the agent session that produced it, turn by turn — the prompts, the reasoning, the commits each turn produced — plus the exact `git log` that re-derives every commit binding from git itself, so nothing here has to be taken on trust.
   ///
-  /// Returns the readable build of one product: the agent session that produced it, turn by turn — the prompts, the reasoning, the commits each turn produced — plus the exact `git log` that re-derives every commit binding from git itself, so nothing here has to be taken on trust.  PUBLIC, no tenancy: it answers only for a session its author explicitly published, which is what makes it safe to be anonymous. An unpublished session is invisible here no matter who asks; its owner reads it through the org-scoped /v1/agents/sessions routes, which need a validated principal.
+  /// Returns the readable build of one product: the agent session that produced it, turn by turn — the prompts, the reasoning, the commits each turn produced — plus the exact `git log` that re-derives every commit binding from git itself, so nothing here has to be taken on trust.  PUBLIC, no tenancy: it answers only for a session its author explicitly published, which is what makes it safe to be anonymous. An unpublished session is invisible here no matter who asks; its owner reads it through the org-scoped /v1/agent/sessions routes, which need a validated principal.
   ///
   /// Parameters:
   ///
@@ -335,8 +335,8 @@ class AgentsApi {
   ///
   /// * [String] project (required):
   ///   Project is the product's slug, from the path.
-  Future<BuildView?> getAgentsBuildsByOrgByProject(String org, String project,) async {
-    final response = await getAgentsBuildsByOrgByProjectWithHttpInfo(org, project,);
+  Future<BuildView?> getAgentBuildsByOrgByProject(String org, String project,) async {
+    final response = await getAgentBuildsByOrgByProjectWithHttpInfo(org, project,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -360,9 +360,9 @@ class AgentsApi {
   ///
   /// * [String] ref (required):
   ///   Ref is the agent's public id (the agent_… handle create and list return) or its org-unique name, from the path. Either resolves the same agent.
-  Future<Response> getAgentsByRefWithHttpInfo(String ref,) async {
+  Future<Response> getAgentByRefWithHttpInfo(String ref,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/{ref}'
+    final path = r'/v1/agent/{ref}'
       .replaceAll('{ref}', ref);
 
     // ignore: prefer_final_locals
@@ -394,8 +394,8 @@ class AgentsApi {
   ///
   /// * [String] ref (required):
   ///   Ref is the agent's public id (the agent_… handle create and list return) or its org-unique name, from the path. Either resolves the same agent.
-  Future<AgentDetail?> getAgentsByRef(String ref,) async {
-    final response = await getAgentsByRefWithHttpInfo(ref,);
+  Future<AgentDetail?> getAgentByRef(String ref,) async {
+    final response = await getAgentByRefWithHttpInfo(ref,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -422,9 +422,9 @@ class AgentsApi {
   ///
   /// * [int] limit:
   ///   Limit caps how many runs come back, newest first. Absent, zero or out of range (1..200) reads as 50.
-  Future<Response> getAgentsByRefRunsWithHttpInfo(String ref, { int? limit, }) async {
+  Future<Response> getAgentByRefRunsWithHttpInfo(String ref, { int? limit, }) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/{ref}/runs'
+    final path = r'/v1/agent/{ref}/runs'
       .replaceAll('{ref}', ref);
 
     // ignore: prefer_final_locals
@@ -463,8 +463,8 @@ class AgentsApi {
   ///
   /// * [int] limit:
   ///   Limit caps how many runs come back, newest first. Absent, zero or out of range (1..200) reads as 50.
-  Future<RunList?> getAgentsByRefRuns(String ref, { int? limit, }) async {
-    final response = await getAgentsByRefRunsWithHttpInfo(ref,  limit: limit, );
+  Future<RunList?> getAgentByRefRuns(String ref, { int? limit, }) async {
+    final response = await getAgentByRefRunsWithHttpInfo(ref,  limit: limit, );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -483,9 +483,9 @@ class AgentsApi {
   /// Returns a summary of every agent conversation in the caller's org — id, derived title, and when it was last appended to — for populating a thread list.  Scoped to the caller's org and nothing else, and that isolation is structural rather than a filter: conversations are persisted in a store opened PER ORG, so there is no query in which another tenant's threads could appear. A validated principal with a non-empty org is required; 403 without one.
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getAgentsChatConversationsWithHttpInfo() async {
+  Future<Response> getAgentChatConversationsWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/chat/conversations';
+    final path = r'/v1/agent/chat/conversations';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -511,8 +511,8 @@ class AgentsApi {
   /// List the agent threads in your org
   ///
   /// Returns a summary of every agent conversation in the caller's org — id, derived title, and when it was last appended to — for populating a thread list.  Scoped to the caller's org and nothing else, and that isolation is structural rather than a filter: conversations are persisted in a store opened PER ORG, so there is no query in which another tenant's threads could appear. A validated principal with a non-empty org is required; 403 without one.
-  Future<void> getAgentsChatConversations() async {
-    final response = await getAgentsChatConversationsWithHttpInfo();
+  Future<void> getAgentChatConversations() async {
+    final response = await getAgentChatConversationsWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -527,9 +527,9 @@ class AgentsApi {
   /// Parameters:
   ///
   /// * [String] id (required):
-  Future<Response> getAgentsChatConversationsByIdWithHttpInfo(String id,) async {
+  Future<Response> getAgentChatConversationsByIdWithHttpInfo(String id,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/chat/conversations/{id}'
+    final path = r'/v1/agent/chat/conversations/{id}'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -560,8 +560,8 @@ class AgentsApi {
   /// Parameters:
   ///
   /// * [String] id (required):
-  Future<void> getAgentsChatConversationsById(String id,) async {
-    final response = await getAgentsChatConversationsByIdWithHttpInfo(id,);
+  Future<void> getAgentChatConversationsById(String id,) async {
+    final response = await getAgentChatConversationsByIdWithHttpInfo(id,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -572,9 +572,9 @@ class AgentsApi {
   /// Returns the preset catalog: each entry's id, its description and whether it is server-executing — the flag that decides if a preset's tool calls run here or come back for the client to apply. The ids are what the round accepts in `preset`.  The catalog is compiled into the build, identical for every caller, and this is the one read in the group that needs no principal.
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getAgentsChatPresetsWithHttpInfo() async {
+  Future<Response> getAgentChatPresetsWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/chat/presets';
+    final path = r'/v1/agent/chat/presets';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -600,8 +600,8 @@ class AgentsApi {
   /// List the agent presets available to a caller
   ///
   /// Returns the preset catalog: each entry's id, its description and whether it is server-executing — the flag that decides if a preset's tool calls run here or come back for the client to apply. The ids are what the round accepts in `preset`.  The catalog is compiled into the build, identical for every caller, and this is the one read in the group that needs no principal.
-  Future<void> getAgentsChatPresets() async {
-    final response = await getAgentsChatPresetsWithHttpInfo();
+  Future<void> getAgentChatPresets() async {
+    final response = await getAgentChatPresetsWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -617,9 +617,9 @@ class AgentsApi {
   ///
   /// * [String] range:
   ///   Range is the window to bucket: 24H, 7D or 30D. Anything else reads as 30D.
-  Future<Response> getAgentsMetricsWithHttpInfo({ String? range, }) async {
+  Future<Response> getAgentMetricsWithHttpInfo({ String? range, }) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/metrics';
+    final path = r'/v1/agent/metrics';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -654,8 +654,8 @@ class AgentsApi {
   ///
   /// * [String] range:
   ///   Range is the window to bucket: 24H, 7D or 30D. Anything else reads as 30D.
-  Future<MetricsView?> getAgentsMetrics({ String? range, }) async {
-    final response = await getAgentsMetricsWithHttpInfo( range: range, );
+  Future<MetricsView?> getAgentMetrics({ String? range, }) async {
+    final response = await getAgentMetricsWithHttpInfo( range: range, );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -682,9 +682,9 @@ class AgentsApi {
   ///
   /// * [String] status:
   ///   Status keeps only runs with this outcome (\"ok\" or \"error\"). Empty keeps both. It is the filter an operator reaches for first — \"show me what broke\" — and answering it here rather than by paging the whole history client-side is the difference between a usable feed and a download.
-  Future<Response> getAgentsRunsWithHttpInfo({ int? limit, String? status, }) async {
+  Future<Response> getAgentRunsWithHttpInfo({ int? limit, String? status, }) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/runs';
+    final path = r'/v1/agent/runs';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -725,8 +725,8 @@ class AgentsApi {
   ///
   /// * [String] status:
   ///   Status keeps only runs with this outcome (\"ok\" or \"error\"). Empty keeps both. It is the filter an operator reaches for first — \"show me what broke\" — and answering it here rather than by paging the whole history client-side is the difference between a usable feed and a download.
-  Future<RunList?> getAgentsRuns({ int? limit, String? status, }) async {
-    final response = await getAgentsRunsWithHttpInfo( limit: limit, status: status, );
+  Future<RunList?> getAgentRuns({ int? limit, String? status, }) async {
+    final response = await getAgentRunsWithHttpInfo( limit: limit, status: status, );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -765,9 +765,9 @@ class AgentsApi {
   ///
   /// * [int] limit:
   ///   Limit caps the page. Absent, zero or over 500 reads as 100.
-  Future<Response> getAgentsSessionsWithHttpInfo({ String? root, String? parent, String? status, String? project, String? room, int? limit, }) async {
+  Future<Response> getAgentSessionsWithHttpInfo({ String? root, String? parent, String? status, String? project, String? room, int? limit, }) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/sessions';
+    final path = r'/v1/agent/sessions';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -832,8 +832,8 @@ class AgentsApi {
   ///
   /// * [int] limit:
   ///   Limit caps the page. Absent, zero or over 500 reads as 100.
-  Future<SessionList?> getAgentsSessions({ String? root, String? parent, String? status, String? project, String? room, int? limit, }) async {
-    final response = await getAgentsSessionsWithHttpInfo( root: root, parent: parent, status: status, project: project, room: room, limit: limit, );
+  Future<SessionList?> getAgentSessions({ String? root, String? parent, String? status, String? project, String? room, int? limit, }) async {
+    final response = await getAgentSessionsWithHttpInfo( root: root, parent: parent, status: status, project: project, room: room, limit: limit, );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -857,9 +857,9 @@ class AgentsApi {
   ///
   /// * [String] id (required):
   ///   ID is the session to act on, from the path.
-  Future<Response> getAgentsSessionsByIdWithHttpInfo(String id,) async {
+  Future<Response> getAgentSessionsByIdWithHttpInfo(String id,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/sessions/{id}'
+    final path = r'/v1/agent/sessions/{id}'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -891,8 +891,8 @@ class AgentsApi {
   ///
   /// * [String] id (required):
   ///   ID is the session to act on, from the path.
-  Future<SessionDetail?> getAgentsSessionsById(String id,) async {
-    final response = await getAgentsSessionsByIdWithHttpInfo(id,);
+  Future<SessionDetail?> getAgentSessionsById(String id,) async {
+    final response = await getAgentSessionsByIdWithHttpInfo(id,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -919,9 +919,9 @@ class AgentsApi {
   ///
   /// * [int] after:
   ///   After is the last seq this poller applied; only commands newer than it come back. Absent or negative reads as 0, which drains from the beginning.
-  Future<Response> getAgentsSessionsByIdControlWithHttpInfo(String id, { int? after, }) async {
+  Future<Response> getAgentSessionsByIdControlWithHttpInfo(String id, { int? after, }) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/sessions/{id}/control'
+    final path = r'/v1/agent/sessions/{id}/control'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -960,8 +960,8 @@ class AgentsApi {
   ///
   /// * [int] after:
   ///   After is the last seq this poller applied; only commands newer than it come back. Absent or negative reads as 0, which drains from the beginning.
-  Future<ControlDrain?> getAgentsSessionsByIdControl(String id, { int? after, }) async {
-    final response = await getAgentsSessionsByIdControlWithHttpInfo(id,  after: after, );
+  Future<ControlDrain?> getAgentSessionsByIdControl(String id, { int? after, }) async {
+    final response = await getAgentSessionsByIdControlWithHttpInfo(id,  after: after, );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -985,9 +985,9 @@ class AgentsApi {
   ///
   /// * [String] id (required):
   ///   ID is the session to act on, from the path.
-  Future<Response> getAgentsSessionsByIdProgressWithHttpInfo(String id,) async {
+  Future<Response> getAgentSessionsByIdProgressWithHttpInfo(String id,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/sessions/{id}/progress'
+    final path = r'/v1/agent/sessions/{id}/progress'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -1019,8 +1019,8 @@ class AgentsApi {
   ///
   /// * [String] id (required):
   ///   ID is the session to act on, from the path.
-  Future<SessionProgress?> getAgentsSessionsByIdProgress(String id,) async {
-    final response = await getAgentsSessionsByIdProgressWithHttpInfo(id,);
+  Future<SessionProgress?> getAgentSessionsByIdProgress(String id,) async {
+    final response = await getAgentSessionsByIdProgressWithHttpInfo(id,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1044,9 +1044,9 @@ class AgentsApi {
   ///
   /// * [String] id (required):
   ///   ID is the session to act on, from the path.
-  Future<Response> getAgentsSessionsByIdTreeWithHttpInfo(String id,) async {
+  Future<Response> getAgentSessionsByIdTreeWithHttpInfo(String id,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/sessions/{id}/tree'
+    final path = r'/v1/agent/sessions/{id}/tree'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -1078,8 +1078,8 @@ class AgentsApi {
   ///
   /// * [String] id (required):
   ///   ID is the session to act on, from the path.
-  Future<TreeNode?> getAgentsSessionsByIdTree(String id,) async {
-    final response = await getAgentsSessionsByIdTreeWithHttpInfo(id,);
+  Future<TreeNode?> getAgentSessionsByIdTree(String id,) async {
+    final response = await getAgentSessionsByIdTreeWithHttpInfo(id,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1098,9 +1098,9 @@ class AgentsApi {
   /// Holds the connection open as text/event-stream and pushes a frame each time the org's registry moves: an `event: session` frame carrying the same session shape the list and detail reads answer with (a registration, an update, or a login-manager revoke tearing a session down), and an `event: event` frame carrying one appended turn. Optional ?root=<session id> narrows the feed to a single subagent tree.  Requires a validated principal carrying an org; 403 without one. Org-scoped fail-closed: the bus filters on tenant before it fans out, so a subscriber only ever receives its own org's updates, and ?root= narrows that further but can never widen it.  Delivery is best-effort and the GET reads remain the source of truth. A subscriber that falls more than 256 frames behind is DROPPED — its channel is closed and the stream ends — so one stuck dashboard can never back-pressure a session write; the client reconnects and re-reads the session endpoints to resynchronise. A `: ping` comment every 25 seconds holds the connection open through proxies and is how a departed client is noticed.
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getAgentsSessionsStreamWithHttpInfo() async {
+  Future<Response> getAgentSessionsStreamWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/sessions/stream';
+    final path = r'/v1/agent/sessions/stream';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -1126,8 +1126,8 @@ class AgentsApi {
   /// Live session and event updates for the caller's org, as Server-Sent Events.
   ///
   /// Holds the connection open as text/event-stream and pushes a frame each time the org's registry moves: an `event: session` frame carrying the same session shape the list and detail reads answer with (a registration, an update, or a login-manager revoke tearing a session down), and an `event: event` frame carrying one appended turn. Optional ?root=<session id> narrows the feed to a single subagent tree.  Requires a validated principal carrying an org; 403 without one. Org-scoped fail-closed: the bus filters on tenant before it fans out, so a subscriber only ever receives its own org's updates, and ?root= narrows that further but can never widen it.  Delivery is best-effort and the GET reads remain the source of truth. A subscriber that falls more than 256 frames behind is DROPPED — its channel is closed and the stream ends — so one stuck dashboard can never back-pressure a session write; the client reconnects and re-reads the session endpoints to resynchronise. A `: ping` comment every 25 seconds holds the connection open through proxies and is how a departed client is noticed.
-  Future<void> getAgentsSessionsStream() async {
-    final response = await getAgentsSessionsStreamWithHttpInfo();
+  Future<void> getAgentSessionsStream() async {
+    final response = await getAgentSessionsStreamWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1138,9 +1138,9 @@ class AgentsApi {
   /// Returns every machine registered to the caller's org, newest first, each with its live session load.
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getAgentsTargetsWithHttpInfo() async {
+  Future<Response> getAgentTargetsWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/targets';
+    final path = r'/v1/agent/targets';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -1166,8 +1166,8 @@ class AgentsApi {
   /// Returns every machine registered to the caller's org, newest first, each with its live session load.
   ///
   /// Returns every machine registered to the caller's org, newest first, each with its live session load.
-  Future<TargetList?> getAgentsTargets() async {
-    final response = await getAgentsTargetsWithHttpInfo();
+  Future<TargetList?> getAgentTargets() async {
+    final response = await getAgentTargetsWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1191,9 +1191,9 @@ class AgentsApi {
   ///
   /// * [String] id (required):
   ///   ID is the target to act on, from the path.
-  Future<Response> getAgentsTargetsByIdWithHttpInfo(String id,) async {
+  Future<Response> getAgentTargetsByIdWithHttpInfo(String id,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/targets/{id}'
+    final path = r'/v1/agent/targets/{id}'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -1225,8 +1225,8 @@ class AgentsApi {
   ///
   /// * [String] id (required):
   ///   ID is the target to act on, from the path.
-  Future<TargetView?> getAgentsTargetsById(String id,) async {
-    final response = await getAgentsTargetsByIdWithHttpInfo(id,);
+  Future<TargetView?> getAgentTargetsById(String id,) async {
+    final response = await getAgentTargetsByIdWithHttpInfo(id,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1252,9 +1252,9 @@ class AgentsApi {
   ///   Ref is the agent to update — its public id or org-unique name, from the path.
   ///
   /// * [UpdateAgentIn] updateAgentIn (required):
-  Future<Response> patchAgentsByRefWithHttpInfo(String ref, UpdateAgentIn updateAgentIn,) async {
+  Future<Response> patchAgentByRefWithHttpInfo(String ref, UpdateAgentIn updateAgentIn,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/{ref}'
+    final path = r'/v1/agent/{ref}'
       .replaceAll('{ref}', ref);
 
     // ignore: prefer_final_locals
@@ -1288,8 +1288,8 @@ class AgentsApi {
   ///   Ref is the agent to update — its public id or org-unique name, from the path.
   ///
   /// * [UpdateAgentIn] updateAgentIn (required):
-  Future<AgentView?> patchAgentsByRef(String ref, UpdateAgentIn updateAgentIn,) async {
-    final response = await patchAgentsByRefWithHttpInfo(ref, updateAgentIn,);
+  Future<AgentView?> patchAgentByRef(String ref, UpdateAgentIn updateAgentIn,) async {
+    final response = await patchAgentByRefWithHttpInfo(ref, updateAgentIn,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1315,9 +1315,9 @@ class AgentsApi {
   ///   ID is the session to update, from the path.
   ///
   /// * [PatchSessionIn] patchSessionIn (required):
-  Future<Response> patchAgentsSessionsByIdWithHttpInfo(String id, PatchSessionIn patchSessionIn,) async {
+  Future<Response> patchAgentSessionsByIdWithHttpInfo(String id, PatchSessionIn patchSessionIn,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/sessions/{id}'
+    final path = r'/v1/agent/sessions/{id}'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -1351,8 +1351,8 @@ class AgentsApi {
   ///   ID is the session to update, from the path.
   ///
   /// * [PatchSessionIn] patchSessionIn (required):
-  Future<SessionView?> patchAgentsSessionsById(String id, PatchSessionIn patchSessionIn,) async {
-    final response = await patchAgentsSessionsByIdWithHttpInfo(id, patchSessionIn,);
+  Future<SessionView?> patchAgentSessionsById(String id, PatchSessionIn patchSessionIn,) async {
+    final response = await patchAgentSessionsByIdWithHttpInfo(id, patchSessionIn,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1378,9 +1378,9 @@ class AgentsApi {
   ///   ID is the target to update, from the path.
   ///
   /// * [PatchTargetIn] patchTargetIn (required):
-  Future<Response> patchAgentsTargetsByIdWithHttpInfo(String id, PatchTargetIn patchTargetIn,) async {
+  Future<Response> patchAgentTargetsByIdWithHttpInfo(String id, PatchTargetIn patchTargetIn,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/targets/{id}'
+    final path = r'/v1/agent/targets/{id}'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -1414,8 +1414,8 @@ class AgentsApi {
   ///   ID is the target to update, from the path.
   ///
   /// * [PatchTargetIn] patchTargetIn (required):
-  Future<TargetView?> patchAgentsTargetsById(String id, PatchTargetIn patchTargetIn,) async {
-    final response = await patchAgentsTargetsByIdWithHttpInfo(id, patchTargetIn,);
+  Future<TargetView?> patchAgentTargetsById(String id, PatchTargetIn patchTargetIn,) async {
+    final response = await patchAgentTargetsByIdWithHttpInfo(id, patchTargetIn,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1438,9 +1438,9 @@ class AgentsApi {
   /// Parameters:
   ///
   /// * [CreateAgentIn] createAgentIn (required):
-  Future<Response> postAgentsWithHttpInfo(CreateAgentIn createAgentIn,) async {
+  Future<Response> postAgentWithHttpInfo(CreateAgentIn createAgentIn,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents';
+    final path = r'/v1/agent';
 
     // ignore: prefer_final_locals
     Object? postBody = createAgentIn;
@@ -1470,8 +1470,8 @@ class AgentsApi {
   /// Parameters:
   ///
   /// * [CreateAgentIn] createAgentIn (required):
-  Future<AgentView?> postAgents(CreateAgentIn createAgentIn,) async {
-    final response = await postAgentsWithHttpInfo(createAgentIn,);
+  Future<AgentView?> postAgent(CreateAgentIn createAgentIn,) async {
+    final response = await postAgentWithHttpInfo(createAgentIn,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1494,9 +1494,9 @@ class AgentsApi {
   /// Parameters:
   ///
   /// * [String] ref (required):
-  Future<Response> postAgentsByRefRunWithHttpInfo(String ref,) async {
+  Future<Response> postAgentByRefRunWithHttpInfo(String ref,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/{ref}/run'
+    final path = r'/v1/agent/{ref}/run'
       .replaceAll('{ref}', ref);
 
     // ignore: prefer_final_locals
@@ -1527,8 +1527,8 @@ class AgentsApi {
   /// Parameters:
   ///
   /// * [String] ref (required):
-  Future<void> postAgentsByRefRun(String ref,) async {
-    final response = await postAgentsByRefRunWithHttpInfo(ref,);
+  Future<void> postAgentByRefRun(String ref,) async {
+    final response = await postAgentByRefRunWithHttpInfo(ref,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1539,9 +1539,9 @@ class AgentsApi {
   /// Answers one turn of a conversation with four things: the model's `reply`, the `actions` the server executed on the caller's behalf, the `ops` the client must apply itself, and the `conversationId` the turn was recorded under.  The split between actions and ops is the rule most easily got wrong. A tool call is executed HERE only when the chosen preset is server-executing AND the tool resolves in the caller's own scope; every other call is handed back as an op for the client to apply to its own graph or UI. A tool that fails still comes back as an action, carrying its error rather than failing the round.  `preset` selects the system prompt and the tool set (`capability` is a legacy alias for it); an unknown one is refused. `conversationId` continues an existing thread, and its absence starts one. A validated principal with a non-empty org is required — the org is the sole authority for both persistence and tool scope, and is NEVER read from the body.  A completion refused for the caller's own reason — 402 insufficient balance, 429, 403 — is relayed with its own status and body verbatim, so the real billing message reaches the client instead of an opaque gateway error. Only a genuine upstream fault becomes a 502.
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> postAgentsChatWithHttpInfo() async {
+  Future<Response> postAgentChatWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/chat';
+    final path = r'/v1/agent/chat';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -1567,8 +1567,8 @@ class AgentsApi {
   /// Run one tool-calling round against your org's own tools
   ///
   /// Answers one turn of a conversation with four things: the model's `reply`, the `actions` the server executed on the caller's behalf, the `ops` the client must apply itself, and the `conversationId` the turn was recorded under.  The split between actions and ops is the rule most easily got wrong. A tool call is executed HERE only when the chosen preset is server-executing AND the tool resolves in the caller's own scope; every other call is handed back as an op for the client to apply to its own graph or UI. A tool that fails still comes back as an action, carrying its error rather than failing the round.  `preset` selects the system prompt and the tool set (`capability` is a legacy alias for it); an unknown one is refused. `conversationId` continues an existing thread, and its absence starts one. A validated principal with a non-empty org is required — the org is the sole authority for both persistence and tool scope, and is NEVER read from the body.  A completion refused for the caller's own reason — 402 insufficient balance, 429, 403 — is relayed with its own status and body verbatim, so the real billing message reaches the client instead of an opaque gateway error. Only a genuine upstream fault becomes a 502.
-  Future<void> postAgentsChat() async {
-    final response = await postAgentsChatWithHttpInfo();
+  Future<void> postAgentChat() async {
+    final response = await postAgentChatWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1579,9 +1579,9 @@ class AgentsApi {
   /// Writes turns to the caller's thread store without running a completion, and answers the `conversationId` they were written under. An absent `conversationId` opens a new thread; supplying one appends to it.  This is for a client that streams its own turn through /v1/chat/completions and still wants the conversation in its history — the round records what IT answers, and is otherwise the only writer. It takes the same store, the same per-org isolation and the same notion of a thread: what is recorded here reads back through the two GETs beside it and the round can continue it by id. A validated principal with a non-empty org is required; 403 without one.
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> postAgentsChatConversationsWithHttpInfo() async {
+  Future<Response> postAgentChatConversationsWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/chat/conversations';
+    final path = r'/v1/agent/chat/conversations';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -1607,8 +1607,8 @@ class AgentsApi {
   /// Record turns in a conversation
   ///
   /// Writes turns to the caller's thread store without running a completion, and answers the `conversationId` they were written under. An absent `conversationId` opens a new thread; supplying one appends to it.  This is for a client that streams its own turn through /v1/chat/completions and still wants the conversation in its history — the round records what IT answers, and is otherwise the only writer. It takes the same store, the same per-org isolation and the same notion of a thread: what is recorded here reads back through the two GETs beside it and the round can continue it by id. A validated principal with a non-empty org is required; 403 without one.
-  Future<void> postAgentsChatConversations() async {
-    final response = await postAgentsChatConversationsWithHttpInfo();
+  Future<void> postAgentChatConversations() async {
+    final response = await postAgentChatConversationsWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1621,9 +1621,9 @@ class AgentsApi {
   /// Parameters:
   ///
   /// * [CodingStartIn] codingStartIn (required):
-  Future<Response> postAgentsCodingWithHttpInfo(CodingStartIn codingStartIn,) async {
+  Future<Response> postAgentCodingWithHttpInfo(CodingStartIn codingStartIn,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/coding';
+    final path = r'/v1/agent/coding';
 
     // ignore: prefer_final_locals
     Object? postBody = codingStartIn;
@@ -1651,8 +1651,8 @@ class AgentsApi {
   /// Parameters:
   ///
   /// * [CodingStartIn] codingStartIn (required):
-  Future<CodingStarted?> postAgentsCoding(CodingStartIn codingStartIn,) async {
-    final response = await postAgentsCodingWithHttpInfo(codingStartIn,);
+  Future<CodingStarted?> postAgentCoding(CodingStartIn codingStartIn,) async {
+    final response = await postAgentCodingWithHttpInfo(codingStartIn,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1675,9 +1675,9 @@ class AgentsApi {
   /// Parameters:
   ///
   /// * [RegisterReq] registerReq (required):
-  Future<Response> postAgentsSessionsWithHttpInfo(RegisterReq registerReq,) async {
+  Future<Response> postAgentSessionsWithHttpInfo(RegisterReq registerReq,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/sessions';
+    final path = r'/v1/agent/sessions';
 
     // ignore: prefer_final_locals
     Object? postBody = registerReq;
@@ -1707,8 +1707,8 @@ class AgentsApi {
   /// Parameters:
   ///
   /// * [RegisterReq] registerReq (required):
-  Future<SessionView?> postAgentsSessions(RegisterReq registerReq,) async {
-    final response = await postAgentsSessionsWithHttpInfo(registerReq,);
+  Future<SessionView?> postAgentSessions(RegisterReq registerReq,) async {
+    final response = await postAgentSessionsWithHttpInfo(registerReq,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1734,9 +1734,9 @@ class AgentsApi {
   ///   ID is the session to append to, from the path.
   ///
   /// * [EventIn] eventIn (required):
-  Future<Response> postAgentsSessionsByIdEventsWithHttpInfo(String id, EventIn eventIn,) async {
+  Future<Response> postAgentSessionsByIdEventsWithHttpInfo(String id, EventIn eventIn,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/sessions/{id}/events'
+    final path = r'/v1/agent/sessions/{id}/events'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -1770,8 +1770,8 @@ class AgentsApi {
   ///   ID is the session to append to, from the path.
   ///
   /// * [EventIn] eventIn (required):
-  Future<EventView?> postAgentsSessionsByIdEvents(String id, EventIn eventIn,) async {
-    final response = await postAgentsSessionsByIdEventsWithHttpInfo(id, eventIn,);
+  Future<EventView?> postAgentSessionsByIdEvents(String id, EventIn eventIn,) async {
+    final response = await postAgentSessionsByIdEventsWithHttpInfo(id, eventIn,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1797,9 +1797,9 @@ class AgentsApi {
   ///   ID is the session to steer, from the path.
   ///
   /// * [ControlIn] controlIn (required):
-  Future<Response> postAgentsSessionsByIdMessageWithHttpInfo(String id, ControlIn controlIn,) async {
+  Future<Response> postAgentSessionsByIdMessageWithHttpInfo(String id, ControlIn controlIn,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/sessions/{id}/message'
+    final path = r'/v1/agent/sessions/{id}/message'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -1833,8 +1833,8 @@ class AgentsApi {
   ///   ID is the session to steer, from the path.
   ///
   /// * [ControlIn] controlIn (required):
-  Future<ControlResult?> postAgentsSessionsByIdMessage(String id, ControlIn controlIn,) async {
-    final response = await postAgentsSessionsByIdMessageWithHttpInfo(id, controlIn,);
+  Future<ControlResult?> postAgentSessionsByIdMessage(String id, ControlIn controlIn,) async {
+    final response = await postAgentSessionsByIdMessageWithHttpInfo(id, controlIn,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1860,9 +1860,9 @@ class AgentsApi {
   ///   ID is the session to steer, from the path.
   ///
   /// * [ControlIn] controlIn (required):
-  Future<Response> postAgentsSessionsByIdPauseWithHttpInfo(String id, ControlIn controlIn,) async {
+  Future<Response> postAgentSessionsByIdPauseWithHttpInfo(String id, ControlIn controlIn,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/sessions/{id}/pause'
+    final path = r'/v1/agent/sessions/{id}/pause'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -1896,8 +1896,8 @@ class AgentsApi {
   ///   ID is the session to steer, from the path.
   ///
   /// * [ControlIn] controlIn (required):
-  Future<ControlResult?> postAgentsSessionsByIdPause(String id, ControlIn controlIn,) async {
-    final response = await postAgentsSessionsByIdPauseWithHttpInfo(id, controlIn,);
+  Future<ControlResult?> postAgentSessionsByIdPause(String id, ControlIn controlIn,) async {
+    final response = await postAgentSessionsByIdPauseWithHttpInfo(id, controlIn,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1923,9 +1923,9 @@ class AgentsApi {
   ///   ID is the session to steer, from the path.
   ///
   /// * [ControlIn] controlIn (required):
-  Future<Response> postAgentsSessionsByIdResumeWithHttpInfo(String id, ControlIn controlIn,) async {
+  Future<Response> postAgentSessionsByIdResumeWithHttpInfo(String id, ControlIn controlIn,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/sessions/{id}/resume'
+    final path = r'/v1/agent/sessions/{id}/resume'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -1959,8 +1959,8 @@ class AgentsApi {
   ///   ID is the session to steer, from the path.
   ///
   /// * [ControlIn] controlIn (required):
-  Future<ControlResult?> postAgentsSessionsByIdResume(String id, ControlIn controlIn,) async {
-    final response = await postAgentsSessionsByIdResumeWithHttpInfo(id, controlIn,);
+  Future<ControlResult?> postAgentSessionsByIdResume(String id, ControlIn controlIn,) async {
+    final response = await postAgentSessionsByIdResumeWithHttpInfo(id, controlIn,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1986,9 +1986,9 @@ class AgentsApi {
   ///   ID is the session to steer, from the path.
   ///
   /// * [ControlIn] controlIn (required):
-  Future<Response> postAgentsSessionsByIdStopWithHttpInfo(String id, ControlIn controlIn,) async {
+  Future<Response> postAgentSessionsByIdStopWithHttpInfo(String id, ControlIn controlIn,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/sessions/{id}/stop'
+    final path = r'/v1/agent/sessions/{id}/stop'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -2022,8 +2022,8 @@ class AgentsApi {
   ///   ID is the session to steer, from the path.
   ///
   /// * [ControlIn] controlIn (required):
-  Future<ControlResult?> postAgentsSessionsByIdStop(String id, ControlIn controlIn,) async {
-    final response = await postAgentsSessionsByIdStopWithHttpInfo(id, controlIn,);
+  Future<ControlResult?> postAgentSessionsByIdStop(String id, ControlIn controlIn,) async {
+    final response = await postAgentSessionsByIdStopWithHttpInfo(id, controlIn,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -2046,9 +2046,9 @@ class AgentsApi {
   /// Parameters:
   ///
   /// * [TargetReq] targetReq (required):
-  Future<Response> postAgentsTargetsWithHttpInfo(TargetReq targetReq,) async {
+  Future<Response> postAgentTargetsWithHttpInfo(TargetReq targetReq,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/targets';
+    final path = r'/v1/agent/targets';
 
     // ignore: prefer_final_locals
     Object? postBody = targetReq;
@@ -2078,8 +2078,8 @@ class AgentsApi {
   /// Parameters:
   ///
   /// * [TargetReq] targetReq (required):
-  Future<TargetView?> postAgentsTargets(TargetReq targetReq,) async {
-    final response = await postAgentsTargetsWithHttpInfo(targetReq,);
+  Future<TargetView?> postAgentTargets(TargetReq targetReq,) async {
+    final response = await postAgentTargetsWithHttpInfo(targetReq,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -2103,9 +2103,9 @@ class AgentsApi {
   ///
   /// * [String] id (required):
   ///   ID is the target to act on, from the path.
-  Future<Response> postAgentsTargetsByIdClaimWithHttpInfo(String id,) async {
+  Future<Response> postAgentTargetsByIdClaimWithHttpInfo(String id,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/targets/{id}/claim'
+    final path = r'/v1/agent/targets/{id}/claim'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -2137,8 +2137,8 @@ class AgentsApi {
   ///
   /// * [String] id (required):
   ///   ID is the target to act on, from the path.
-  Future<RoutedRunOut?> postAgentsTargetsByIdClaim(String id,) async {
-    final response = await postAgentsTargetsByIdClaimWithHttpInfo(id,);
+  Future<RoutedRunOut?> postAgentTargetsByIdClaim(String id,) async {
+    final response = await postAgentTargetsByIdClaimWithHttpInfo(id,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -2162,9 +2162,9 @@ class AgentsApi {
   ///
   /// * [String] id (required):
   ///   ID is the target to act on, from the path.
-  Future<Response> postAgentsTargetsByIdKeyWithHttpInfo(String id,) async {
+  Future<Response> postAgentTargetsByIdKeyWithHttpInfo(String id,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/targets/{id}/key'
+    final path = r'/v1/agent/targets/{id}/key'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -2196,8 +2196,8 @@ class AgentsApi {
   ///
   /// * [String] id (required):
   ///   ID is the target to act on, from the path.
-  Future<ClaimKeyOut?> postAgentsTargetsByIdKey(String id,) async {
-    final response = await postAgentsTargetsByIdKeyWithHttpInfo(id,);
+  Future<ClaimKeyOut?> postAgentTargetsByIdKey(String id,) async {
+    final response = await postAgentTargetsByIdKeyWithHttpInfo(id,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -2226,9 +2226,9 @@ class AgentsApi {
   ///   RunID is the routed run being completed, from the path.
   ///
   /// * [ReportRunIn] reportRunIn (required):
-  Future<Response> postAgentsTargetsByIdRunsByRunidReportWithHttpInfo(String id, String runId, ReportRunIn reportRunIn,) async {
+  Future<Response> postAgentTargetsByIdRunsByRunidReportWithHttpInfo(String id, String runId, ReportRunIn reportRunIn,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/agents/targets/{id}/runs/{runId}/report'
+    final path = r'/v1/agent/targets/{id}/runs/{runId}/report'
       .replaceAll('{id}', id)
       .replaceAll('{runId}', runId);
 
@@ -2266,8 +2266,8 @@ class AgentsApi {
   ///   RunID is the routed run being completed, from the path.
   ///
   /// * [ReportRunIn] reportRunIn (required):
-  Future<ReportOut?> postAgentsTargetsByIdRunsByRunidReport(String id, String runId, ReportRunIn reportRunIn,) async {
-    final response = await postAgentsTargetsByIdRunsByRunidReportWithHttpInfo(id, runId, reportRunIn,);
+  Future<ReportOut?> postAgentTargetsByIdRunsByRunidReport(String id, String runId, ReportRunIn reportRunIn,) async {
+    final response = await postAgentTargetsByIdRunsByRunidReportWithHttpInfo(id, runId, reportRunIn,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }

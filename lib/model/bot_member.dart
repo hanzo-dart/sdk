@@ -19,7 +19,7 @@ class BotMember {
     this.personRef,
     this.userId,
   });
-  /// Active is whether the agent projects as a LIVE space member, derived from its registry status: empty, \"active\" and \"ready\" are live, anything else (archived/retired) is not. An inactive bot drops out of the Team list while its past authorship survives.
+  /// Active is whether the agent projects as a LIVE space member, derived from its registry status: empty, \"active\" and \"ready\" are live, anything else (archived/retired) is not. An inactive bot drops out of the roster while its past authorship survives.
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
@@ -28,7 +28,7 @@ class BotMember {
   ///
   bool? active;
 
-  /// the agent id
+  /// ID is the agent id.
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
@@ -37,7 +37,7 @@ class BotMember {
   ///
   String? id;
 
-  /// display name
+  /// Name is the display name.
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
@@ -46,7 +46,7 @@ class BotMember {
   ///
   String? name;
 
-  /// the projected Person _id
+  /// PersonRef is the projected Person _id.
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
@@ -55,7 +55,7 @@ class BotMember {
   ///
   String? personRef;
 
-  /// derived member account uuid (personUuid)
+  /// UserID is the derived member account uuid (personUuid).
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated

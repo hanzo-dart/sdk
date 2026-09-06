@@ -11,8 +11,8 @@
 part of hanzoai.cloud;
 
 
-class ProjectsApi {
-  ProjectsApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
+class ProjectApi {
+  ProjectApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
 
   final ApiClient apiClient;
 
@@ -26,9 +26,9 @@ class ProjectsApi {
   ///
   /// * [String] slug (required):
   ///   Slug is the project to act on, from the path. It is unique within the caller's org and nowhere else, so another tenant's slug is a 404.
-  Future<Response> deleteProjectsBySlugWithHttpInfo(String slug,) async {
+  Future<Response> deleteProjectBySlugWithHttpInfo(String slug,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/{slug}'
+    final path = r'/v1/project/{slug}'
       .replaceAll('{slug}', slug);
 
     // ignore: prefer_final_locals
@@ -60,8 +60,8 @@ class ProjectsApi {
   ///
   /// * [String] slug (required):
   ///   Slug is the project to act on, from the path. It is unique within the caller's org and nowhere else, so another tenant's slug is a 404.
-  Future<void> deleteProjectsBySlug(String slug,) async {
-    final response = await deleteProjectsBySlugWithHttpInfo(slug,);
+  Future<void> deleteProjectBySlug(String slug,) async {
+    final response = await deleteProjectBySlugWithHttpInfo(slug,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -80,9 +80,9 @@ class ProjectsApi {
   ///
   /// * [String] host (required):
   ///   Host is the custom hostname, from the path. It is cleaned to its canonical form (lowercased, trailing dot dropped) before anything is looked up.
-  Future<Response> deleteProjectsBySlugDomainsByHostWithHttpInfo(String slug, String host,) async {
+  Future<Response> deleteProjectBySlugDomainsByHostWithHttpInfo(String slug, String host,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/{slug}/domains/{host}'
+    final path = r'/v1/project/{slug}/domains/{host}'
       .replaceAll('{slug}', slug)
       .replaceAll('{host}', host);
 
@@ -118,8 +118,8 @@ class ProjectsApi {
   ///
   /// * [String] host (required):
   ///   Host is the custom hostname, from the path. It is cleaned to its canonical form (lowercased, trailing dot dropped) before anything is looked up.
-  Future<void> deleteProjectsBySlugDomainsByHost(String slug, String host,) async {
-    final response = await deleteProjectsBySlugDomainsByHostWithHttpInfo(slug, host,);
+  Future<void> deleteProjectBySlugDomainsByHost(String slug, String host,) async {
+    final response = await deleteProjectBySlugDomainsByHostWithHttpInfo(slug, host,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -135,9 +135,9 @@ class ProjectsApi {
   ///
   /// * [String] slug (required):
   ///   Slug is the project to act on, from the path. It is unique within the caller's org and nowhere else, so another tenant's slug is a 404.
-  Future<Response> deleteProjectsBySlugStarWithHttpInfo(String slug,) async {
+  Future<Response> deleteProjectBySlugStarWithHttpInfo(String slug,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/{slug}/star'
+    final path = r'/v1/project/{slug}/star'
       .replaceAll('{slug}', slug);
 
     // ignore: prefer_final_locals
@@ -169,8 +169,8 @@ class ProjectsApi {
   ///
   /// * [String] slug (required):
   ///   Slug is the project to act on, from the path. It is unique within the caller's org and nowhere else, so another tenant's slug is a 404.
-  Future<ProjectsStar?> deleteProjectsBySlugStar(String slug,) async {
-    final response = await deleteProjectsBySlugStarWithHttpInfo(slug,);
+  Future<ProjectsStar?> deleteProjectBySlugStar(String slug,) async {
+    final response = await deleteProjectBySlugStarWithHttpInfo(slug,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -189,9 +189,9 @@ class ProjectsApi {
   /// Returns every project your org owns.  Each row carries the slug, name, framework, visibility, status and live URL — the same rows console and the builder render, because there is only one store behind both. It requires a validated principal (403 without one) and is keyed by that principal's org, so it never contains another tenant's project.
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getProjectsWithHttpInfo() async {
+  Future<Response> getProjectWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects';
+    final path = r'/v1/project';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -217,8 +217,8 @@ class ProjectsApi {
   /// Returns every project your org owns.
   ///
   /// Returns every project your org owns.  Each row carries the slug, name, framework, visibility, status and live URL — the same rows console and the builder render, because there is only one store behind both. It requires a validated principal (403 without one) and is keyed by that principal's org, so it never contains another tenant's project.
-  Future<List<ProjectsProject>?> getProjects() async {
-    final response = await getProjectsWithHttpInfo();
+  Future<List<ProjectsProject>?> getProject() async {
+    final response = await getProjectWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -245,9 +245,9 @@ class ProjectsApi {
   ///
   /// * [String] slug (required):
   ///   Slug is the project to act on, from the path. It is unique within the caller's org and nowhere else, so another tenant's slug is a 404.
-  Future<Response> getProjectsBySlugWithHttpInfo(String slug,) async {
+  Future<Response> getProjectBySlugWithHttpInfo(String slug,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/{slug}'
+    final path = r'/v1/project/{slug}'
       .replaceAll('{slug}', slug);
 
     // ignore: prefer_final_locals
@@ -279,8 +279,8 @@ class ProjectsApi {
   ///
   /// * [String] slug (required):
   ///   Slug is the project to act on, from the path. It is unique within the caller's org and nowhere else, so another tenant's slug is a 404.
-  Future<ProjectsProject?> getProjectsBySlug(String slug,) async {
-    final response = await getProjectsBySlugWithHttpInfo(slug,);
+  Future<ProjectsProject?> getProjectBySlug(String slug,) async {
+    final response = await getProjectBySlugWithHttpInfo(slug,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -304,9 +304,9 @@ class ProjectsApi {
   ///
   /// * [String] slug (required):
   ///   Slug is the project to act on, from the path. It is unique within the caller's org and nowhere else, so another tenant's slug is a 404.
-  Future<Response> getProjectsBySlugDeploymentsWithHttpInfo(String slug,) async {
+  Future<Response> getProjectBySlugDeploymentsWithHttpInfo(String slug,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/{slug}/deployments'
+    final path = r'/v1/project/{slug}/deployments'
       .replaceAll('{slug}', slug);
 
     // ignore: prefer_final_locals
@@ -338,8 +338,8 @@ class ProjectsApi {
   ///
   /// * [String] slug (required):
   ///   Slug is the project to act on, from the path. It is unique within the caller's org and nowhere else, so another tenant's slug is a 404.
-  Future<List<ProjectsDeployment>?> getProjectsBySlugDeployments(String slug,) async {
-    final response = await getProjectsBySlugDeploymentsWithHttpInfo(slug,);
+  Future<List<ProjectsDeployment>?> getProjectBySlugDeployments(String slug,) async {
+    final response = await getProjectBySlugDeploymentsWithHttpInfo(slug,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -369,9 +369,9 @@ class ProjectsApi {
   ///
   /// * [String] id (required):
   ///   ID is the deployment id, from the path. A deployment of another project — or of another tenant's project — is not found.
-  Future<Response> getProjectsBySlugDeploymentsByIdWithHttpInfo(String slug, String id,) async {
+  Future<Response> getProjectBySlugDeploymentsByIdWithHttpInfo(String slug, String id,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/{slug}/deployments/{id}'
+    final path = r'/v1/project/{slug}/deployments/{id}'
       .replaceAll('{slug}', slug)
       .replaceAll('{id}', id);
 
@@ -407,8 +407,8 @@ class ProjectsApi {
   ///
   /// * [String] id (required):
   ///   ID is the deployment id, from the path. A deployment of another project — or of another tenant's project — is not found.
-  Future<ProjectsDeployment?> getProjectsBySlugDeploymentsById(String slug, String id,) async {
-    final response = await getProjectsBySlugDeploymentsByIdWithHttpInfo(slug, id,);
+  Future<ProjectsDeployment?> getProjectBySlugDeploymentsById(String slug, String id,) async {
+    final response = await getProjectBySlugDeploymentsByIdWithHttpInfo(slug, id,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -432,9 +432,9 @@ class ProjectsApi {
   ///
   /// * [String] slug (required):
   ///   Slug is the project to act on, from the path. It is unique within the caller's org and nowhere else, so another tenant's slug is a 404.
-  Future<Response> getProjectsBySlugDomainsWithHttpInfo(String slug,) async {
+  Future<Response> getProjectBySlugDomainsWithHttpInfo(String slug,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/{slug}/domains'
+    final path = r'/v1/project/{slug}/domains'
       .replaceAll('{slug}', slug);
 
     // ignore: prefer_final_locals
@@ -466,8 +466,8 @@ class ProjectsApi {
   ///
   /// * [String] slug (required):
   ///   Slug is the project to act on, from the path. It is unique within the caller's org and nowhere else, so another tenant's slug is a 404.
-  Future<ProjectsDomains?> getProjectsBySlugDomains(String slug,) async {
-    final response = await getProjectsBySlugDomainsWithHttpInfo(slug,);
+  Future<ProjectsDomains?> getProjectBySlugDomains(String slug,) async {
+    final response = await getProjectBySlugDomainsWithHttpInfo(slug,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -491,9 +491,9 @@ class ProjectsApi {
   ///
   /// * [String] slug (required):
   ///   Slug is the project to act on, from the path. It is unique within the caller's org and nowhere else, so another tenant's slug is a 404.
-  Future<Response> getProjectsBySlugReleasesWithHttpInfo(String slug,) async {
+  Future<Response> getProjectBySlugReleasesWithHttpInfo(String slug,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/{slug}/releases'
+    final path = r'/v1/project/{slug}/releases'
       .replaceAll('{slug}', slug);
 
     // ignore: prefer_final_locals
@@ -525,8 +525,8 @@ class ProjectsApi {
   ///
   /// * [String] slug (required):
   ///   Slug is the project to act on, from the path. It is unique within the caller's org and nowhere else, so another tenant's slug is a 404.
-  Future<List<ProjectsRelease>?> getProjectsBySlugReleases(String slug,) async {
-    final response = await getProjectsBySlugReleasesWithHttpInfo(slug,);
+  Future<List<ProjectsRelease>?> getProjectBySlugReleases(String slug,) async {
+    final response = await getProjectBySlugReleasesWithHttpInfo(slug,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -552,9 +552,9 @@ class ProjectsApi {
   /// Parameters:
   ///
   /// * [String] slug (required):
-  Future<Response> getProjectsBySlugShotWithHttpInfo(String slug,) async {
+  Future<Response> getProjectBySlugShotWithHttpInfo(String slug,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/{slug}/shot'
+    final path = r'/v1/project/{slug}/shot'
       .replaceAll('{slug}', slug);
 
     // ignore: prefer_final_locals
@@ -585,8 +585,8 @@ class ProjectsApi {
   /// Parameters:
   ///
   /// * [String] slug (required):
-  Future<void> getProjectsBySlugShot(String slug,) async {
-    final response = await getProjectsBySlugShotWithHttpInfo(slug,);
+  Future<void> getProjectBySlugShot(String slug,) async {
+    final response = await getProjectBySlugShotWithHttpInfo(slug,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -597,9 +597,9 @@ class ProjectsApi {
   /// health reports whether a publish reaches readers, rather than whether it was accepted. Those are different questions and only the second one was ever visible.  It asks the edge and nothing else. There is no live call to the provider here: Configured is a local fact, it is the fact that was missing, and a health check that spends a third-party API call is one an operator learns not to run.
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getProjectsEdgeWithHttpInfo() async {
+  Future<Response> getProjectEdgeWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/edge';
+    final path = r'/v1/project/edge';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -625,8 +625,8 @@ class ProjectsApi {
   /// health reports whether a publish reaches readers, rather than whether it was accepted.
   ///
   /// health reports whether a publish reaches readers, rather than whether it was accepted. Those are different questions and only the second one was ever visible.  It asks the edge and nothing else. There is no live call to the provider here: Configured is a local fact, it is the fact that was missing, and a health check that spends a third-party API call is one an operator learns not to run.
-  Future<EdgeState?> getProjectsEdge() async {
-    final response = await getProjectsEdgeWithHttpInfo();
+  Future<EdgeState?> getProjectEdge() async {
+    final response = await getProjectEdgeWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -642,12 +642,12 @@ class ProjectsApi {
 
   /// Returns the org's deployed sites at the pretty URLs they serve at.
   ///
-  /// Returns the org's deployed sites at the pretty URLs they serve at.  It reads the SAME org-scoped store as /v1/projects and keeps only the projects that are actually `live`, so a draft or a failed build is not advertised as a site.  Scope: a validated principal is required (403 without one) and the list is keyed by that principal's org.
+  /// Returns the org's deployed sites at the pretty URLs they serve at.  It reads the SAME org-scoped store as /v1/project and keeps only the projects that are actually `live`, so a draft or a failed build is not advertised as a site.  Scope: a validated principal is required (403 without one) and the list is keyed by that principal's org.
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getProjectsSitesWithHttpInfo() async {
+  Future<Response> getProjectSitesWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/sites';
+    final path = r'/v1/project/sites';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -672,9 +672,9 @@ class ProjectsApi {
 
   /// Returns the org's deployed sites at the pretty URLs they serve at.
   ///
-  /// Returns the org's deployed sites at the pretty URLs they serve at.  It reads the SAME org-scoped store as /v1/projects and keeps only the projects that are actually `live`, so a draft or a failed build is not advertised as a site.  Scope: a validated principal is required (403 without one) and the list is keyed by that principal's org.
-  Future<List<ProjectsSite>?> getProjectsSites() async {
-    final response = await getProjectsSitesWithHttpInfo();
+  /// Returns the org's deployed sites at the pretty URLs they serve at.  It reads the SAME org-scoped store as /v1/project and keeps only the projects that are actually `live`, so a draft or a failed build is not advertised as a site.  Scope: a validated principal is required (403 without one) and the list is keyed by that principal's org.
+  Future<List<ProjectsSite>?> getProjectSites() async {
+    final response = await getProjectSitesWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -701,9 +701,9 @@ class ProjectsApi {
   ///
   /// * [String] slug (required):
   ///   Slug is the project to act on, from the path. It is unique within the caller's org and nowhere else, so another tenant's slug is a 404.
-  Future<Response> getProjectsSitesBySlugWithHttpInfo(String slug,) async {
+  Future<Response> getProjectSitesBySlugWithHttpInfo(String slug,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/sites/{slug}'
+    final path = r'/v1/project/sites/{slug}'
       .replaceAll('{slug}', slug);
 
     // ignore: prefer_final_locals
@@ -735,8 +735,8 @@ class ProjectsApi {
   ///
   /// * [String] slug (required):
   ///   Slug is the project to act on, from the path. It is unique within the caller's org and nowhere else, so another tenant's slug is a 404.
-  Future<ProjectsSite?> getProjectsSitesBySlug(String slug,) async {
-    final response = await getProjectsSitesBySlugWithHttpInfo(slug,);
+  Future<ProjectsSite?> getProjectSitesBySlug(String slug,) async {
+    final response = await getProjectSitesBySlugWithHttpInfo(slug,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -755,9 +755,9 @@ class ProjectsApi {
   /// Returns the client-side pixels the SITE has connected (GA4, Google Ads, LinkedIn, Meta, Pinterest, Reddit, TikTok, X) with their NON-SECRET ids, so the hosted tag injects them first-party and stamps each browser event with the same event_id the server-side Conversions API uses — deduping the two. Resolved per site: by the publishable key on ?key= when it names a project, else by the request host, so hanzo.ai and hanzo.chat carry different tags under one org. WITHOUT a resolvable site it answers an empty set at 200 — a page never breaks on its tag config.
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getProjectsTagsWithHttpInfo() async {
+  Future<Response> getProjectTagsWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/tags';
+    final path = r'/v1/project/tags';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -783,8 +783,8 @@ class ProjectsApi {
   /// The site's browser tag set for the hosted tag — which pixels to inject, by publishable key
   ///
   /// Returns the client-side pixels the SITE has connected (GA4, Google Ads, LinkedIn, Meta, Pinterest, Reddit, TikTok, X) with their NON-SECRET ids, so the hosted tag injects them first-party and stamps each browser event with the same event_id the server-side Conversions API uses — deduping the two. Resolved per site: by the publishable key on ?key= when it names a project, else by the request host, so hanzo.ai and hanzo.chat carry different tags under one org. WITHOUT a resolvable site it answers an empty set at 200 — a page never breaks on its tag config.
-  Future<TagConfig?> getProjectsTags() async {
-    final response = await getProjectsTagsWithHttpInfo();
+  Future<TagConfig?> getProjectTags() async {
+    final response = await getProjectTagsWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -810,9 +810,9 @@ class ProjectsApi {
   ///   Slug is the project to update, from the path. The URL is the addressing authority — a `slug` in the body cannot move the write to another project.
   ///
   /// * [ProjectsUpdate] projectsUpdate (required):
-  Future<Response> patchProjectsBySlugWithHttpInfo(String slug, ProjectsUpdate projectsUpdate,) async {
+  Future<Response> patchProjectBySlugWithHttpInfo(String slug, ProjectsUpdate projectsUpdate,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/{slug}'
+    final path = r'/v1/project/{slug}'
       .replaceAll('{slug}', slug);
 
     // ignore: prefer_final_locals
@@ -846,8 +846,8 @@ class ProjectsApi {
   ///   Slug is the project to update, from the path. The URL is the addressing authority — a `slug` in the body cannot move the write to another project.
   ///
   /// * [ProjectsUpdate] projectsUpdate (required):
-  Future<ProjectsProject?> patchProjectsBySlug(String slug, ProjectsUpdate projectsUpdate,) async {
-    final response = await patchProjectsBySlugWithHttpInfo(slug, projectsUpdate,);
+  Future<ProjectsProject?> patchProjectBySlug(String slug, ProjectsUpdate projectsUpdate,) async {
+    final response = await patchProjectBySlugWithHttpInfo(slug, projectsUpdate,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -870,9 +870,9 @@ class ProjectsApi {
   /// Parameters:
   ///
   /// * [ProjectsCreate] projectsCreate (required):
-  Future<Response> postProjectsWithHttpInfo(ProjectsCreate projectsCreate,) async {
+  Future<Response> postProjectWithHttpInfo(ProjectsCreate projectsCreate,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects';
+    final path = r'/v1/project';
 
     // ignore: prefer_final_locals
     Object? postBody = projectsCreate;
@@ -902,8 +902,8 @@ class ProjectsApi {
   /// Parameters:
   ///
   /// * [ProjectsCreate] projectsCreate (required):
-  Future<ProjectsProject?> postProjects(ProjectsCreate projectsCreate,) async {
-    final response = await postProjectsWithHttpInfo(projectsCreate,);
+  Future<ProjectsProject?> postProject(ProjectsCreate projectsCreate,) async {
+    final response = await postProjectWithHttpInfo(projectsCreate,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -919,7 +919,7 @@ class ProjectsApi {
 
   /// Upload a built site as one archive and serve it
   ///
-  /// Takes a built site live at `https://<slug>.hanzo.app` in one call. The body is the site itself — a `zip` or `tar.gz` holding `index.html` at its root (or a single wrapper directory that does), sent raw or as a multipart file part. It is unpacked to the site's own storage prefix and served immediately, answering the finished deployment.  It is bounded by the edge body limit (16 MiB by default), and that bound is the whole reason the other path exists: an oversized POST is refused by the server BEFORE any handler runs and surfaces as an opaque `400 Error when parsing request` that reads like a malformed payload rather than a size cap. A site too large for one archive opens a deployment with `POST /v1/projects/{slug}/deployments` instead and writes its files straight to storage against the scoped grant that answers with — no body limit, and no bytes through this API at all.  Billing is fail-closed and fails FIRST: the hosting gate runs before anything is parsed or uploaded, so an unfunded org is 402 and an unreachable commerce is 503 with nothing written. The debit lands only on success — a failed upload is never billed and never flips the live site — and a redeploy answers the SAME URL, because slug and apex are stable.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal's org, so another tenant's slug is a 404. Object storage must be configured (503); an archive that does not walk is a 400 and one over the size cap is a 413.
+  /// Takes a built site live at `https://<slug>.hanzo.app` in one call. The body is the site itself — a `zip` or `tar.gz` holding `index.html` at its root (or a single wrapper directory that does), sent raw or as a multipart file part. It is unpacked to the site's own storage prefix and served immediately, answering the finished deployment.  It is bounded by the edge body limit (16 MiB by default), and that bound is the whole reason the other path exists: an oversized POST is refused by the server BEFORE any handler runs and surfaces as an opaque `400 Error when parsing request` that reads like a malformed payload rather than a size cap. A site too large for one archive opens a deployment with `POST /v1/project/{slug}/deployments` instead and writes its files straight to storage against the scoped grant that answers with — no body limit, and no bytes through this API at all.  Billing is fail-closed and fails FIRST: the hosting gate runs before anything is parsed or uploaded, so an unfunded org is 402 and an unreachable commerce is 503 with nothing written. The debit lands only on success — a failed upload is never billed and never flips the live site — and a redeploy answers the SAME URL, because slug and apex are stable.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal's org, so another tenant's slug is a 404. Object storage must be configured (503); an archive that does not walk is a 400 and one over the size cap is a 413.
   ///
   /// Note: This method returns the HTTP [Response].
   ///
@@ -928,9 +928,9 @@ class ProjectsApi {
   /// * [String] slug (required):
   ///
   /// * [MultipartFile] body:
-  Future<Response> postProjectsBySlugDeployWithHttpInfo(String slug, { MultipartFile? body, }) async {
+  Future<Response> postProjectBySlugDeployWithHttpInfo(String slug, { MultipartFile? body, }) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/{slug}/deploy'
+    final path = r'/v1/project/{slug}/deploy'
       .replaceAll('{slug}', slug);
 
     // ignore: prefer_final_locals
@@ -956,15 +956,15 @@ class ProjectsApi {
 
   /// Upload a built site as one archive and serve it
   ///
-  /// Takes a built site live at `https://<slug>.hanzo.app` in one call. The body is the site itself — a `zip` or `tar.gz` holding `index.html` at its root (or a single wrapper directory that does), sent raw or as a multipart file part. It is unpacked to the site's own storage prefix and served immediately, answering the finished deployment.  It is bounded by the edge body limit (16 MiB by default), and that bound is the whole reason the other path exists: an oversized POST is refused by the server BEFORE any handler runs and surfaces as an opaque `400 Error when parsing request` that reads like a malformed payload rather than a size cap. A site too large for one archive opens a deployment with `POST /v1/projects/{slug}/deployments` instead and writes its files straight to storage against the scoped grant that answers with — no body limit, and no bytes through this API at all.  Billing is fail-closed and fails FIRST: the hosting gate runs before anything is parsed or uploaded, so an unfunded org is 402 and an unreachable commerce is 503 with nothing written. The debit lands only on success — a failed upload is never billed and never flips the live site — and a redeploy answers the SAME URL, because slug and apex are stable.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal's org, so another tenant's slug is a 404. Object storage must be configured (503); an archive that does not walk is a 400 and one over the size cap is a 413.
+  /// Takes a built site live at `https://<slug>.hanzo.app` in one call. The body is the site itself — a `zip` or `tar.gz` holding `index.html` at its root (or a single wrapper directory that does), sent raw or as a multipart file part. It is unpacked to the site's own storage prefix and served immediately, answering the finished deployment.  It is bounded by the edge body limit (16 MiB by default), and that bound is the whole reason the other path exists: an oversized POST is refused by the server BEFORE any handler runs and surfaces as an opaque `400 Error when parsing request` that reads like a malformed payload rather than a size cap. A site too large for one archive opens a deployment with `POST /v1/project/{slug}/deployments` instead and writes its files straight to storage against the scoped grant that answers with — no body limit, and no bytes through this API at all.  Billing is fail-closed and fails FIRST: the hosting gate runs before anything is parsed or uploaded, so an unfunded org is 402 and an unreachable commerce is 503 with nothing written. The debit lands only on success — a failed upload is never billed and never flips the live site — and a redeploy answers the SAME URL, because slug and apex are stable.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal's org, so another tenant's slug is a 404. Object storage must be configured (503); an archive that does not walk is a 400 and one over the size cap is a 413.
   ///
   /// Parameters:
   ///
   /// * [String] slug (required):
   ///
   /// * [MultipartFile] body:
-  Future<ProjectsDeployment?> postProjectsBySlugDeploy(String slug, { MultipartFile? body, }) async {
-    final response = await postProjectsBySlugDeployWithHttpInfo(slug,  body: body, );
+  Future<ProjectsDeployment?> postProjectBySlugDeploy(String slug, { MultipartFile? body, }) async {
+    final response = await postProjectBySlugDeployWithHttpInfo(slug,  body: body, );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -990,9 +990,9 @@ class ProjectsApi {
   ///   Slug is the site to deploy, from the path.
   ///
   /// * [ProjectsDeployStart] projectsDeployStart (required):
-  Future<Response> postProjectsBySlugDeploymentsWithHttpInfo(String slug, ProjectsDeployStart projectsDeployStart,) async {
+  Future<Response> postProjectBySlugDeploymentsWithHttpInfo(String slug, ProjectsDeployStart projectsDeployStart,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/{slug}/deployments'
+    final path = r'/v1/project/{slug}/deployments'
       .replaceAll('{slug}', slug);
 
     // ignore: prefer_final_locals
@@ -1026,8 +1026,8 @@ class ProjectsApi {
   ///   Slug is the site to deploy, from the path.
   ///
   /// * [ProjectsDeployStart] projectsDeployStart (required):
-  Future<ProjectsDeployment?> postProjectsBySlugDeployments(String slug, ProjectsDeployStart projectsDeployStart,) async {
-    final response = await postProjectsBySlugDeploymentsWithHttpInfo(slug, projectsDeployStart,);
+  Future<ProjectsDeployment?> postProjectBySlugDeployments(String slug, ProjectsDeployStart projectsDeployStart,) async {
+    final response = await postProjectBySlugDeploymentsWithHttpInfo(slug, projectsDeployStart,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1056,9 +1056,9 @@ class ProjectsApi {
   ///   ID is the queued deployment to complete, from the path.
   ///
   /// * [ProjectsComplete] projectsComplete (required):
-  Future<Response> postProjectsBySlugDeploymentsByIdCompleteWithHttpInfo(String slug, String id, ProjectsComplete projectsComplete,) async {
+  Future<Response> postProjectBySlugDeploymentsByIdCompleteWithHttpInfo(String slug, String id, ProjectsComplete projectsComplete,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/{slug}/deployments/{id}/complete'
+    final path = r'/v1/project/{slug}/deployments/{id}/complete'
       .replaceAll('{slug}', slug)
       .replaceAll('{id}', id);
 
@@ -1096,8 +1096,8 @@ class ProjectsApi {
   ///   ID is the queued deployment to complete, from the path.
   ///
   /// * [ProjectsComplete] projectsComplete (required):
-  Future<ProjectsDeployment?> postProjectsBySlugDeploymentsByIdComplete(String slug, String id, ProjectsComplete projectsComplete,) async {
-    final response = await postProjectsBySlugDeploymentsByIdCompleteWithHttpInfo(slug, id, projectsComplete,);
+  Future<ProjectsDeployment?> postProjectBySlugDeploymentsByIdComplete(String slug, String id, ProjectsComplete projectsComplete,) async {
+    final response = await postProjectBySlugDeploymentsByIdCompleteWithHttpInfo(slug, id, projectsComplete,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1123,9 +1123,9 @@ class ProjectsApi {
   ///   Slug is the site the hosts attach to, from the path.
   ///
   /// * [ProjectsDomainsBind] projectsDomainsBind (required):
-  Future<Response> postProjectsBySlugDomainsWithHttpInfo(String slug, ProjectsDomainsBind projectsDomainsBind,) async {
+  Future<Response> postProjectBySlugDomainsWithHttpInfo(String slug, ProjectsDomainsBind projectsDomainsBind,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/{slug}/domains'
+    final path = r'/v1/project/{slug}/domains'
       .replaceAll('{slug}', slug);
 
     // ignore: prefer_final_locals
@@ -1159,8 +1159,8 @@ class ProjectsApi {
   ///   Slug is the site the hosts attach to, from the path.
   ///
   /// * [ProjectsDomainsBind] projectsDomainsBind (required):
-  Future<ProjectsBoundDomains?> postProjectsBySlugDomains(String slug, ProjectsDomainsBind projectsDomainsBind,) async {
-    final response = await postProjectsBySlugDomainsWithHttpInfo(slug, projectsDomainsBind,);
+  Future<ProjectsBoundDomains?> postProjectBySlugDomains(String slug, ProjectsDomainsBind projectsDomainsBind,) async {
+    final response = await postProjectBySlugDomainsWithHttpInfo(slug, projectsDomainsBind,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1187,9 +1187,9 @@ class ProjectsApi {
   ///
   /// * [String] host (required):
   ///   Host is the custom hostname, from the path. It is cleaned to its canonical form (lowercased, trailing dot dropped) before anything is looked up.
-  Future<Response> postProjectsBySlugDomainsByHostVerifyWithHttpInfo(String slug, String host,) async {
+  Future<Response> postProjectBySlugDomainsByHostVerifyWithHttpInfo(String slug, String host,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/{slug}/domains/{host}/verify'
+    final path = r'/v1/project/{slug}/domains/{host}/verify'
       .replaceAll('{slug}', slug)
       .replaceAll('{host}', host);
 
@@ -1225,8 +1225,8 @@ class ProjectsApi {
   ///
   /// * [String] host (required):
   ///   Host is the custom hostname, from the path. It is cleaned to its canonical form (lowercased, trailing dot dropped) before anything is looked up.
-  Future<ProjectsDomain?> postProjectsBySlugDomainsByHostVerify(String slug, String host,) async {
-    final response = await postProjectsBySlugDomainsByHostVerifyWithHttpInfo(slug, host,);
+  Future<ProjectsDomain?> postProjectBySlugDomainsByHostVerify(String slug, String host,) async {
+    final response = await postProjectBySlugDomainsByHostVerifyWithHttpInfo(slug, host,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1252,9 +1252,9 @@ class ProjectsApi {
   ///   Slug is the site to publish, from the path.
   ///
   /// * [ProjectsPublish] projectsPublish (required):
-  Future<Response> postProjectsBySlugPublishWithHttpInfo(String slug, ProjectsPublish projectsPublish,) async {
+  Future<Response> postProjectBySlugPublishWithHttpInfo(String slug, ProjectsPublish projectsPublish,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/{slug}/publish'
+    final path = r'/v1/project/{slug}/publish'
       .replaceAll('{slug}', slug);
 
     // ignore: prefer_final_locals
@@ -1288,8 +1288,8 @@ class ProjectsApi {
   ///   Slug is the site to publish, from the path.
   ///
   /// * [ProjectsPublish] projectsPublish (required):
-  Future<ProjectsRelease?> postProjectsBySlugPublish(String slug, ProjectsPublish projectsPublish,) async {
-    final response = await postProjectsBySlugPublishWithHttpInfo(slug, projectsPublish,);
+  Future<ProjectsRelease?> postProjectBySlugPublish(String slug, ProjectsPublish projectsPublish,) async {
+    final response = await postProjectBySlugPublishWithHttpInfo(slug, projectsPublish,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1313,9 +1313,9 @@ class ProjectsApi {
   ///
   /// * [String] slug (required):
   ///   Slug is the project to act on, from the path. It is unique within the caller's org and nowhere else, so another tenant's slug is a 404.
-  Future<Response> postProjectsBySlugPurgeWithHttpInfo(String slug,) async {
+  Future<Response> postProjectBySlugPurgeWithHttpInfo(String slug,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/{slug}/purge'
+    final path = r'/v1/project/{slug}/purge'
       .replaceAll('{slug}', slug);
 
     // ignore: prefer_final_locals
@@ -1347,8 +1347,8 @@ class ProjectsApi {
   ///
   /// * [String] slug (required):
   ///   Slug is the project to act on, from the path. It is unique within the caller's org and nowhere else, so another tenant's slug is a 404.
-  Future<ProjectsProject?> postProjectsBySlugPurge(String slug,) async {
-    final response = await postProjectsBySlugPurgeWithHttpInfo(slug,);
+  Future<ProjectsProject?> postProjectBySlugPurge(String slug,) async {
+    final response = await postProjectBySlugPurgeWithHttpInfo(slug,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1374,9 +1374,9 @@ class ProjectsApi {
   ///   Slug is the site to publish, from the path.
   ///
   /// * [ProjectsPublish] projectsPublish (required):
-  Future<Response> postProjectsBySlugReleasesWithHttpInfo(String slug, ProjectsPublish projectsPublish,) async {
+  Future<Response> postProjectBySlugReleasesWithHttpInfo(String slug, ProjectsPublish projectsPublish,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/{slug}/releases'
+    final path = r'/v1/project/{slug}/releases'
       .replaceAll('{slug}', slug);
 
     // ignore: prefer_final_locals
@@ -1410,8 +1410,8 @@ class ProjectsApi {
   ///   Slug is the site to publish, from the path.
   ///
   /// * [ProjectsPublish] projectsPublish (required):
-  Future<ProjectsRelease?> postProjectsBySlugReleases(String slug, ProjectsPublish projectsPublish,) async {
-    final response = await postProjectsBySlugReleasesWithHttpInfo(slug, projectsPublish,);
+  Future<ProjectsRelease?> postProjectBySlugReleases(String slug, ProjectsPublish projectsPublish,) async {
+    final response = await postProjectBySlugReleasesWithHttpInfo(slug, projectsPublish,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1438,9 +1438,9 @@ class ProjectsApi {
   ///
   /// * [String] release (required):
   ///   Release is the content-addressed release id (\"rel_\" + 32 hex chars), from the path. Anything that is not that shape is not found, rather than being interpolated into a storage prefix.
-  Future<Response> postProjectsBySlugReleasesByReleaseActivateWithHttpInfo(String slug, String release,) async {
+  Future<Response> postProjectBySlugReleasesByReleaseActivateWithHttpInfo(String slug, String release,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/{slug}/releases/{release}/activate'
+    final path = r'/v1/project/{slug}/releases/{release}/activate'
       .replaceAll('{slug}', slug)
       .replaceAll('{release}', release);
 
@@ -1476,8 +1476,8 @@ class ProjectsApi {
   ///
   /// * [String] release (required):
   ///   Release is the content-addressed release id (\"rel_\" + 32 hex chars), from the path. Anything that is not that shape is not found, rather than being interpolated into a storage prefix.
-  Future<ProjectsRelease?> postProjectsBySlugReleasesByReleaseActivate(String slug, String release,) async {
-    final response = await postProjectsBySlugReleasesByReleaseActivateWithHttpInfo(slug, release,);
+  Future<ProjectsRelease?> postProjectBySlugReleasesByReleaseActivate(String slug, String release,) async {
+    final response = await postProjectBySlugReleasesByReleaseActivateWithHttpInfo(slug, release,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1493,16 +1493,16 @@ class ProjectsApi {
 
   /// Creates a project seeded from a PUBLISHED EXAMPLE — either a starter-kit template from the ONE embedded gallery catalog, or any live project on the platform (an example a seeded creator published, or another org's app serving at <slug>.hanzo.app).
   ///
-  /// Creates a project seeded from a PUBLISHED EXAMPLE — either a starter-kit template from the ONE embedded gallery catalog, or any live project on the platform (an example a seeded creator published, or another org's app serving at <slug>.hanzo.app). Answers 201 with the new project.  `slug` names the PARENT to fork and is required. Templates resolve first, and the caller org's own private templates ahead of the public gallery, so a curated template slug keeps meaning the same thing even if someone later publishes a live project under it; `variant` picks that template's format/page/theme. If no template matches, the slug resolves to the UNIQUE live project that owns it across all orgs — the same resolution the site edge uses to serve <slug>.hanzo.app, so what you can browse is what you can fork.  `name` and `target` override the derived project name and slug; everything else is inherited from the parent. A live parent contributes its REPO, so the child builds from the same source — the parent's deployed bytes are never copied, because releases are per-tenant by design and the fork publishes its own. The parent it actually resolved is stamped on the child as `forkedFrom`, so attribution is a fact recorded at fork time rather than a claim reconstructed later.  It funnels through the SAME create path POST /v1/projects uses, so slug validation, org scoping, ID minting and the 409 on a slug the caller's own org already uses are identical.  Scope: a validated principal is required (403 without one) and the child is created in THAT principal's org.
+  /// Creates a project seeded from a PUBLISHED EXAMPLE — either a starter-kit template from the ONE embedded gallery catalog, or any live project on the platform (an example a seeded creator published, or another org's app serving at <slug>.hanzo.app). Answers 201 with the new project.  `slug` names the PARENT to fork and is required. Templates resolve first, and the caller org's own private templates ahead of the public gallery, so a curated template slug keeps meaning the same thing even if someone later publishes a live project under it; `variant` picks that template's format/page/theme. If no template matches, the slug resolves to the UNIQUE live project that owns it across all orgs — the same resolution the site edge uses to serve <slug>.hanzo.app, so what you can browse is what you can fork.  `name` and `target` override the derived project name and slug; everything else is inherited from the parent. A live parent contributes its REPO, so the child builds from the same source — the parent's deployed bytes are never copied, because releases are per-tenant by design and the fork publishes its own. The parent it actually resolved is stamped on the child as `forkedFrom`, so attribution is a fact recorded at fork time rather than a claim reconstructed later.  It funnels through the SAME create path POST /v1/project uses, so slug validation, org scoping, ID minting and the 409 on a slug the caller's own org already uses are identical.  Scope: a validated principal is required (403 without one) and the child is created in THAT principal's org.
   ///
   /// Note: This method returns the HTTP [Response].
   ///
   /// Parameters:
   ///
   /// * [ProjectsFork] projectsFork (required):
-  Future<Response> postProjectsForkWithHttpInfo(ProjectsFork projectsFork,) async {
+  Future<Response> postProjectForkWithHttpInfo(ProjectsFork projectsFork,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/fork';
+    final path = r'/v1/project/fork';
 
     // ignore: prefer_final_locals
     Object? postBody = projectsFork;
@@ -1527,13 +1527,13 @@ class ProjectsApi {
 
   /// Creates a project seeded from a PUBLISHED EXAMPLE — either a starter-kit template from the ONE embedded gallery catalog, or any live project on the platform (an example a seeded creator published, or another org's app serving at <slug>.hanzo.app).
   ///
-  /// Creates a project seeded from a PUBLISHED EXAMPLE — either a starter-kit template from the ONE embedded gallery catalog, or any live project on the platform (an example a seeded creator published, or another org's app serving at <slug>.hanzo.app). Answers 201 with the new project.  `slug` names the PARENT to fork and is required. Templates resolve first, and the caller org's own private templates ahead of the public gallery, so a curated template slug keeps meaning the same thing even if someone later publishes a live project under it; `variant` picks that template's format/page/theme. If no template matches, the slug resolves to the UNIQUE live project that owns it across all orgs — the same resolution the site edge uses to serve <slug>.hanzo.app, so what you can browse is what you can fork.  `name` and `target` override the derived project name and slug; everything else is inherited from the parent. A live parent contributes its REPO, so the child builds from the same source — the parent's deployed bytes are never copied, because releases are per-tenant by design and the fork publishes its own. The parent it actually resolved is stamped on the child as `forkedFrom`, so attribution is a fact recorded at fork time rather than a claim reconstructed later.  It funnels through the SAME create path POST /v1/projects uses, so slug validation, org scoping, ID minting and the 409 on a slug the caller's own org already uses are identical.  Scope: a validated principal is required (403 without one) and the child is created in THAT principal's org.
+  /// Creates a project seeded from a PUBLISHED EXAMPLE — either a starter-kit template from the ONE embedded gallery catalog, or any live project on the platform (an example a seeded creator published, or another org's app serving at <slug>.hanzo.app). Answers 201 with the new project.  `slug` names the PARENT to fork and is required. Templates resolve first, and the caller org's own private templates ahead of the public gallery, so a curated template slug keeps meaning the same thing even if someone later publishes a live project under it; `variant` picks that template's format/page/theme. If no template matches, the slug resolves to the UNIQUE live project that owns it across all orgs — the same resolution the site edge uses to serve <slug>.hanzo.app, so what you can browse is what you can fork.  `name` and `target` override the derived project name and slug; everything else is inherited from the parent. A live parent contributes its REPO, so the child builds from the same source — the parent's deployed bytes are never copied, because releases are per-tenant by design and the fork publishes its own. The parent it actually resolved is stamped on the child as `forkedFrom`, so attribution is a fact recorded at fork time rather than a claim reconstructed later.  It funnels through the SAME create path POST /v1/project uses, so slug validation, org scoping, ID minting and the 409 on a slug the caller's own org already uses are identical.  Scope: a validated principal is required (403 without one) and the child is created in THAT principal's org.
   ///
   /// Parameters:
   ///
   /// * [ProjectsFork] projectsFork (required):
-  Future<ProjectsProject?> postProjectsFork(ProjectsFork projectsFork,) async {
-    final response = await postProjectsForkWithHttpInfo(projectsFork,);
+  Future<ProjectsProject?> postProjectFork(ProjectsFork projectsFork,) async {
+    final response = await postProjectForkWithHttpInfo(projectsFork,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1549,16 +1549,16 @@ class ProjectsApi {
 
   /// Generates a self-contained, mobile-responsive static site from a natural-language brief and deploys it live in one call.
   ///
-  /// Generates a self-contained, mobile-responsive static site from a natural-language brief and deploys it live in one call.  One inference call turns `brief` (capped at 8 KiB) into a file manifest, which then runs through the SAME validation, guards and viewport guarantee as a hand-supplied manifest: index.html required at the root, absolute and traversal paths rejected, per-file and total size capped, and a mobile viewport meta tag injected into every HTML document that lacks one. The generated site is fully inline — no CDNs, no remote fonts or images — so it is CSP-safe. `slug` and `name` are optional: the model's own title is preferred, and a slug is derived or minted when none is given.  It writes into the SAME org-scoped store as /v1/projects — it ensures a project (framework `static`) for the resolved slug and records a deployment — so this is a second entry point to one publish pipeline, not a second copy of project state. Ordering is the billing contract: the hosting gate runs BEFORE any inference or upload, so a denied gate generates and uploads NOTHING, and the debit lands once, only after the site is actually live. The tokens are billed to the same ledger the hosting fee was reserved against.  Answers 503 when object storage or inference is unconfigured, and 400 when the model's manifest cannot be parsed or fails the guards.  Scope: a validated principal is required (403 without one) and the site is published into THAT principal's org.
+  /// Generates a self-contained, mobile-responsive static site from a natural-language brief and deploys it live in one call.  One inference call turns `brief` (capped at 8 KiB) into a file manifest, which then runs through the SAME validation, guards and viewport guarantee as a hand-supplied manifest: index.html required at the root, absolute and traversal paths rejected, per-file and total size capped, and a mobile viewport meta tag injected into every HTML document that lacks one. The generated site is fully inline — no CDNs, no remote fonts or images — so it is CSP-safe. `slug` and `name` are optional: the model's own title is preferred, and a slug is derived or minted when none is given.  It writes into the SAME org-scoped store as /v1/project — it ensures a project (framework `static`) for the resolved slug and records a deployment — so this is a second entry point to one publish pipeline, not a second copy of project state. Ordering is the billing contract: the hosting gate runs BEFORE any inference or upload, so a denied gate generates and uploads NOTHING, and the debit lands once, only after the site is actually live. The tokens are billed to the same ledger the hosting fee was reserved against.  Answers 503 when object storage or inference is unconfigured, and 400 when the model's manifest cannot be parsed or fails the guards.  Scope: a validated principal is required (403 without one) and the site is published into THAT principal's org.
   ///
   /// Note: This method returns the HTTP [Response].
   ///
   /// Parameters:
   ///
   /// * [ProjectsBuildSite] projectsBuildSite (required):
-  Future<Response> postProjectsSitesWithHttpInfo(ProjectsBuildSite projectsBuildSite,) async {
+  Future<Response> postProjectSitesWithHttpInfo(ProjectsBuildSite projectsBuildSite,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/sites';
+    final path = r'/v1/project/sites';
 
     // ignore: prefer_final_locals
     Object? postBody = projectsBuildSite;
@@ -1583,13 +1583,13 @@ class ProjectsApi {
 
   /// Generates a self-contained, mobile-responsive static site from a natural-language brief and deploys it live in one call.
   ///
-  /// Generates a self-contained, mobile-responsive static site from a natural-language brief and deploys it live in one call.  One inference call turns `brief` (capped at 8 KiB) into a file manifest, which then runs through the SAME validation, guards and viewport guarantee as a hand-supplied manifest: index.html required at the root, absolute and traversal paths rejected, per-file and total size capped, and a mobile viewport meta tag injected into every HTML document that lacks one. The generated site is fully inline — no CDNs, no remote fonts or images — so it is CSP-safe. `slug` and `name` are optional: the model's own title is preferred, and a slug is derived or minted when none is given.  It writes into the SAME org-scoped store as /v1/projects — it ensures a project (framework `static`) for the resolved slug and records a deployment — so this is a second entry point to one publish pipeline, not a second copy of project state. Ordering is the billing contract: the hosting gate runs BEFORE any inference or upload, so a denied gate generates and uploads NOTHING, and the debit lands once, only after the site is actually live. The tokens are billed to the same ledger the hosting fee was reserved against.  Answers 503 when object storage or inference is unconfigured, and 400 when the model's manifest cannot be parsed or fails the guards.  Scope: a validated principal is required (403 without one) and the site is published into THAT principal's org.
+  /// Generates a self-contained, mobile-responsive static site from a natural-language brief and deploys it live in one call.  One inference call turns `brief` (capped at 8 KiB) into a file manifest, which then runs through the SAME validation, guards and viewport guarantee as a hand-supplied manifest: index.html required at the root, absolute and traversal paths rejected, per-file and total size capped, and a mobile viewport meta tag injected into every HTML document that lacks one. The generated site is fully inline — no CDNs, no remote fonts or images — so it is CSP-safe. `slug` and `name` are optional: the model's own title is preferred, and a slug is derived or minted when none is given.  It writes into the SAME org-scoped store as /v1/project — it ensures a project (framework `static`) for the resolved slug and records a deployment — so this is a second entry point to one publish pipeline, not a second copy of project state. Ordering is the billing contract: the hosting gate runs BEFORE any inference or upload, so a denied gate generates and uploads NOTHING, and the debit lands once, only after the site is actually live. The tokens are billed to the same ledger the hosting fee was reserved against.  Answers 503 when object storage or inference is unconfigured, and 400 when the model's manifest cannot be parsed or fails the guards.  Scope: a validated principal is required (403 without one) and the site is published into THAT principal's org.
   ///
   /// Parameters:
   ///
   /// * [ProjectsBuildSite] projectsBuildSite (required):
-  Future<ProjectsSiteDeploy?> postProjectsSites(ProjectsBuildSite projectsBuildSite,) async {
-    final response = await postProjectsSitesWithHttpInfo(projectsBuildSite,);
+  Future<ProjectsSiteDeploy?> postProjectSites(ProjectsBuildSite projectsBuildSite,) async {
+    final response = await postProjectSitesWithHttpInfo(projectsBuildSite,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1605,16 +1605,16 @@ class ProjectsApi {
 
   /// Deploys a caller-supplied file manifest — the deploy_site capability an agent calls — and answers with where it went live.
   ///
-  /// Deploys a caller-supplied file manifest — the deploy_site capability an agent calls — and answers with where it went live.  `files` is a list of {path, content} pairs, the same shape the brief build emits, and it runs through the SAME guards: index.html required at the root, absolute and traversal paths rejected, per-file and total size capped, and a mobile viewport meta tag injected into every HTML document that lacks one — so a hand-built site is exactly as safe and as responsive as a generated one. `slug` and `name` are optional; a slug is derived from the name or minted.  It writes into the SAME org-scoped store as /v1/projects, ensuring a project (framework `static`) for the resolved slug and recording a deployment. The hosting gate runs before the upload and the debit lands once, after the site is live — a failed upload is never billed. Answers 503 when object storage is unconfigured.  Scope: a validated principal is required (403 without one) and the site is published into THAT principal's org.
+  /// Deploys a caller-supplied file manifest — the deploy_site capability an agent calls — and answers with where it went live.  `files` is a list of {path, content} pairs, the same shape the brief build emits, and it runs through the SAME guards: index.html required at the root, absolute and traversal paths rejected, per-file and total size capped, and a mobile viewport meta tag injected into every HTML document that lacks one — so a hand-built site is exactly as safe and as responsive as a generated one. `slug` and `name` are optional; a slug is derived from the name or minted.  It writes into the SAME org-scoped store as /v1/project, ensuring a project (framework `static`) for the resolved slug and recording a deployment. The hosting gate runs before the upload and the debit lands once, after the site is live — a failed upload is never billed. Answers 503 when object storage is unconfigured.  Scope: a validated principal is required (403 without one) and the site is published into THAT principal's org.
   ///
   /// Note: This method returns the HTTP [Response].
   ///
   /// Parameters:
   ///
   /// * [ProjectsDeploySite] projectsDeploySite (required):
-  Future<Response> postProjectsSitesDeployWithHttpInfo(ProjectsDeploySite projectsDeploySite,) async {
+  Future<Response> postProjectSitesDeployWithHttpInfo(ProjectsDeploySite projectsDeploySite,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/sites/deploy';
+    final path = r'/v1/project/sites/deploy';
 
     // ignore: prefer_final_locals
     Object? postBody = projectsDeploySite;
@@ -1639,13 +1639,13 @@ class ProjectsApi {
 
   /// Deploys a caller-supplied file manifest — the deploy_site capability an agent calls — and answers with where it went live.
   ///
-  /// Deploys a caller-supplied file manifest — the deploy_site capability an agent calls — and answers with where it went live.  `files` is a list of {path, content} pairs, the same shape the brief build emits, and it runs through the SAME guards: index.html required at the root, absolute and traversal paths rejected, per-file and total size capped, and a mobile viewport meta tag injected into every HTML document that lacks one — so a hand-built site is exactly as safe and as responsive as a generated one. `slug` and `name` are optional; a slug is derived from the name or minted.  It writes into the SAME org-scoped store as /v1/projects, ensuring a project (framework `static`) for the resolved slug and recording a deployment. The hosting gate runs before the upload and the debit lands once, after the site is live — a failed upload is never billed. Answers 503 when object storage is unconfigured.  Scope: a validated principal is required (403 without one) and the site is published into THAT principal's org.
+  /// Deploys a caller-supplied file manifest — the deploy_site capability an agent calls — and answers with where it went live.  `files` is a list of {path, content} pairs, the same shape the brief build emits, and it runs through the SAME guards: index.html required at the root, absolute and traversal paths rejected, per-file and total size capped, and a mobile viewport meta tag injected into every HTML document that lacks one — so a hand-built site is exactly as safe and as responsive as a generated one. `slug` and `name` are optional; a slug is derived from the name or minted.  It writes into the SAME org-scoped store as /v1/project, ensuring a project (framework `static`) for the resolved slug and recording a deployment. The hosting gate runs before the upload and the debit lands once, after the site is live — a failed upload is never billed. Answers 503 when object storage is unconfigured.  Scope: a validated principal is required (403 without one) and the site is published into THAT principal's org.
   ///
   /// Parameters:
   ///
   /// * [ProjectsDeploySite] projectsDeploySite (required):
-  Future<ProjectsSiteDeploy?> postProjectsSitesDeploy(ProjectsDeploySite projectsDeploySite,) async {
-    final response = await postProjectsSitesDeployWithHttpInfo(projectsDeploySite,);
+  Future<ProjectsSiteDeploy?> postProjectSitesDeploy(ProjectsDeploySite projectsDeploySite,) async {
+    final response = await postProjectSitesDeployWithHttpInfo(projectsDeploySite,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1669,9 +1669,9 @@ class ProjectsApi {
   ///
   /// * [String] slug (required):
   ///   Slug is the project to act on, from the path. It is unique within the caller's org and nowhere else, so another tenant's slug is a 404.
-  Future<Response> putProjectsBySlugStarWithHttpInfo(String slug,) async {
+  Future<Response> putProjectBySlugStarWithHttpInfo(String slug,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/projects/{slug}/star'
+    final path = r'/v1/project/{slug}/star'
       .replaceAll('{slug}', slug);
 
     // ignore: prefer_final_locals
@@ -1703,8 +1703,8 @@ class ProjectsApi {
   ///
   /// * [String] slug (required):
   ///   Slug is the project to act on, from the path. It is unique within the caller's org and nowhere else, so another tenant's slug is a 404.
-  Future<ProjectsStar?> putProjectsBySlugStar(String slug,) async {
-    final response = await putProjectsBySlugStarWithHttpInfo(slug,);
+  Future<ProjectsStar?> putProjectBySlugStar(String slug,) async {
+    final response = await putProjectBySlugStarWithHttpInfo(slug,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }

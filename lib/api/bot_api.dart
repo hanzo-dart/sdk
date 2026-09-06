@@ -16,6 +16,54 @@ class BotApi {
 
   final ApiClient apiClient;
 
+  /// Returns the caller org's bots as space members — each with the member account uuid and the Person reference the roster addresses it by.
+  ///
+  /// Returns the caller org's bots as space members — each with the member account uuid and the Person reference the roster addresses it by.  A deployment that runs no team subsystem has no spaces and therefore no roster, which is an empty list rather than an error: ErrNoPeer is the ONE error that means \"this deployment does not run that app\", and every other failure is an outage and says so.
+  ///
+  /// Note: This method returns the HTTP [Response].
+  Future<Response> getBotMembersWithHttpInfo() async {
+    // ignore: prefer_const_declarations
+    final path = r'/v1/bot/members';
+
+    // ignore: prefer_final_locals
+    Object? postBody;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    const contentTypes = <String>[];
+
+
+    return apiClient.invokeAPI(
+      path,
+      'GET',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  /// Returns the caller org's bots as space members — each with the member account uuid and the Person reference the roster addresses it by.
+  ///
+  /// Returns the caller org's bots as space members — each with the member account uuid and the Person reference the roster addresses it by.  A deployment that runs no team subsystem has no spaces and therefore no roster, which is an empty list rather than an error: ErrNoPeer is the ONE error that means \"this deployment does not run that app\", and every other failure is an outage and says so.
+  Future<BotRoster?> getBotMembers() async {
+    final response = await getBotMembersWithHttpInfo();
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'BotRoster',) as BotRoster;
+    
+    }
+    return null;
+  }
+
   /// List returns the caller org's live bot runs, read from the bot runtime and projected into the console contract with each run's live session URL derived here.
   ///
   /// List returns the caller org's live bot runs, read from the bot runtime and projected into the console contract with each run's live session URL derived here.  The org is ALWAYS the validated principal's org, NEVER a request field, and it is what scopes the runtime's answer — so one tenant can never enumerate another's runs. A runtime that cannot answer is an error, not an empty list: [] would tell the caller \"your org has no runs\", which is a different claim from \"we could not ask\", and the difference is the whole reason this endpoint exists.
@@ -59,6 +107,54 @@ class BotApi {
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'BotRuns',) as BotRuns;
+    
+    }
+    return null;
+  }
+
+  /// Re-projects the caller org's bots as members into every space of the org and removes the ones whose agent is gone.
+  ///
+  /// Re-projects the caller org's bots as members into every space of the org and removes the ones whose agent is gone. Idempotent, and admin only — the admin bit rides the caller to team, which is what decides it.
+  ///
+  /// Note: This method returns the HTTP [Response].
+  Future<Response> postBotMembersSyncWithHttpInfo() async {
+    // ignore: prefer_const_declarations
+    final path = r'/v1/bot/members/sync';
+
+    // ignore: prefer_final_locals
+    Object? postBody;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    const contentTypes = <String>[];
+
+
+    return apiClient.invokeAPI(
+      path,
+      'POST',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  /// Re-projects the caller org's bots as members into every space of the org and removes the ones whose agent is gone.
+  ///
+  /// Re-projects the caller org's bots as members into every space of the org and removes the ones whose agent is gone. Idempotent, and admin only — the admin bit rides the caller to team, which is what decides it.
+  Future<BotSync?> postBotMembersSync() async {
+    final response = await postBotMembersSyncWithHttpInfo();
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'BotSync',) as BotSync;
     
     }
     return null;

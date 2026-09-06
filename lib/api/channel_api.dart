@@ -11,8 +11,8 @@
 part of hanzoai.cloud;
 
 
-class ChannelsApi {
-  ChannelsApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
+class ChannelApi {
+  ChannelApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
 
   final ApiClient apiClient;
 
@@ -21,9 +21,9 @@ class ChannelsApi {
   /// Reports every chat channel this org can send through, and whether it can send through it right now.  A channel appears here whether or not it is connected — an empty list would leave a caller unable to tell \"this org has no Slack\" from \"Slack is down\", which are different problems with different fixes. Each entry carries the connection behind it, so the answer to \"why can I not post?\" is in the same response as the channel that cannot post.
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getChannelsWithHttpInfo() async {
+  Future<Response> getChannelWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/channels';
+    final path = r'/v1/channel';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -49,8 +49,8 @@ class ChannelsApi {
   /// Reports every chat channel this org can send through, and whether it can send through it right now.
   ///
   /// Reports every chat channel this org can send through, and whether it can send through it right now.  A channel appears here whether or not it is connected — an empty list would leave a caller unable to tell \"this org has no Slack\" from \"Slack is down\", which are different problems with different fixes. Each entry carries the connection behind it, so the answer to \"why can I not post?\" is in the same response as the channel that cannot post.
-  Future<ChatChannels?> getChannels() async {
-    final response = await getChannelsWithHttpInfo();
+  Future<ChatChannels?> getChannel() async {
+    final response = await getChannelWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -74,9 +74,9 @@ class ChannelsApi {
   ///
   /// * [String] channel:
   ///   Channel is the transport: discord, github, linear, slack, teams, telegram or whatsapp. Required; an unknown value is a 404.
-  Future<Response> getChannelsAgentWithHttpInfo({ String? channel, }) async {
+  Future<Response> getChannelAgentWithHttpInfo({ String? channel, }) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/channels/agent';
+    final path = r'/v1/channel/agent';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -111,8 +111,8 @@ class ChannelsApi {
   ///
   /// * [String] channel:
   ///   Channel is the transport: discord, github, linear, slack, teams, telegram or whatsapp. Required; an unknown value is a 404.
-  Future<ChannelAgents?> getChannelsAgent({ String? channel, }) async {
-    final response = await getChannelsAgentWithHttpInfo( channel: channel, );
+  Future<ChannelAgents?> getChannelAgent({ String? channel, }) async {
+    final response = await getChannelAgentWithHttpInfo( channel: channel, );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -136,9 +136,9 @@ class ChannelsApi {
   ///
   /// * [String] channel:
   ///   Channel is the transport to read: discord, github, linear, slack, teams, telegram or whatsapp. Required; an unknown value is a 404.
-  Future<Response> getChannelsAllowlistWithHttpInfo({ String? channel, }) async {
+  Future<Response> getChannelAllowlistWithHttpInfo({ String? channel, }) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/channels/allowlist';
+    final path = r'/v1/channel/allowlist';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -173,8 +173,8 @@ class ChannelsApi {
   ///
   /// * [String] channel:
   ///   Channel is the transport to read: discord, github, linear, slack, teams, telegram or whatsapp. Required; an unknown value is a 404.
-  Future<AllowlistView?> getChannelsAllowlist({ String? channel, }) async {
-    final response = await getChannelsAllowlistWithHttpInfo( channel: channel, );
+  Future<AllowlistView?> getChannelAllowlist({ String? channel, }) async {
+    final response = await getChannelAllowlistWithHttpInfo( channel: channel, );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -201,9 +201,9 @@ class ChannelsApi {
   ///
   /// * [String] limit:
   ///   Limit caps how many messages come back. Empty or 0 uses the store's default page size. Must parse as an integer.
-  Future<Response> getChannelsInboxWithHttpInfo({ String? since, String? limit, }) async {
+  Future<Response> getChannelInboxWithHttpInfo({ String? since, String? limit, }) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/channels/inbox';
+    final path = r'/v1/channel/inbox';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -244,8 +244,8 @@ class ChannelsApi {
   ///
   /// * [String] limit:
   ///   Limit caps how many messages come back. Empty or 0 uses the store's default page size. Must parse as an integer.
-  Future<InboxPage?> getChannelsInbox({ String? since, String? limit, }) async {
-    final response = await getChannelsInboxWithHttpInfo( since: since, limit: limit, );
+  Future<InboxPage?> getChannelInbox({ String? since, String? limit, }) async {
+    final response = await getChannelInboxWithHttpInfo( since: since, limit: limit, );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -261,12 +261,12 @@ class ChannelsApi {
 
   /// Returns the pairing requests waiting for the caller org to approve — one per person who messaged a connected bot on a channel whose DM policy is \"pairing\" and who is not allowed yet.
   ///
-  /// Returns the pairing requests waiting for the caller org to approve — one per person who messaged a connected bot on a channel whose DM policy is \"pairing\" and who is not allowed yet. Each row carries the CODE an org admin passes to POST /v1/channels/pairing/approve. Expired requests are not returned. Codes are capability strings: they are shown here, and never logged.
+  /// Returns the pairing requests waiting for the caller org to approve — one per person who messaged a connected bot on a channel whose DM policy is \"pairing\" and who is not allowed yet. Each row carries the CODE an org admin passes to POST /v1/channel/pairing/approve. Expired requests are not returned. Codes are capability strings: they are shown here, and never logged.
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getChannelsPairingWithHttpInfo() async {
+  Future<Response> getChannelPairingWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/channels/pairing';
+    final path = r'/v1/channel/pairing';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -291,9 +291,9 @@ class ChannelsApi {
 
   /// Returns the pairing requests waiting for the caller org to approve — one per person who messaged a connected bot on a channel whose DM policy is \"pairing\" and who is not allowed yet.
   ///
-  /// Returns the pairing requests waiting for the caller org to approve — one per person who messaged a connected bot on a channel whose DM policy is \"pairing\" and who is not allowed yet. Each row carries the CODE an org admin passes to POST /v1/channels/pairing/approve. Expired requests are not returned. Codes are capability strings: they are shown here, and never logged.
-  Future<PairingQueue?> getChannelsPairing() async {
-    final response = await getChannelsPairingWithHttpInfo();
+  /// Returns the pairing requests waiting for the caller org to approve — one per person who messaged a connected bot on a channel whose DM policy is \"pairing\" and who is not allowed yet. Each row carries the CODE an org admin passes to POST /v1/channel/pairing/approve. Expired requests are not returned. Codes are capability strings: they are shown here, and never logged.
+  Future<PairingQueue?> getChannelPairing() async {
+    final response = await getChannelPairingWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -316,9 +316,9 @@ class ChannelsApi {
   /// Parameters:
   ///
   /// * [String] channel (required):
-  Future<Response> postChannelsByChannelSendWithHttpInfo(String channel,) async {
+  Future<Response> postChannelByChannelSendWithHttpInfo(String channel,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/channels/{channel}/send'
+    final path = r'/v1/channel/{channel}/send'
       .replaceAll('{channel}', channel);
 
     // ignore: prefer_final_locals
@@ -349,8 +349,8 @@ class ChannelsApi {
   /// Parameters:
   ///
   /// * [String] channel (required):
-  Future<void> postChannelsByChannelSend(String channel,) async {
-    final response = await postChannelsByChannelSendWithHttpInfo(channel,);
+  Future<void> postChannelByChannelSend(String channel,) async {
+    final response = await postChannelByChannelSendWithHttpInfo(channel,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -365,9 +365,9 @@ class ChannelsApi {
   /// Parameters:
   ///
   /// * [ApprovePairingIn] approvePairingIn (required):
-  Future<Response> postChannelsPairingApproveWithHttpInfo(ApprovePairingIn approvePairingIn,) async {
+  Future<Response> postChannelPairingApproveWithHttpInfo(ApprovePairingIn approvePairingIn,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/channels/pairing/approve';
+    final path = r'/v1/channel/pairing/approve';
 
     // ignore: prefer_final_locals
     Object? postBody = approvePairingIn;
@@ -397,8 +397,8 @@ class ChannelsApi {
   /// Parameters:
   ///
   /// * [ApprovePairingIn] approvePairingIn (required):
-  Future<PairingApproved?> postChannelsPairingApprove(ApprovePairingIn approvePairingIn,) async {
-    final response = await postChannelsPairingApproveWithHttpInfo(approvePairingIn,);
+  Future<PairingApproved?> postChannelPairingApprove(ApprovePairingIn approvePairingIn,) async {
+    final response = await postChannelPairingApproveWithHttpInfo(approvePairingIn,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -414,16 +414,16 @@ class ChannelsApi {
 
   /// Binds agents to the caller org's channel and answers the bindings as GET would.
   ///
-  /// Binds agents to the caller org's channel and answers the bindings as GET would. It requires ORG ADMIN. The agent is named by its ref — the name an org gave it at POST /v1/agents, or a built-in such as dev, des or vi.
+  /// Binds agents to the caller org's channel and answers the bindings as GET would. It requires ORG ADMIN. The agent is named by its ref — the name an org gave it at POST /v1/agent, or a built-in such as dev, des or vi.
   ///
   /// Note: This method returns the HTTP [Response].
   ///
   /// Parameters:
   ///
   /// * [ChannelAgentsPut] channelAgentsPut (required):
-  Future<Response> putChannelsAgentWithHttpInfo(ChannelAgentsPut channelAgentsPut,) async {
+  Future<Response> putChannelAgentWithHttpInfo(ChannelAgentsPut channelAgentsPut,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/channels/agent';
+    final path = r'/v1/channel/agent';
 
     // ignore: prefer_final_locals
     Object? postBody = channelAgentsPut;
@@ -448,13 +448,13 @@ class ChannelsApi {
 
   /// Binds agents to the caller org's channel and answers the bindings as GET would.
   ///
-  /// Binds agents to the caller org's channel and answers the bindings as GET would. It requires ORG ADMIN. The agent is named by its ref — the name an org gave it at POST /v1/agents, or a built-in such as dev, des or vi.
+  /// Binds agents to the caller org's channel and answers the bindings as GET would. It requires ORG ADMIN. The agent is named by its ref — the name an org gave it at POST /v1/agent, or a built-in such as dev, des or vi.
   ///
   /// Parameters:
   ///
   /// * [ChannelAgentsPut] channelAgentsPut (required):
-  Future<ChannelAgents?> putChannelsAgent(ChannelAgentsPut channelAgentsPut,) async {
-    final response = await putChannelsAgentWithHttpInfo(channelAgentsPut,);
+  Future<ChannelAgents?> putChannelAgent(ChannelAgentsPut channelAgentsPut,) async {
+    final response = await putChannelAgentWithHttpInfo(channelAgentsPut,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -477,9 +477,9 @@ class ChannelsApi {
   /// Parameters:
   ///
   /// * [AllowlistPutIn] allowlistPutIn (required):
-  Future<Response> putChannelsAllowlistWithHttpInfo(AllowlistPutIn allowlistPutIn,) async {
+  Future<Response> putChannelAllowlistWithHttpInfo(AllowlistPutIn allowlistPutIn,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/channels/allowlist';
+    final path = r'/v1/channel/allowlist';
 
     // ignore: prefer_final_locals
     Object? postBody = allowlistPutIn;
@@ -509,8 +509,8 @@ class ChannelsApi {
   /// Parameters:
   ///
   /// * [AllowlistPutIn] allowlistPutIn (required):
-  Future<AllowlistView?> putChannelsAllowlist(AllowlistPutIn allowlistPutIn,) async {
-    final response = await putChannelsAllowlistWithHttpInfo(allowlistPutIn,);
+  Future<AllowlistView?> putChannelAllowlist(AllowlistPutIn allowlistPutIn,) async {
+    final response = await putChannelAllowlistWithHttpInfo(allowlistPutIn,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }

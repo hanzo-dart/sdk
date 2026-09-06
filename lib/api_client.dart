@@ -565,8 +565,6 @@ class ApiClient {
           return BookRequest.fromJson(value);
         case 'BookResponse':
           return BookResponse.fromJson(value);
-        case 'BotList':
-          return BotList.fromJson(value);
         case 'BotMember':
           return BotMember.fromJson(value);
         case 'BotRoster':
@@ -579,8 +577,6 @@ class ApiClient {
           return BotStopped.fromJson(value);
         case 'BotSync':
           return BotSync.fromJson(value);
-        case 'BotView':
-          return BotView.fromJson(value);
         case 'Breakdown':
           return Breakdown.fromJson(value);
         case 'BreakdownRow':
@@ -1407,6 +1403,16 @@ class ApiClient {
           return FlowVersion.fromJson(value);
         case 'FnList':
           return FnList.fromJson(value);
+        case 'ForgeJob':
+          return ForgeJob.fromJson(value);
+        case 'ForgeJobRepository':
+          return ForgeJobRepository.fromJson(value);
+        case 'ForgeJobRepositoryOwner':
+          return ForgeJobRepositoryOwner.fromJson(value);
+        case 'ForgeJobWorkflowJob':
+          return ForgeJobWorkflowJob.fromJson(value);
+        case 'ForgeLaunched':
+          return ForgeLaunched.fromJson(value);
         case 'Form':
           return Form.fromJson(value);
         case 'FormItem':
@@ -4301,14 +4307,8 @@ class ApiClient {
           return PurgeIn.fromJson(value);
         case 'PurgeOut':
           return PurgeOut.fromJson(value);
-        case 'Push':
-          return Push.fromJson(value);
         case 'PushFile':
           return PushFile.fromJson(value);
-        case 'PushPusher':
-          return PushPusher.fromJson(value);
-        case 'PushRepository':
-          return PushRepository.fromJson(value);
         case 'PushReq':
           return PushReq.fromJson(value);
         case 'PushResp':

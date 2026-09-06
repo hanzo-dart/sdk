@@ -67,7 +67,7 @@ class ChannelView {
   ///
   String? dmPolicy;
 
-  /// GroupPolicy is how this org admits group and thread rooms here: \"open\", \"allowlist\" or \"disabled\", defaulting to \"open\". Both policy fields come back EMPTY — rather than the listing failing — when the policy cannot be read; GET /v1/channels/allowlist carries the same two with the entries they consult.
+  /// GroupPolicy is how this org admits group and thread rooms here: \"open\", \"allowlist\" or \"disabled\", defaulting to \"open\". Both policy fields come back EMPTY — rather than the listing failing — when the policy cannot be read; GET /v1/channel/allowlist carries the same two with the entries they consult.
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
@@ -85,7 +85,7 @@ class ChannelView {
   ///
   String? id;
 
-  /// PendingPairing counts the org's UNEXPIRED pairing requests on this channel: exactly the rows GET /v1/channels/pairing returns for it, one per person waiting on an admin. It never exceeds three — the pending cap per (org, channel) — and expired requests are not counted.
+  /// PendingPairing counts the org's UNEXPIRED pairing requests on this channel: exactly the rows GET /v1/channel/pairing returns for it, one per person waiting on an admin. It never exceeds three — the pending cap per (org, channel) — and expired requests are not counted.
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated

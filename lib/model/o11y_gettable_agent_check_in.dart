@@ -14,13 +14,13 @@ class O11yGettableAgentCheckIn {
   /// Returns a new [O11yGettableAgentCheckIn] instance.
   O11yGettableAgentCheckIn({
     this.accountId,
-    this.cloudAccountId,
     this.cloudIntegrationId,
-    this.integrationConfigLegacy,
+    this.cloudAccountId,
     this.integrationConfig,
+    this.integrationConfigLegacy,
     this.providerAccountId,
-    this.removedAtLegacy,
     this.removedAt,
+    this.removedAtLegacy,
   });
   /// Older fields for backward compatibility with existing AWS agents
   ///
@@ -37,14 +37,6 @@ class O11yGettableAgentCheckIn {
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  String? cloudAccountId;
-
-  ///
-  /// Please note: This property should have been non-nullable! Since the specification file
-  /// does not include a default value (using the "default:" property), however, the generated
-  /// source code must fall back to having a nullable type.
-  /// Consider adding a "default:" property in the specification file to hide this note.
-  ///
   String? cloudIntegrationId;
 
   ///
@@ -53,7 +45,7 @@ class O11yGettableAgentCheckIn {
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  O11yIntegrationConfig? integrationConfigLegacy;
+  String? cloudAccountId;
 
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
@@ -69,7 +61,7 @@ class O11yGettableAgentCheckIn {
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  String? providerAccountId;
+  O11yIntegrationConfig? integrationConfigLegacy;
 
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
@@ -77,7 +69,7 @@ class O11yGettableAgentCheckIn {
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  DateTime? removedAtLegacy;
+  String? providerAccountId;
 
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
@@ -87,31 +79,39 @@ class O11yGettableAgentCheckIn {
   ///
   DateTime? removedAt;
 
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  DateTime? removedAtLegacy;
+
   @override
   bool operator ==(Object other) => identical(this, other) || other is O11yGettableAgentCheckIn &&
     other.accountId == accountId &&
-    other.cloudAccountId == cloudAccountId &&
     other.cloudIntegrationId == cloudIntegrationId &&
-    other.integrationConfigLegacy == integrationConfigLegacy &&
+    other.cloudAccountId == cloudAccountId &&
     other.integrationConfig == integrationConfig &&
+    other.integrationConfigLegacy == integrationConfigLegacy &&
     other.providerAccountId == providerAccountId &&
-    other.removedAtLegacy == removedAtLegacy &&
-    other.removedAt == removedAt;
+    other.removedAt == removedAt &&
+    other.removedAtLegacy == removedAtLegacy;
 
   @override
   int get hashCode =>
     // ignore: unnecessary_parenthesis
     (accountId == null ? 0 : accountId!.hashCode) +
-    (cloudAccountId == null ? 0 : cloudAccountId!.hashCode) +
     (cloudIntegrationId == null ? 0 : cloudIntegrationId!.hashCode) +
-    (integrationConfigLegacy == null ? 0 : integrationConfigLegacy!.hashCode) +
+    (cloudAccountId == null ? 0 : cloudAccountId!.hashCode) +
     (integrationConfig == null ? 0 : integrationConfig!.hashCode) +
+    (integrationConfigLegacy == null ? 0 : integrationConfigLegacy!.hashCode) +
     (providerAccountId == null ? 0 : providerAccountId!.hashCode) +
-    (removedAtLegacy == null ? 0 : removedAtLegacy!.hashCode) +
-    (removedAt == null ? 0 : removedAt!.hashCode);
+    (removedAt == null ? 0 : removedAt!.hashCode) +
+    (removedAtLegacy == null ? 0 : removedAtLegacy!.hashCode);
 
   @override
-  String toString() => 'O11yGettableAgentCheckIn[accountId=$accountId, cloudAccountId=$cloudAccountId, cloudIntegrationId=$cloudIntegrationId, integrationConfigLegacy=$integrationConfigLegacy, integrationConfig=$integrationConfig, providerAccountId=$providerAccountId, removedAtLegacy=$removedAtLegacy, removedAt=$removedAt]';
+  String toString() => 'O11yGettableAgentCheckIn[accountId=$accountId, cloudIntegrationId=$cloudIntegrationId, cloudAccountId=$cloudAccountId, integrationConfig=$integrationConfig, integrationConfigLegacy=$integrationConfigLegacy, providerAccountId=$providerAccountId, removedAt=$removedAt, removedAtLegacy=$removedAtLegacy]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -120,40 +120,40 @@ class O11yGettableAgentCheckIn {
     } else {
       json[r'account_id'] = null;
     }
-    if (this.cloudAccountId != null) {
-      json[r'cloud_account_id'] = this.cloudAccountId;
-    } else {
-      json[r'cloud_account_id'] = null;
-    }
     if (this.cloudIntegrationId != null) {
       json[r'cloudIntegrationId'] = this.cloudIntegrationId;
     } else {
       json[r'cloudIntegrationId'] = null;
     }
-    if (this.integrationConfigLegacy != null) {
-      json[r'integration_config'] = this.integrationConfigLegacy;
+    if (this.cloudAccountId != null) {
+      json[r'cloud_account_id'] = this.cloudAccountId;
     } else {
-      json[r'integration_config'] = null;
+      json[r'cloud_account_id'] = null;
     }
     if (this.integrationConfig != null) {
       json[r'integrationConfig'] = this.integrationConfig;
     } else {
       json[r'integrationConfig'] = null;
     }
+    if (this.integrationConfigLegacy != null) {
+      json[r'integration_config'] = this.integrationConfigLegacy;
+    } else {
+      json[r'integration_config'] = null;
+    }
     if (this.providerAccountId != null) {
       json[r'providerAccountId'] = this.providerAccountId;
     } else {
       json[r'providerAccountId'] = null;
     }
-    if (this.removedAtLegacy != null) {
-      json[r'removed_at'] = this.removedAtLegacy!.toUtc().toIso8601String();
-    } else {
-      json[r'removed_at'] = null;
-    }
     if (this.removedAt != null) {
       json[r'removedAt'] = this.removedAt!.toUtc().toIso8601String();
     } else {
       json[r'removedAt'] = null;
+    }
+    if (this.removedAtLegacy != null) {
+      json[r'removed_at'] = this.removedAtLegacy!.toUtc().toIso8601String();
+    } else {
+      json[r'removed_at'] = null;
     }
     return json;
   }
@@ -178,13 +178,13 @@ class O11yGettableAgentCheckIn {
 
       return O11yGettableAgentCheckIn(
         accountId: mapValueOfType<String>(json, r'account_id'),
-        cloudAccountId: mapValueOfType<String>(json, r'cloud_account_id'),
         cloudIntegrationId: mapValueOfType<String>(json, r'cloudIntegrationId'),
-        integrationConfigLegacy: O11yIntegrationConfig.fromJson(json[r'integration_config']),
+        cloudAccountId: mapValueOfType<String>(json, r'cloud_account_id'),
         integrationConfig: O11yProviderIntegrationConfig.fromJson(json[r'integrationConfig']),
+        integrationConfigLegacy: O11yIntegrationConfig.fromJson(json[r'integration_config']),
         providerAccountId: mapValueOfType<String>(json, r'providerAccountId'),
-        removedAtLegacy: mapDateTime(json, r'removed_at', r''),
         removedAt: mapDateTime(json, r'removedAt', r''),
+        removedAtLegacy: mapDateTime(json, r'removed_at', r''),
       );
     }
     return null;

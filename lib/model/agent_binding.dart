@@ -26,7 +26,7 @@ class AgentBinding {
     this.status,
     this.updatedTime,
   });
-  /// AgentName is the cloud Agent (/v1/agents) this machine runs — the agent a message to the bot is actually run against. It is the one field that decides what the bot DOES.
+  /// AgentName is the cloud Agent (/v1/agent) this machine runs — the agent a message to the bot is actually run against. It is the one field that decides what the bot DOES.
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated

@@ -48,6 +48,7 @@ class IamUser {
     this.createdTime,
     this.currency,
     this.custom,
+    this.custom10,
     this.custom2,
     this.custom3,
     this.custom4,
@@ -56,7 +57,6 @@ class IamUser {
     this.custom7,
     this.custom8,
     this.custom9,
-    this.custom10,
     this.dailymotion,
     this.deezer,
     this.deleted,
@@ -463,6 +463,14 @@ class IamUser {
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
+  String? custom10;
+
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
   String? custom2;
 
   ///
@@ -520,14 +528,6 @@ class IamUser {
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
   String? custom9;
-
-  ///
-  /// Please note: This property should have been non-nullable! Since the specification file
-  /// does not include a default value (using the "default:" property), however, the generated
-  /// source code must fall back to having a nullable type.
-  /// Consider adding a "default:" property in the specification file to hide this note.
-  ///
-  String? custom10;
 
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
@@ -1646,6 +1646,7 @@ class IamUser {
     other.createdTime == createdTime &&
     other.currency == currency &&
     other.custom == custom &&
+    other.custom10 == custom10 &&
     other.custom2 == custom2 &&
     other.custom3 == custom3 &&
     other.custom4 == custom4 &&
@@ -1654,7 +1655,6 @@ class IamUser {
     other.custom7 == custom7 &&
     other.custom8 == custom8 &&
     other.custom9 == custom9 &&
-    other.custom10 == custom10 &&
     other.dailymotion == dailymotion &&
     other.deezer == deezer &&
     other.deleted == deleted &&
@@ -1834,6 +1834,7 @@ class IamUser {
     (createdTime == null ? 0 : createdTime!.hashCode) +
     (currency == null ? 0 : currency!.hashCode) +
     (custom == null ? 0 : custom!.hashCode) +
+    (custom10 == null ? 0 : custom10!.hashCode) +
     (custom2 == null ? 0 : custom2!.hashCode) +
     (custom3 == null ? 0 : custom3!.hashCode) +
     (custom4 == null ? 0 : custom4!.hashCode) +
@@ -1842,7 +1843,6 @@ class IamUser {
     (custom7 == null ? 0 : custom7!.hashCode) +
     (custom8 == null ? 0 : custom8!.hashCode) +
     (custom9 == null ? 0 : custom9!.hashCode) +
-    (custom10 == null ? 0 : custom10!.hashCode) +
     (dailymotion == null ? 0 : dailymotion!.hashCode) +
     (deezer == null ? 0 : deezer!.hashCode) +
     (deleted == null ? 0 : deleted!.hashCode) +
@@ -1985,7 +1985,7 @@ class IamUser {
     (zoom == null ? 0 : zoom!.hashCode);
 
   @override
-  String toString() => 'IamUser[accessKey=$accessKey, accessSecret=$accessSecret, accessSecretHash=$accessSecretHash, accessToken=$accessToken, address=$address, addresses=$addresses, adfs=$adfs, affiliation=$affiliation, alipay=$alipay, amazon=$amazon, apple=$apple, applicationScopes=$applicationScopes, auth0=$auth0, avatar=$avatar, avatarType=$avatarType, azuread=$azuread, azureadb2c=$azureadb2c, baidu=$baidu, balance=$balance, balanceCredit=$balanceCredit, balanceCurrency=$balanceCurrency, battlenet=$battlenet, bilibili=$bilibili, bio=$bio, birthday=$birthday, bitbucket=$bitbucket, box=$box, cart=$cart, cloudfoundry=$cloudfoundry, countryCode=$countryCode, createdAt=$createdAt, createdIp=$createdIp, createdTime=$createdTime, currency=$currency, custom=$custom, custom2=$custom2, custom3=$custom3, custom4=$custom4, custom5=$custom5, custom6=$custom6, custom7=$custom7, custom8=$custom8, custom9=$custom9, custom10=$custom10, dailymotion=$dailymotion, deezer=$deezer, deleted=$deleted, deletedTime=$deletedTime, digitalocean=$digitalocean, dingtalk=$dingtalk, discord=$discord, displayName=$displayName, douyin=$douyin, dropbox=$dropbox, education=$education, email=$email, emailVerified=$emailVerified, eveonline=$eveonline, externalId=$externalId, faceIds=$faceIds, facebook=$facebook, firstName=$firstName, fitbit=$fitbit, gender=$gender, gitea=$gitea, gitee=$gitee, github=$github, gitlab=$gitlab, google=$google, hash=$hash, heroku=$heroku, homepage=$homepage, iam=$iam, id=$id, idCard=$idCard, idCardType=$idCardType, influxcloud=$influxcloud, infoflow=$infoflow, instagram=$instagram, intercom=$intercom, invitation=$invitation, invitationCode=$invitationCode, ipWhitelist=$ipWhitelist, isAdmin=$isAdmin, isDefaultAvatar=$isDefaultAvatar, isDeleted=$isDeleted, isForbidden=$isForbidden, isOnline=$isOnline, isVerified=$isVerified, kakao=$kakao, karma=$karma, kwai=$kwai, language=$language, lark=$lark, lastChangePasswordTime=$lastChangePasswordTime, lastName=$lastName, lastSigninIp=$lastSigninIp, lastSigninTime=$lastSigninTime, lastSigninWrongTime=$lastSigninWrongTime, lastfm=$lastfm, ldap=$ldap, line=$line, linkedin=$linkedin, location=$location, mailru=$mailru, managedAccounts=$managedAccounts, meetup=$meetup, mfaAccounts=$mfaAccounts, mfaEmailEnabled=$mfaEmailEnabled, mfaItems=$mfaItems, mfaPhoneEnabled=$mfaPhoneEnabled, mfaPushEnabled=$mfaPushEnabled, mfaPushProvider=$mfaPushProvider, mfaPushReceiver=$mfaPushReceiver, mfaRadiusEnabled=$mfaRadiusEnabled, mfaRadiusProvider=$mfaRadiusProvider, mfaRadiusUsername=$mfaRadiusUsername, mfaRememberDeadline=$mfaRememberDeadline, mfaRememberDigest=$mfaRememberDigest, microsoftonline=$microsoftonline, multiFactorAuths=$multiFactorAuths, name=$name, naver=$naver, needUpdatePassword=$needUpdatePassword, nextcloud=$nextcloud, okta=$okta, onedrive=$onedrive, originalRefreshToken=$originalRefreshToken, originalToken=$originalToken, oura=$oura, owner=$owner, passwordHash=$passwordHash, passwordSalt=$passwordSalt, passwordType=$passwordType, patreon=$patreon, paypal=$paypal, permanentAvatar=$permanentAvatar, phone=$phone, preHash=$preHash, preferredMfaType=$preferredMfaType, properties=$properties, qq=$qq, ranking=$ranking, realName=$realName, recoveryCodes=$recoveryCodes, region=$region, registerSource=$registerSource, registerType=$registerType, salesforce=$salesforce, score=$score, shopify=$shopify, signinWrongTimes=$signinWrongTimes, signupApplication=$signupApplication, slack=$slack, soundcloud=$soundcloud, spotify=$spotify, steam=$steam, strava=$strava, stripe=$stripe, tag=$tag, telegram=$telegram, tiktok=$tiktok, title=$title, totpSecret=$totpSecret, tumblr=$tumblr, twitch=$twitch, twitter=$twitter, type=$type, typetalk=$typetalk, uber=$uber, updatedAt=$updatedAt, updatedTime=$updatedTime, verificationCode=$verificationCode, vk=$vk, webauthnCredentials=$webauthnCredentials, wechat=$wechat, wecom=$wecom, weibo=$weibo, wepay=$wepay, xero=$xero, yahoo=$yahoo, yammer=$yammer, yandex=$yandex, zoom=$zoom]';
+  String toString() => 'IamUser[accessKey=$accessKey, accessSecret=$accessSecret, accessSecretHash=$accessSecretHash, accessToken=$accessToken, address=$address, addresses=$addresses, adfs=$adfs, affiliation=$affiliation, alipay=$alipay, amazon=$amazon, apple=$apple, applicationScopes=$applicationScopes, auth0=$auth0, avatar=$avatar, avatarType=$avatarType, azuread=$azuread, azureadb2c=$azureadb2c, baidu=$baidu, balance=$balance, balanceCredit=$balanceCredit, balanceCurrency=$balanceCurrency, battlenet=$battlenet, bilibili=$bilibili, bio=$bio, birthday=$birthday, bitbucket=$bitbucket, box=$box, cart=$cart, cloudfoundry=$cloudfoundry, countryCode=$countryCode, createdAt=$createdAt, createdIp=$createdIp, createdTime=$createdTime, currency=$currency, custom=$custom, custom10=$custom10, custom2=$custom2, custom3=$custom3, custom4=$custom4, custom5=$custom5, custom6=$custom6, custom7=$custom7, custom8=$custom8, custom9=$custom9, dailymotion=$dailymotion, deezer=$deezer, deleted=$deleted, deletedTime=$deletedTime, digitalocean=$digitalocean, dingtalk=$dingtalk, discord=$discord, displayName=$displayName, douyin=$douyin, dropbox=$dropbox, education=$education, email=$email, emailVerified=$emailVerified, eveonline=$eveonline, externalId=$externalId, faceIds=$faceIds, facebook=$facebook, firstName=$firstName, fitbit=$fitbit, gender=$gender, gitea=$gitea, gitee=$gitee, github=$github, gitlab=$gitlab, google=$google, hash=$hash, heroku=$heroku, homepage=$homepage, iam=$iam, id=$id, idCard=$idCard, idCardType=$idCardType, influxcloud=$influxcloud, infoflow=$infoflow, instagram=$instagram, intercom=$intercom, invitation=$invitation, invitationCode=$invitationCode, ipWhitelist=$ipWhitelist, isAdmin=$isAdmin, isDefaultAvatar=$isDefaultAvatar, isDeleted=$isDeleted, isForbidden=$isForbidden, isOnline=$isOnline, isVerified=$isVerified, kakao=$kakao, karma=$karma, kwai=$kwai, language=$language, lark=$lark, lastChangePasswordTime=$lastChangePasswordTime, lastName=$lastName, lastSigninIp=$lastSigninIp, lastSigninTime=$lastSigninTime, lastSigninWrongTime=$lastSigninWrongTime, lastfm=$lastfm, ldap=$ldap, line=$line, linkedin=$linkedin, location=$location, mailru=$mailru, managedAccounts=$managedAccounts, meetup=$meetup, mfaAccounts=$mfaAccounts, mfaEmailEnabled=$mfaEmailEnabled, mfaItems=$mfaItems, mfaPhoneEnabled=$mfaPhoneEnabled, mfaPushEnabled=$mfaPushEnabled, mfaPushProvider=$mfaPushProvider, mfaPushReceiver=$mfaPushReceiver, mfaRadiusEnabled=$mfaRadiusEnabled, mfaRadiusProvider=$mfaRadiusProvider, mfaRadiusUsername=$mfaRadiusUsername, mfaRememberDeadline=$mfaRememberDeadline, mfaRememberDigest=$mfaRememberDigest, microsoftonline=$microsoftonline, multiFactorAuths=$multiFactorAuths, name=$name, naver=$naver, needUpdatePassword=$needUpdatePassword, nextcloud=$nextcloud, okta=$okta, onedrive=$onedrive, originalRefreshToken=$originalRefreshToken, originalToken=$originalToken, oura=$oura, owner=$owner, passwordHash=$passwordHash, passwordSalt=$passwordSalt, passwordType=$passwordType, patreon=$patreon, paypal=$paypal, permanentAvatar=$permanentAvatar, phone=$phone, preHash=$preHash, preferredMfaType=$preferredMfaType, properties=$properties, qq=$qq, ranking=$ranking, realName=$realName, recoveryCodes=$recoveryCodes, region=$region, registerSource=$registerSource, registerType=$registerType, salesforce=$salesforce, score=$score, shopify=$shopify, signinWrongTimes=$signinWrongTimes, signupApplication=$signupApplication, slack=$slack, soundcloud=$soundcloud, spotify=$spotify, steam=$steam, strava=$strava, stripe=$stripe, tag=$tag, telegram=$telegram, tiktok=$tiktok, title=$title, totpSecret=$totpSecret, tumblr=$tumblr, twitch=$twitch, twitter=$twitter, type=$type, typetalk=$typetalk, uber=$uber, updatedAt=$updatedAt, updatedTime=$updatedTime, verificationCode=$verificationCode, vk=$vk, webauthnCredentials=$webauthnCredentials, wechat=$wechat, wecom=$wecom, weibo=$weibo, wepay=$wepay, xero=$xero, yahoo=$yahoo, yammer=$yammer, yandex=$yandex, zoom=$zoom]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -2148,6 +2148,11 @@ class IamUser {
     } else {
       json[r'custom'] = null;
     }
+    if (this.custom10 != null) {
+      json[r'custom10'] = this.custom10;
+    } else {
+      json[r'custom10'] = null;
+    }
     if (this.custom2 != null) {
       json[r'custom2'] = this.custom2;
     } else {
@@ -2187,11 +2192,6 @@ class IamUser {
       json[r'custom9'] = this.custom9;
     } else {
       json[r'custom9'] = null;
-    }
-    if (this.custom10 != null) {
-      json[r'custom10'] = this.custom10;
-    } else {
-      json[r'custom10'] = null;
     }
     if (this.dailymotion != null) {
       json[r'dailymotion'] = this.dailymotion;
@@ -2920,6 +2920,7 @@ class IamUser {
         createdTime: mapValueOfType<String>(json, r'createdTime'),
         currency: mapValueOfType<String>(json, r'currency'),
         custom: mapValueOfType<String>(json, r'custom'),
+        custom10: mapValueOfType<String>(json, r'custom10'),
         custom2: mapValueOfType<String>(json, r'custom2'),
         custom3: mapValueOfType<String>(json, r'custom3'),
         custom4: mapValueOfType<String>(json, r'custom4'),
@@ -2928,7 +2929,6 @@ class IamUser {
         custom7: mapValueOfType<String>(json, r'custom7'),
         custom8: mapValueOfType<String>(json, r'custom8'),
         custom9: mapValueOfType<String>(json, r'custom9'),
-        custom10: mapValueOfType<String>(json, r'custom10'),
         dailymotion: mapValueOfType<String>(json, r'dailymotion'),
         deezer: mapValueOfType<String>(json, r'deezer'),
         deleted: mapValueOfType<bool>(json, r'deleted'),

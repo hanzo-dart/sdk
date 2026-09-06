@@ -23,7 +23,7 @@ class AllowlistView {
   /// AccessGroups is the org's named sender sets, as group name -> channel -> member entries, held once for the whole org. A DM or Group entry written `accessGroup:<name>` admits any sender listed under that name for THIS channel, or under the channel `*`, which is how one set covers every transport at once. Replaced wholesale by the PUT.
   Map<String, Map<String, List<String>>> accessGroups;
 
-  /// DM is the CONFIG-managed DM allow entries — the list PUT /v1/channels/allowlist owns and replaces wholesale. An entry matches a sender either EXACTLY, as the transport-native id inbox messages carry, or as `accessGroup:<name>` resolved through AccessGroups. A bare `*` admits everyone, but only while DMPolicy is \"open\": it is gate syntax, not an identity, so under \"allowlist\" it matches nobody.
+  /// DM is the CONFIG-managed DM allow entries — the list PUT /v1/channel/allowlist owns and replaces wholesale. An entry matches a sender either EXACTLY, as the transport-native id inbox messages carry, or as `accessGroup:<name>` resolved through AccessGroups. A bare `*` admits everyone, but only while DMPolicy is \"open\": it is gate syntax, not an identity, so under \"allowlist\" it matches nobody.
   List<String> dm;
 
   /// DMPolicy decides every inbound DIRECT message, defaulting to \"pairing\" when the org has never set one. \"pairing\": a sender with no entry is sent a pairing code and the message is DROPPED — it never reaches the inbox — and they are admitted only once an admin approves. \"allowlist\": only DM admits, and Paired senders are suspended, since a pairing grant counts under \"pairing\" alone. \"open\" is not unconditional either — it still requires `*` or a matching entry in DM.
@@ -47,7 +47,7 @@ class AllowlistView {
   ///
   String? groupPolicy;
 
-  /// Paired is the senders admitted by PAIRING — the entries POST /v1/channels/pairing/approve minted, DM scope only. READ-ONLY on this endpoint: the PUT writes config entries and can never revoke one of these (listing a paired sender under DM instead promotes that entry to config, which the admin then owns). They admit only while DMPolicy is \"pairing\".
+  /// Paired is the senders admitted by PAIRING — the entries POST /v1/channel/pairing/approve minted, DM scope only. READ-ONLY on this endpoint: the PUT writes config entries and can never revoke one of these (listing a paired sender under DM instead promotes that entry to config, which the admin then owns). They admit only while DMPolicy is \"pairing\".
   List<String> paired;
 
   @override

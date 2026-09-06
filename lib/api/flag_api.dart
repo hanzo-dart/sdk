@@ -11,8 +11,8 @@
 part of hanzoai.cloud;
 
 
-class FlagsApi {
-  FlagsApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
+class FlagApi {
+  FlagApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
 
   final ApiClient apiClient;
 
@@ -26,9 +26,9 @@ class FlagsApi {
   ///
   /// * [String] key (required):
   ///   Key is the flag key to act on, from the path.
-  Future<Response> deleteFlagsDefsByKeyWithHttpInfo(String key,) async {
+  Future<Response> deleteFlagDefsByKeyWithHttpInfo(String key,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/flags/defs/{key}'
+    final path = r'/v1/flag/defs/{key}'
       .replaceAll('{key}', key);
 
     // ignore: prefer_final_locals
@@ -60,8 +60,8 @@ class FlagsApi {
   ///
   /// * [String] key (required):
   ///   Key is the flag key to act on, from the path.
-  Future<DeletedOut?> deleteFlagsDefsByKey(String key,) async {
-    final response = await deleteFlagsDefsByKeyWithHttpInfo(key,);
+  Future<DeletedOut?> deleteFlagDefsByKey(String key,) async {
+    final response = await deleteFlagDefsByKeyWithHttpInfo(key,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -85,9 +85,9 @@ class FlagsApi {
   ///
   /// * [int] limit:
   ///   Limit caps the rows returned. 1–500; anything else takes the default 100.
-  Future<Response> getFlagsActivityWithHttpInfo({ int? limit, }) async {
+  Future<Response> getFlagActivityWithHttpInfo({ int? limit, }) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/flags/activity';
+    final path = r'/v1/flag/activity';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -122,8 +122,8 @@ class FlagsApi {
   ///
   /// * [int] limit:
   ///   Limit caps the rows returned. 1–500; anything else takes the default 100.
-  Future<ActivityOut?> getFlagsActivity({ int? limit, }) async {
-    final response = await getFlagsActivityWithHttpInfo( limit: limit, );
+  Future<ActivityOut?> getFlagActivity({ int? limit, }) async {
+    final response = await getFlagActivityWithHttpInfo( limit: limit, );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -142,9 +142,9 @@ class FlagsApi {
   /// Returns every flag definition in the caller's (org, project) store, by key, with its version and who last changed it.
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getFlagsDefsWithHttpInfo() async {
+  Future<Response> getFlagDefsWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/flags/defs';
+    final path = r'/v1/flag/defs';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -170,8 +170,8 @@ class FlagsApi {
   /// Returns every flag definition in the caller's (org, project) store, by key, with its version and who last changed it.
   ///
   /// Returns every flag definition in the caller's (org, project) store, by key, with its version and who last changed it.
-  Future<DefsOut?> getFlagsDefs() async {
-    final response = await getFlagsDefsWithHttpInfo();
+  Future<DefsOut?> getFlagDefs() async {
+    final response = await getFlagDefsWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -195,9 +195,9 @@ class FlagsApi {
   ///
   /// * [String] key (required):
   ///   Key is the flag key to act on, from the path.
-  Future<Response> getFlagsDefsByKeyWithHttpInfo(String key,) async {
+  Future<Response> getFlagDefsByKeyWithHttpInfo(String key,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/flags/defs/{key}'
+    final path = r'/v1/flag/defs/{key}'
       .replaceAll('{key}', key);
 
     // ignore: prefer_final_locals
@@ -229,8 +229,8 @@ class FlagsApi {
   ///
   /// * [String] key (required):
   ///   Key is the flag key to act on, from the path.
-  Future<DefRow?> getFlagsDefsByKey(String key,) async {
-    final response = await getFlagsDefsByKeyWithHttpInfo(key,);
+  Future<DefRow?> getFlagDefsByKey(String key,) async {
+    final response = await getFlagDefsByKeyWithHttpInfo(key,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -249,9 +249,9 @@ class FlagsApi {
   /// Health reports that the flag engine is serving. It is not gated: liveness must be probe-able without a token.
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getFlagsHealthWithHttpInfo() async {
+  Future<Response> getFlagHealthWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/flags/health';
+    final path = r'/v1/flag/health';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -277,8 +277,8 @@ class FlagsApi {
   /// Health reports that the flag engine is serving.
   ///
   /// Health reports that the flag engine is serving. It is not gated: liveness must be probe-able without a token.
-  Future<HealthOut?> getFlagsHealth() async {
-    final response = await getFlagsHealthWithHttpInfo();
+  Future<HealthOut?> getFlagHealth() async {
+    final response = await getFlagHealthWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -301,9 +301,9 @@ class FlagsApi {
   /// Parameters:
   ///
   /// * [EvaluateIn] evaluateIn (required):
-  Future<Response> postFlagsWithHttpInfo(EvaluateIn evaluateIn,) async {
+  Future<Response> postFlagWithHttpInfo(EvaluateIn evaluateIn,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/flags';
+    final path = r'/v1/flag';
 
     // ignore: prefer_final_locals
     Object? postBody = evaluateIn;
@@ -333,8 +333,8 @@ class FlagsApi {
   /// Parameters:
   ///
   /// * [EvaluateIn] evaluateIn (required):
-  Future<Object?> postFlags(EvaluateIn evaluateIn,) async {
-    final response = await postFlagsWithHttpInfo(evaluateIn,);
+  Future<Object?> postFlag(EvaluateIn evaluateIn,) async {
+    final response = await postFlagWithHttpInfo(evaluateIn,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -357,9 +357,9 @@ class FlagsApi {
   /// Parameters:
   ///
   /// * [EvaluateIn] evaluateIn (required):
-  Future<Response> postFlagsDecideWithHttpInfo(EvaluateIn evaluateIn,) async {
+  Future<Response> postFlagDecideWithHttpInfo(EvaluateIn evaluateIn,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/flags/decide';
+    final path = r'/v1/flag/decide';
 
     // ignore: prefer_final_locals
     Object? postBody = evaluateIn;
@@ -389,8 +389,8 @@ class FlagsApi {
   /// Parameters:
   ///
   /// * [EvaluateIn] evaluateIn (required):
-  Future<Object?> postFlagsDecide(EvaluateIn evaluateIn,) async {
-    final response = await postFlagsDecideWithHttpInfo(evaluateIn,);
+  Future<Object?> postFlagDecide(EvaluateIn evaluateIn,) async {
+    final response = await postFlagDecideWithHttpInfo(evaluateIn,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -416,9 +416,9 @@ class FlagsApi {
   ///   Key is the flag key to write, from the path.
   ///
   /// * [Object] body (required):
-  Future<Response> putFlagsDefsByKeyWithHttpInfo(String key, Object body,) async {
+  Future<Response> putFlagDefsByKeyWithHttpInfo(String key, Object body,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/flags/defs/{key}'
+    final path = r'/v1/flag/defs/{key}'
       .replaceAll('{key}', key);
 
     // ignore: prefer_final_locals
@@ -452,8 +452,8 @@ class FlagsApi {
   ///   Key is the flag key to write, from the path.
   ///
   /// * [Object] body (required):
-  Future<DefRow?> putFlagsDefsByKey(String key, Object body,) async {
-    final response = await putFlagsDefsByKeyWithHttpInfo(key, body,);
+  Future<DefRow?> putFlagDefsByKey(String key, Object body,) async {
+    final response = await putFlagDefsByKeyWithHttpInfo(key, body,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }

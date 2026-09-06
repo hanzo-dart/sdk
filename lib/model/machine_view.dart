@@ -13,6 +13,8 @@ part of hanzoai.cloud;
 class MachineView {
   /// Returns a new [MachineView] instance.
   MachineView({
+    this.agent,
+    this.binding,
     this.createdTime,
     this.gpu,
     this.id,
@@ -28,6 +30,24 @@ class MachineView {
     this.type,
     this.vcpu,
   });
+  /// Agent is the cloud Agent this machine runs, lifted out of the binding so a list reads without following one. Empty means nothing is bound — for a kind=bot machine that means it costs money and answers nothing.
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  String? agent;
+
+  /// Binding is the record joining this machine to that agent, carrying vm's own reconciled status and its reason. Absent means no runtime is bound, which is also what a stopped bot looks like: stopping unbinds and leaves the machine running.
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  AgentBinding? binding;
+
   /// CreatedTime is when the machine came into being: the provider's own creation timestamp for a Visor machine, passed through in whatever form it states it, and for a BYO machine the RFC 3339 moment it first dialed in.
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
@@ -46,7 +66,7 @@ class MachineView {
   ///
   String? gpu;
 
-  /// ID addresses this machine on the /v1/visor/machines/:id routes: the org-scoped NAME Visor keys a machine by, falling back to the provider id for a machine that has no name. A BYO machine's is the id it dialed in under.
+  /// ID addresses this machine on the /v1/compute/machines/:id routes: the org-scoped NAME Visor keys a machine by, falling back to the provider id for a machine that has no name. A BYO machine's is the id it dialed in under.
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
@@ -64,7 +84,7 @@ class MachineView {
   ///
   String? image;
 
-  /// Mem is system RAM rendered for a human (\"8 GB\"), not a number to compute with. Empty when the provider's figure is ambiguous, or when the only figure available is a GPU slug's gb — that is VRAM, and reporting it as system RAM would be a fabrication. A BYO machine's RAM is on /v1/visor/fleet/workers.
+  /// Mem is system RAM rendered for a human (\"8 GB\"), not a number to compute with. Empty when the provider's figure is ambiguous, or when the only figure available is a GPU slug's gb — that is VRAM, and reporting it as system RAM would be a fabrication. A BYO machine's RAM is on /v1/compute/fleet/workers.
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
@@ -145,7 +165,7 @@ class MachineView {
   ///
   String? type;
 
-  /// Vcpu is logical cores — the provider's own cpuSize when that is a clean integer, else the count read out of the size slug (4 from \"s-4vcpu-8gb\"). ABSENT, never 0, when neither says. A BYO machine leaves it absent here; its real core count is on GET /v1/visor/fleet/workers.
+  /// Vcpu is logical cores — the provider's own cpuSize when that is a clean integer, else the count read out of the size slug (4 from \"s-4vcpu-8gb\"). ABSENT, never 0, when neither says. A BYO machine leaves it absent here; its real core count is on GET /v1/compute/fleet/workers.
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
@@ -156,6 +176,8 @@ class MachineView {
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is MachineView &&
+    other.agent == agent &&
+    other.binding == binding &&
     other.createdTime == createdTime &&
     other.gpu == gpu &&
     other.id == id &&
@@ -174,6 +196,8 @@ class MachineView {
   @override
   int get hashCode =>
     // ignore: unnecessary_parenthesis
+    (agent == null ? 0 : agent!.hashCode) +
+    (binding == null ? 0 : binding!.hashCode) +
     (createdTime == null ? 0 : createdTime!.hashCode) +
     (gpu == null ? 0 : gpu!.hashCode) +
     (id == null ? 0 : id!.hashCode) +
@@ -190,10 +214,20 @@ class MachineView {
     (vcpu == null ? 0 : vcpu!.hashCode);
 
   @override
-  String toString() => 'MachineView[createdTime=$createdTime, gpu=$gpu, id=$id, image=$image, mem=$mem, name=$name, os=$os, privateIp=$privateIp, provider=$provider, publicIp=$publicIp, region=$region, status=$status, type=$type, vcpu=$vcpu]';
+  String toString() => 'MachineView[agent=$agent, binding=$binding, createdTime=$createdTime, gpu=$gpu, id=$id, image=$image, mem=$mem, name=$name, os=$os, privateIp=$privateIp, provider=$provider, publicIp=$publicIp, region=$region, status=$status, type=$type, vcpu=$vcpu]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
+    if (this.agent != null) {
+      json[r'agent'] = this.agent;
+    } else {
+      json[r'agent'] = null;
+    }
+    if (this.binding != null) {
+      json[r'binding'] = this.binding;
+    } else {
+      json[r'binding'] = null;
+    }
     if (this.createdTime != null) {
       json[r'createdTime'] = this.createdTime;
     } else {
@@ -286,6 +320,8 @@ class MachineView {
       }());
 
       return MachineView(
+        agent: mapValueOfType<String>(json, r'agent'),
+        binding: AgentBinding.fromJson(json[r'binding']),
         createdTime: mapValueOfType<String>(json, r'createdTime'),
         gpu: mapValueOfType<String>(json, r'gpu'),
         id: mapValueOfType<String>(json, r'id'),

@@ -19,7 +19,7 @@ class ToolCall {
   /// Arguments is the tool's own input object, passed through verbatim to whichever source owns it.
   Map<String, Object> arguments;
 
-  /// Name is the tool to run, exactly as GET /v1/tools reports it.
+  /// Name is the tool to run, exactly as GET /v1/tool reports it.
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated

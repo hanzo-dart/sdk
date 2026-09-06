@@ -13,130 +13,42 @@ part of hanzoai.cloud;
 class Verdict {
   /// Returns a new [Verdict] instance.
   Verdict({
-    this.builds,
-    this.commit,
-    this.fired,
-    this.org,
-    this.reason,
-    this.ref,
-    this.repo,
+    this.flags = const [],
+    this.severity,
   });
-  ///
-  /// Please note: This property should have been non-nullable! Since the specification file
-  /// does not include a default value (using the "default:" property), however, the generated
-  /// source code must fall back to having a nullable type.
-  /// Consider adding a "default:" property in the specification file to hide this note.
-  ///
-  int? builds;
+  /// Flags are the findings behind the severity, in detection order: floating-declared, floating-running, stale, un-rolled, then the release-artifact ones. Always present — `[]` for a row that runs what it declares, never null.
+  List<DriftFlag> flags;
 
+  /// Severity is the roll-up over Flags — red if any flag is red, else yellow if any is yellow, else ok. It is the column a board sorts and filters on, and \"ok\" is exactly what no flags means.
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  String? commit;
-
-  ///
-  /// Please note: This property should have been non-nullable! Since the specification file
-  /// does not include a default value (using the "default:" property), however, the generated
-  /// source code must fall back to having a nullable type.
-  /// Consider adding a "default:" property in the specification file to hide this note.
-  ///
-  bool? fired;
-
-  ///
-  /// Please note: This property should have been non-nullable! Since the specification file
-  /// does not include a default value (using the "default:" property), however, the generated
-  /// source code must fall back to having a nullable type.
-  /// Consider adding a "default:" property in the specification file to hide this note.
-  ///
-  String? org;
-
-  ///
-  /// Please note: This property should have been non-nullable! Since the specification file
-  /// does not include a default value (using the "default:" property), however, the generated
-  /// source code must fall back to having a nullable type.
-  /// Consider adding a "default:" property in the specification file to hide this note.
-  ///
-  String? reason;
-
-  ///
-  /// Please note: This property should have been non-nullable! Since the specification file
-  /// does not include a default value (using the "default:" property), however, the generated
-  /// source code must fall back to having a nullable type.
-  /// Consider adding a "default:" property in the specification file to hide this note.
-  ///
-  String? ref;
-
-  ///
-  /// Please note: This property should have been non-nullable! Since the specification file
-  /// does not include a default value (using the "default:" property), however, the generated
-  /// source code must fall back to having a nullable type.
-  /// Consider adding a "default:" property in the specification file to hide this note.
-  ///
-  String? repo;
+  String? severity;
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is Verdict &&
-    other.builds == builds &&
-    other.commit == commit &&
-    other.fired == fired &&
-    other.org == org &&
-    other.reason == reason &&
-    other.ref == ref &&
-    other.repo == repo;
+    _deepEquality.equals(other.flags, flags) &&
+    other.severity == severity;
 
   @override
   int get hashCode =>
     // ignore: unnecessary_parenthesis
-    (builds == null ? 0 : builds!.hashCode) +
-    (commit == null ? 0 : commit!.hashCode) +
-    (fired == null ? 0 : fired!.hashCode) +
-    (org == null ? 0 : org!.hashCode) +
-    (reason == null ? 0 : reason!.hashCode) +
-    (ref == null ? 0 : ref!.hashCode) +
-    (repo == null ? 0 : repo!.hashCode);
+    (flags.hashCode) +
+    (severity == null ? 0 : severity!.hashCode);
 
   @override
-  String toString() => 'Verdict[builds=$builds, commit=$commit, fired=$fired, org=$org, reason=$reason, ref=$ref, repo=$repo]';
+  String toString() => 'Verdict[flags=$flags, severity=$severity]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (this.builds != null) {
-      json[r'builds'] = this.builds;
+      json[r'flags'] = this.flags;
+    if (this.severity != null) {
+      json[r'severity'] = this.severity;
     } else {
-      json[r'builds'] = null;
-    }
-    if (this.commit != null) {
-      json[r'commit'] = this.commit;
-    } else {
-      json[r'commit'] = null;
-    }
-    if (this.fired != null) {
-      json[r'fired'] = this.fired;
-    } else {
-      json[r'fired'] = null;
-    }
-    if (this.org != null) {
-      json[r'org'] = this.org;
-    } else {
-      json[r'org'] = null;
-    }
-    if (this.reason != null) {
-      json[r'reason'] = this.reason;
-    } else {
-      json[r'reason'] = null;
-    }
-    if (this.ref != null) {
-      json[r'ref'] = this.ref;
-    } else {
-      json[r'ref'] = null;
-    }
-    if (this.repo != null) {
-      json[r'repo'] = this.repo;
-    } else {
-      json[r'repo'] = null;
+      json[r'severity'] = null;
     }
     return json;
   }
@@ -160,13 +72,8 @@ class Verdict {
       }());
 
       return Verdict(
-        builds: mapValueOfType<int>(json, r'builds'),
-        commit: mapValueOfType<String>(json, r'commit'),
-        fired: mapValueOfType<bool>(json, r'fired'),
-        org: mapValueOfType<String>(json, r'org'),
-        reason: mapValueOfType<String>(json, r'reason'),
-        ref: mapValueOfType<String>(json, r'ref'),
-        repo: mapValueOfType<String>(json, r'repo'),
+        flags: DriftFlag.listFromJson(json[r'flags']),
+        severity: mapValueOfType<String>(json, r'severity'),
       );
     }
     return null;

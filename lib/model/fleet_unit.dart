@@ -88,7 +88,7 @@ class FleetUnit {
   ///
   int? sessions;
 
-  /// Source is the plane this row came from: \"agent\" (a linked run-target), \"byo\" (a worker or cluster the org dialed in) or \"visor\" (a machine Hanzo provisioned). It is half the row's identity, and it says which face owns the unit — /v1/agents/targets, /v1/visor/fleet/workers, /v1/visor/machines.
+  /// Source is the plane this row came from: \"agent\" (a linked run-target), \"byo\" (a worker or cluster the org dialed in) or \"visor\" (a machine Hanzo provisioned). It is half the row's identity, and it says which face owns the unit — /v1/agent/targets, /v1/compute/fleet/workers, /v1/compute/machines.
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated

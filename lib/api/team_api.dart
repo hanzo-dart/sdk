@@ -377,54 +377,6 @@ class TeamApi {
     return null;
   }
 
-  /// Returns the caller org's bot members — the org's agents projected as the space Employees they become, each with the member account uuid and Person reference the roster addresses it by.
-  ///
-  /// Returns the caller org's bot members — the org's agents projected as the space Employees they become, each with the member account uuid and Person reference the roster addresses it by. An agents subsystem that is not mounted answers an empty list, never an error.
-  ///
-  /// Note: This method returns the HTTP [Response].
-  Future<Response> getTeamBotsWithHttpInfo() async {
-    // ignore: prefer_const_declarations
-    final path = r'/v1/team/bots';
-
-    // ignore: prefer_final_locals
-    Object? postBody;
-
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{};
-    final formParams = <String, String>{};
-
-    const contentTypes = <String>[];
-
-
-    return apiClient.invokeAPI(
-      path,
-      'GET',
-      queryParams,
-      postBody,
-      headerParams,
-      formParams,
-      contentTypes.isEmpty ? null : contentTypes.first,
-    );
-  }
-
-  /// Returns the caller org's bot members — the org's agents projected as the space Employees they become, each with the member account uuid and Person reference the roster addresses it by.
-  ///
-  /// Returns the caller org's bot members — the org's agents projected as the space Employees they become, each with the member account uuid and Person reference the roster addresses it by. An agents subsystem that is not mounted answers an empty list, never an error.
-  Future<BotRoster?> getTeamBots() async {
-    final response = await getTeamBotsWithHttpInfo();
-    if (response.statusCode >= HttpStatus.badRequest) {
-      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
-    }
-    // When a remote server returns no body with a status of 204, we shall not decode it.
-    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
-    // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'BotRoster',) as BotRoster;
-    
-    }
-    return null;
-  }
-
   /// Open the live collaborative-editing socket
   ///
   /// Upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  BOTH LANES SHARE ONE ROOT. The client derives them from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so pointing the editor at this service is one value, and the two lanes cannot drift apart.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or space token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document's space must be the token's space when the token pins one, and the caller must be a member of it. A mismatch, an unknown space and a non-member deny alike with \"document not found\". Rooms are keyed by org and space and the persisted log's key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
@@ -873,54 +825,6 @@ class TeamApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
-  }
-
-  /// SyncBots re-projects the caller org's agents as space members into EVERY space of the org, and removes the ones whose agent is gone.
-  ///
-  /// SyncBots re-projects the caller org's agents as space members into EVERY space of the org, and removes the ones whose agent is gone. It is idempotent, and admin only: mutating a space's roster requires the gateway-minted admin flag, which a client can never forge. It answers how many roster entries the reconcile touched.
-  ///
-  /// Note: This method returns the HTTP [Response].
-  Future<Response> postTeamBotsSyncWithHttpInfo() async {
-    // ignore: prefer_const_declarations
-    final path = r'/v1/team/bots/sync';
-
-    // ignore: prefer_final_locals
-    Object? postBody;
-
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{};
-    final formParams = <String, String>{};
-
-    const contentTypes = <String>[];
-
-
-    return apiClient.invokeAPI(
-      path,
-      'POST',
-      queryParams,
-      postBody,
-      headerParams,
-      formParams,
-      contentTypes.isEmpty ? null : contentTypes.first,
-    );
-  }
-
-  /// SyncBots re-projects the caller org's agents as space members into EVERY space of the org, and removes the ones whose agent is gone.
-  ///
-  /// SyncBots re-projects the caller org's agents as space members into EVERY space of the org, and removes the ones whose agent is gone. It is idempotent, and admin only: mutating a space's roster requires the gateway-minted admin flag, which a client can never forge. It answers how many roster entries the reconcile touched.
-  Future<BotSync?> postTeamBotsSync() async {
-    final response = await postTeamBotsSyncWithHttpInfo();
-    if (response.statusCode >= HttpStatus.badRequest) {
-      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
-    }
-    // When a remote server returns no body with a status of 204, we shall not decode it.
-    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
-    // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'BotSync',) as BotSync;
-    
-    }
-    return null;
   }
 
   /// CollabRPC is the collaborative-markup snapshot plane the Team front's editor speaks: createContent stores a document field's markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.

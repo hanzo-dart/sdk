@@ -14,8 +14,8 @@ class O11yO11yAgentCheckInIn {
   /// Returns a new [O11yO11yAgentCheckInIn] instance.
   O11yO11yAgentCheckInIn({
     this.accountId,
-    this.cloudAccountId,
     this.cloudIntegrationId,
+    this.cloudAccountId,
     this.data = const {},
     this.providerAccountId,
   });
@@ -27,6 +27,8 @@ class O11yO11yAgentCheckInIn {
   ///
   String? accountId;
 
+  Object? cloudIntegrationId;
+
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
@@ -34,8 +36,6 @@ class O11yO11yAgentCheckInIn {
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
   String? cloudAccountId;
-
-  Object? cloudIntegrationId;
 
   Map<String, Object> data;
 
@@ -50,8 +50,8 @@ class O11yO11yAgentCheckInIn {
   @override
   bool operator ==(Object other) => identical(this, other) || other is O11yO11yAgentCheckInIn &&
     other.accountId == accountId &&
-    other.cloudAccountId == cloudAccountId &&
     other.cloudIntegrationId == cloudIntegrationId &&
+    other.cloudAccountId == cloudAccountId &&
     _deepEquality.equals(other.data, data) &&
     other.providerAccountId == providerAccountId;
 
@@ -59,13 +59,13 @@ class O11yO11yAgentCheckInIn {
   int get hashCode =>
     // ignore: unnecessary_parenthesis
     (accountId == null ? 0 : accountId!.hashCode) +
-    (cloudAccountId == null ? 0 : cloudAccountId!.hashCode) +
     (cloudIntegrationId == null ? 0 : cloudIntegrationId!.hashCode) +
+    (cloudAccountId == null ? 0 : cloudAccountId!.hashCode) +
     (data.hashCode) +
     (providerAccountId == null ? 0 : providerAccountId!.hashCode);
 
   @override
-  String toString() => 'O11yO11yAgentCheckInIn[accountId=$accountId, cloudAccountId=$cloudAccountId, cloudIntegrationId=$cloudIntegrationId, data=$data, providerAccountId=$providerAccountId]';
+  String toString() => 'O11yO11yAgentCheckInIn[accountId=$accountId, cloudIntegrationId=$cloudIntegrationId, cloudAccountId=$cloudAccountId, data=$data, providerAccountId=$providerAccountId]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -74,15 +74,15 @@ class O11yO11yAgentCheckInIn {
     } else {
       json[r'account_id'] = null;
     }
-    if (this.cloudAccountId != null) {
-      json[r'cloud_account_id'] = this.cloudAccountId;
-    } else {
-      json[r'cloud_account_id'] = null;
-    }
     if (this.cloudIntegrationId != null) {
       json[r'cloudIntegrationId'] = this.cloudIntegrationId;
     } else {
       json[r'cloudIntegrationId'] = null;
+    }
+    if (this.cloudAccountId != null) {
+      json[r'cloud_account_id'] = this.cloudAccountId;
+    } else {
+      json[r'cloud_account_id'] = null;
     }
       json[r'data'] = this.data;
     if (this.providerAccountId != null) {
@@ -113,8 +113,8 @@ class O11yO11yAgentCheckInIn {
 
       return O11yO11yAgentCheckInIn(
         accountId: mapValueOfType<String>(json, r'account_id'),
-        cloudAccountId: mapValueOfType<String>(json, r'cloud_account_id'),
         cloudIntegrationId: mapValueOfType<Object>(json, r'cloudIntegrationId'),
+        cloudAccountId: mapValueOfType<String>(json, r'cloud_account_id'),
         data: mapCastOfType<String, Object>(json, r'data') ?? const {},
         providerAccountId: mapValueOfType<String>(json, r'providerAccountId'),
       );

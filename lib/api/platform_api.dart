@@ -1450,62 +1450,6 @@ class PlatformApi {
     return null;
   }
 
-  /// Receive a push from the forge and trigger its build
-  ///
-  /// The forge's push-to-deploy endpoint. git.hanzo.ai runs as a separate server, so its pushes never reach this fleet's own receive-pack; without this a push to the host we call canonical builds nothing. A verified push is handed to the SAME two clients a native push travels — the single-registrant deploy trigger, and the many-subscriber lifecycle stream that notifies and indexes — and the build decision itself stays downstream in the one place that knows what a push means.  PUBLIC at the JWT layer, because the forge carries no Hanzo session: AUTHENTICATION IS THE SIGNATURE. The HMAC covers the raw bytes and is verified BEFORE the payload is parsed, so an unauthenticated body is never decoded. The secret is read from KMS; a deployment that cannot read it answers 503 and processes nothing, rather than trusting a delivery it could not check. The body is read UNCOMPRESSED — a request declaring a Content-Encoding is refused 415 before it is touched, because decoding one is unbounded work bought with a few bytes and no credential. A bad signature is 401, a payload over 8 MiB is 413, and a malformed one 400.  A verified push that reaches both clients answers 200 with fired true and the NUMBER OF BUILDS it launched — zero is ordinary, since most pushes track no application, and it is the answer 'fired' cannot give. A push that could not be dispatched answers 500: the delivery page shows it red, and the Replay that prompts reaches a fresh attempt rather than being declined as already landed.  The deliveries deliberately ignored answer 200 with a reason and nothing else: a payload that is not a push, a ref DELETE (a zero `after` has no commit to build), a BOT-authored push (release automation pushes as the forge's own Actions user, and a release must never rebuild itself), a push from a forge namespace that maps to no org, and a redelivery of a push already fired. Branches and tags both reach the build trigger, because releases are cut by tag and filtering here would silently stop publishing.
-  ///
-  /// Note: This method returns the HTTP [Response].
-  ///
-  /// Parameters:
-  ///
-  /// * [Push] push:
-  Future<Response> postPlatformHookWithHttpInfo({ Push? push, }) async {
-    // ignore: prefer_const_declarations
-    final path = r'/v1/platform/hook';
-
-    // ignore: prefer_final_locals
-    Object? postBody = push;
-
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{};
-    final formParams = <String, String>{};
-
-    const contentTypes = <String>['application/json'];
-
-
-    return apiClient.invokeAPI(
-      path,
-      'POST',
-      queryParams,
-      postBody,
-      headerParams,
-      formParams,
-      contentTypes.isEmpty ? null : contentTypes.first,
-    );
-  }
-
-  /// Receive a push from the forge and trigger its build
-  ///
-  /// The forge's push-to-deploy endpoint. git.hanzo.ai runs as a separate server, so its pushes never reach this fleet's own receive-pack; without this a push to the host we call canonical builds nothing. A verified push is handed to the SAME two clients a native push travels — the single-registrant deploy trigger, and the many-subscriber lifecycle stream that notifies and indexes — and the build decision itself stays downstream in the one place that knows what a push means.  PUBLIC at the JWT layer, because the forge carries no Hanzo session: AUTHENTICATION IS THE SIGNATURE. The HMAC covers the raw bytes and is verified BEFORE the payload is parsed, so an unauthenticated body is never decoded. The secret is read from KMS; a deployment that cannot read it answers 503 and processes nothing, rather than trusting a delivery it could not check. The body is read UNCOMPRESSED — a request declaring a Content-Encoding is refused 415 before it is touched, because decoding one is unbounded work bought with a few bytes and no credential. A bad signature is 401, a payload over 8 MiB is 413, and a malformed one 400.  A verified push that reaches both clients answers 200 with fired true and the NUMBER OF BUILDS it launched — zero is ordinary, since most pushes track no application, and it is the answer 'fired' cannot give. A push that could not be dispatched answers 500: the delivery page shows it red, and the Replay that prompts reaches a fresh attempt rather than being declined as already landed.  The deliveries deliberately ignored answer 200 with a reason and nothing else: a payload that is not a push, a ref DELETE (a zero `after` has no commit to build), a BOT-authored push (release automation pushes as the forge's own Actions user, and a release must never rebuild itself), a push from a forge namespace that maps to no org, and a redelivery of a push already fired. Branches and tags both reach the build trigger, because releases are cut by tag and filtering here would silently stop publishing.
-  ///
-  /// Parameters:
-  ///
-  /// * [Push] push:
-  Future<Verdict?> postPlatformHook({ Push? push, }) async {
-    final response = await postPlatformHookWithHttpInfo( push: push, );
-    if (response.statusCode >= HttpStatus.badRequest) {
-      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
-    }
-    // When a remote server returns no body with a status of 204, we shall not decode it.
-    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
-    // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'Verdict',) as Verdict;
-    
-    }
-    return null;
-  }
-
   /// Creates an application from a git repo or a container image.
   ///
   /// Creates an application from a git repo or a container image.  It registers a new application under one of the caller org's projects and answers 201 with it. Creating does NOT deploy: the app lands in `draft` and nothing reaches the cluster until /deploy.  `source` is `git` — which requires `repo.url` — or `image`, which requires `image.repository`; anything else is 400. A git app builds with zero-config `pack` by default and may opt into `dockerfile`; an image app never builds. The repo URL and Dockerfile path are validated here against the SAME allowlist the privileged build enforces, so an unsafe source is refused before it is ever persisted.  The `slug` is the app's identity in the cluster: given or derived from `name`, it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$`, and a slug already used in this project is 409. `replicas` and `storageGb` are clamped to the deployment's limits rather than refused.  Env keys must match `^[A-Za-z_][A-Za-z0-9_]*$`. A variable marked `secret: true` is SEALED into KMS and its plaintext is never written to the database — and if KMS is unavailable the create fails 503 rather than falling back to storing a secret in the clear.  The app is seeded with its canonical default host, so it has a working HTTPS URL the moment it deploys. A bare custom domain cannot be attached here — it has to go through add-domain and DNS verification first. Requires a validated principal; 403 without one, and every cluster object it will later create lands in that org's own `tenant-<org>` namespace.

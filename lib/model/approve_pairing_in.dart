@@ -25,7 +25,7 @@ class ApprovePairingIn {
   ///
   String? channel;
 
-  /// Code is the pairing code from GET /v1/channels/pairing. It is a capability: holding it is what authorises the approval, alongside org admin.
+  /// Code is the pairing code from GET /v1/channel/pairing. It is a capability: holding it is what authorises the approval, alongside org admin.
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated

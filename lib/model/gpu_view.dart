@@ -41,7 +41,7 @@ class GpuView {
   ///
   String? location;
 
-  /// Machine is the id of the machine holding this card, addressable as-is on /v1/visor/machines/:id.
+  /// Machine is the id of the machine holding this card, addressable as-is on /v1/compute/machines/:id.
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated

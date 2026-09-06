@@ -11,8 +11,8 @@
 part of hanzoai.cloud;
 
 
-class ToolsApi {
-  ToolsApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
+class ToolApi {
+  ToolApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
 
   final ApiClient apiClient;
 
@@ -26,9 +26,9 @@ class ToolsApi {
   ///
   /// * [String] id (required):
   ///   ID is the server to deregister, from the path.
-  Future<Response> deleteToolsMcpServersByIdWithHttpInfo(String id,) async {
+  Future<Response> deleteToolMcpServersByIdWithHttpInfo(String id,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/tools/mcp/servers/{id}'
+    final path = r'/v1/tool/mcp/servers/{id}'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -60,8 +60,8 @@ class ToolsApi {
   ///
   /// * [String] id (required):
   ///   ID is the server to deregister, from the path.
-  Future<void> deleteToolsMcpServersById(String id,) async {
-    final response = await deleteToolsMcpServersByIdWithHttpInfo(id,);
+  Future<void> deleteToolMcpServersById(String id,) async {
+    final response = await deleteToolMcpServersByIdWithHttpInfo(id,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -77,9 +77,9 @@ class ToolsApi {
   ///
   /// * [String] id (required):
   ///   ID is the plugin to remove, from the path.
-  Future<Response> deleteToolsPluginsAuthoredByIdWithHttpInfo(String id,) async {
+  Future<Response> deleteToolPluginsAuthoredByIdWithHttpInfo(String id,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/tools/plugins/authored/{id}'
+    final path = r'/v1/tool/plugins/authored/{id}'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -111,8 +111,8 @@ class ToolsApi {
   ///
   /// * [String] id (required):
   ///   ID is the plugin to remove, from the path.
-  Future<PluginDeleted?> deleteToolsPluginsAuthoredById(String id,) async {
-    final response = await deleteToolsPluginsAuthoredByIdWithHttpInfo(id,);
+  Future<PluginDeleted?> deleteToolPluginsAuthoredById(String id,) async {
+    final response = await deleteToolPluginsAuthoredByIdWithHttpInfo(id,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -136,9 +136,9 @@ class ToolsApi {
   ///
   /// * [String] id (required):
   ///   ID is the skill to remove, from the path. It is the skill's name.
-  Future<Response> deleteToolsSkillsByIdWithHttpInfo(String id,) async {
+  Future<Response> deleteToolSkillsByIdWithHttpInfo(String id,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/tools/skills/{id}'
+    final path = r'/v1/tool/skills/{id}'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -170,8 +170,8 @@ class ToolsApi {
   ///
   /// * [String] id (required):
   ///   ID is the skill to remove, from the path. It is the skill's name.
-  Future<SkillDeleted?> deleteToolsSkillsById(String id,) async {
-    final response = await deleteToolsSkillsByIdWithHttpInfo(id,);
+  Future<SkillDeleted?> deleteToolSkillsById(String id,) async {
+    final response = await deleteToolSkillsByIdWithHttpInfo(id,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -187,7 +187,7 @@ class ToolsApi {
 
   /// Lists every tool the caller's org and project can reach, from every source, each flagged with whether it is activated.
   ///
-  /// Lists every tool the caller's org and project can reach, from every source, each flagged with whether it is activated. This is the discovery surface: one flat set of names spanning connector actions, user functions, zap-service routes, agents, skills and the org's own external MCP servers, deduplicated by name so the highest-precedence source wins a collision. It lists; it does not call — dispatch is POST /v1/tools/call.
+  /// Lists every tool the caller's org and project can reach, from every source, each flagged with whether it is activated. This is the discovery surface: one flat set of names spanning connector actions, user functions, zap-service routes, agents, skills and the org's own external MCP servers, deduplicated by name so the highest-precedence source wins a collision. It lists; it does not call — dispatch is POST /v1/tool/call.
   ///
   /// Note: This method returns the HTTP [Response].
   ///
@@ -198,9 +198,9 @@ class ToolsApi {
   ///
   /// * [String] activated:
   ///   Activated keeps only the tools activated for the caller's org and project, and only when it is exactly the string \"true\".
-  Future<Response> getToolsWithHttpInfo({ String? source_, String? activated, }) async {
+  Future<Response> getToolWithHttpInfo({ String? source_, String? activated, }) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/tools';
+    final path = r'/v1/tool';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -232,7 +232,7 @@ class ToolsApi {
 
   /// Lists every tool the caller's org and project can reach, from every source, each flagged with whether it is activated.
   ///
-  /// Lists every tool the caller's org and project can reach, from every source, each flagged with whether it is activated. This is the discovery surface: one flat set of names spanning connector actions, user functions, zap-service routes, agents, skills and the org's own external MCP servers, deduplicated by name so the highest-precedence source wins a collision. It lists; it does not call — dispatch is POST /v1/tools/call.
+  /// Lists every tool the caller's org and project can reach, from every source, each flagged with whether it is activated. This is the discovery surface: one flat set of names spanning connector actions, user functions, zap-service routes, agents, skills and the org's own external MCP servers, deduplicated by name so the highest-precedence source wins a collision. It lists; it does not call — dispatch is POST /v1/tool/call.
   ///
   /// Parameters:
   ///
@@ -241,8 +241,8 @@ class ToolsApi {
   ///
   /// * [String] activated:
   ///   Activated keeps only the tools activated for the caller's org and project, and only when it is exactly the string \"true\".
-  Future<ToolList?> getTools({ String? source_, String? activated, }) async {
-    final response = await getToolsWithHttpInfo( source_: source_, activated: activated, );
+  Future<ToolList?> getTool({ String? source_, String? activated, }) async {
+    final response = await getToolWithHttpInfo( source_: source_, activated: activated, );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -261,9 +261,9 @@ class ToolsApi {
   /// Reports which tools are switched on for the caller's org and project. Activation is what makes a tool dispatchable and what makes it visible to an agent, so this is the set the MCP tool list is drawn from — every other tool in the registry is discoverable but refused at call time.
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getToolsActivationWithHttpInfo() async {
+  Future<Response> getToolActivationWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/tools/activation';
+    final path = r'/v1/tool/activation';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -289,8 +289,8 @@ class ToolsApi {
   /// Reports which tools are switched on for the caller's org and project.
   ///
   /// Reports which tools are switched on for the caller's org and project. Activation is what makes a tool dispatchable and what makes it visible to an agent, so this is the set the MCP tool list is drawn from — every other tool in the registry is discoverable but refused at call time.
-  Future<ActivationSet?> getToolsActivation() async {
-    final response = await getToolsActivationWithHttpInfo();
+  Future<ActivationSet?> getToolActivation() async {
+    final response = await getToolActivationWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -306,7 +306,7 @@ class ToolsApi {
 
   /// Lists the MCP servers the public registries publish, as we hold them: our canonical copy of registry.modelcontextprotocol.io, plus what we decided about each entry.
   ///
-  /// Lists the MCP servers the public registries publish, as we hold them: our canonical copy of registry.modelcontextprotocol.io, plus what we decided about each entry.  This is the SHELF an org picks from. A listing with a streamable-http endpoint can be enabled as-is — POST /v1/tools/mcp/servers with its id — and its tools then join the org's tool plane and the fleet's MCP server. A listing that only ships a stdio package needs a process to run it, which is why the transports are on every entry rather than implied.  Hidden entries are absent: they are the ones we took off the shelf. A platform SuperAdmin sees them, because the same query answers \"what is on the shelf\" and \"what is in the catalog\" and two queries would drift apart.  It is PAGED — 50 by default, 200 at most. The public registry publishes tens of thousands of servers, so an unbounded answer is a twenty-megabyte response and a storefront that renders in a minute. total is the whole match, not the page.
+  /// Lists the MCP servers the public registries publish, as we hold them: our canonical copy of registry.modelcontextprotocol.io, plus what we decided about each entry.  This is the SHELF an org picks from. A listing with a streamable-http endpoint can be enabled as-is — POST /v1/tool/mcp/servers with its id — and its tools then join the org's tool plane and the fleet's MCP server. A listing that only ships a stdio package needs a process to run it, which is why the transports are on every entry rather than implied.  Hidden entries are absent: they are the ones we took off the shelf. A platform SuperAdmin sees them, because the same query answers \"what is on the shelf\" and \"what is in the catalog\" and two queries would drift apart.  It is PAGED — 50 by default, 200 at most. The public registry publishes tens of thousands of servers, so an unbounded answer is a twenty-megabyte response and a storefront that renders in a minute. total is the whole match, not the page.
   ///
   /// Note: This method returns the HTTP [Response].
   ///
@@ -326,9 +326,9 @@ class ToolsApi {
   ///
   /// * [int] offset:
   ///   Offset skips that many listings.
-  Future<Response> getToolsCatalogWithHttpInfo({ String? q, String? featured, String? official, int? limit, int? offset, }) async {
+  Future<Response> getToolCatalogWithHttpInfo({ String? q, String? featured, String? official, int? limit, int? offset, }) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/tools/catalog';
+    final path = r'/v1/tool/catalog';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -369,7 +369,7 @@ class ToolsApi {
 
   /// Lists the MCP servers the public registries publish, as we hold them: our canonical copy of registry.modelcontextprotocol.io, plus what we decided about each entry.
   ///
-  /// Lists the MCP servers the public registries publish, as we hold them: our canonical copy of registry.modelcontextprotocol.io, plus what we decided about each entry.  This is the SHELF an org picks from. A listing with a streamable-http endpoint can be enabled as-is — POST /v1/tools/mcp/servers with its id — and its tools then join the org's tool plane and the fleet's MCP server. A listing that only ships a stdio package needs a process to run it, which is why the transports are on every entry rather than implied.  Hidden entries are absent: they are the ones we took off the shelf. A platform SuperAdmin sees them, because the same query answers \"what is on the shelf\" and \"what is in the catalog\" and two queries would drift apart.  It is PAGED — 50 by default, 200 at most. The public registry publishes tens of thousands of servers, so an unbounded answer is a twenty-megabyte response and a storefront that renders in a minute. total is the whole match, not the page.
+  /// Lists the MCP servers the public registries publish, as we hold them: our canonical copy of registry.modelcontextprotocol.io, plus what we decided about each entry.  This is the SHELF an org picks from. A listing with a streamable-http endpoint can be enabled as-is — POST /v1/tool/mcp/servers with its id — and its tools then join the org's tool plane and the fleet's MCP server. A listing that only ships a stdio package needs a process to run it, which is why the transports are on every entry rather than implied.  Hidden entries are absent: they are the ones we took off the shelf. A platform SuperAdmin sees them, because the same query answers \"what is on the shelf\" and \"what is in the catalog\" and two queries would drift apart.  It is PAGED — 50 by default, 200 at most. The public registry publishes tens of thousands of servers, so an unbounded answer is a twenty-megabyte response and a storefront that renders in a minute. total is the whole match, not the page.
   ///
   /// Parameters:
   ///
@@ -387,8 +387,8 @@ class ToolsApi {
   ///
   /// * [int] offset:
   ///   Offset skips that many listings.
-  Future<McpCatalog?> getToolsCatalog({ String? q, String? featured, String? official, int? limit, int? offset, }) async {
-    final response = await getToolsCatalogWithHttpInfo( q: q, featured: featured, official: official, limit: limit, offset: offset, );
+  Future<McpCatalog?> getToolCatalog({ String? q, String? featured, String? official, int? limit, int? offset, }) async {
+    final response = await getToolCatalogWithHttpInfo( q: q, featured: featured, official: official, limit: limit, offset: offset, );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -412,9 +412,9 @@ class ToolsApi {
   ///
   /// * [String] id (required):
   ///   ID is the listing, from the path. It is the publisher's reverse-DNS name with its one slash written as an underscore — \"com.stripe_mcp\".
-  Future<Response> getToolsCatalogByIdWithHttpInfo(String id,) async {
+  Future<Response> getToolCatalogByIdWithHttpInfo(String id,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/tools/catalog/{id}'
+    final path = r'/v1/tool/catalog/{id}'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -446,8 +446,8 @@ class ToolsApi {
   ///
   /// * [String] id (required):
   ///   ID is the listing, from the path. It is the publisher's reverse-DNS name with its one slash written as an underscore — \"com.stripe_mcp\".
-  Future<MCPListing?> getToolsCatalogById(String id,) async {
-    final response = await getToolsCatalogByIdWithHttpInfo(id,);
+  Future<MCPListing?> getToolCatalogById(String id,) async {
+    final response = await getToolCatalogByIdWithHttpInfo(id,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -466,9 +466,9 @@ class ToolsApi {
   /// Lists the external MCP servers the caller's org has registered. Each record carries the URL and the name of the header its credential is injected into; the credential VALUE lives only in KMS and is never returned, so hasSecret is the whole of what this surface says about it.
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getToolsMcpServersWithHttpInfo() async {
+  Future<Response> getToolMcpServersWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/tools/mcp/servers';
+    final path = r'/v1/tool/mcp/servers';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -494,8 +494,8 @@ class ToolsApi {
   /// Lists the external MCP servers the caller's org has registered.
   ///
   /// Lists the external MCP servers the caller's org has registered. Each record carries the URL and the name of the header its credential is injected into; the credential VALUE lives only in KMS and is never returned, so hasSecret is the whole of what this surface says about it.
-  Future<McpServerList?> getToolsMcpServers() async {
-    final response = await getToolsMcpServersWithHttpInfo();
+  Future<McpServerList?> getToolMcpServers() async {
+    final response = await getToolMcpServersWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -519,9 +519,9 @@ class ToolsApi {
   ///
   /// * [String] all:
   ///   All includes the configured-but-disabled subsystems too, but only when it is exactly the string \"true\". Otherwise only the running ones are reported.
-  Future<Response> getToolsPluginsWithHttpInfo({ String? all, }) async {
+  Future<Response> getToolPluginsWithHttpInfo({ String? all, }) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/tools/plugins';
+    final path = r'/v1/tool/plugins';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -556,8 +556,8 @@ class ToolsApi {
   ///
   /// * [String] all:
   ///   All includes the configured-but-disabled subsystems too, but only when it is exactly the string \"true\". Otherwise only the running ones are reported.
-  Future<PluginMountList?> getToolsPlugins({ String? all, }) async {
-    final response = await getToolsPluginsWithHttpInfo( all: all, );
+  Future<PluginMountList?> getToolPlugins({ String? all, }) async {
+    final response = await getToolPluginsWithHttpInfo( all: all, );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -573,12 +573,12 @@ class ToolsApi {
 
   /// Lists the plugins the caller's org BUILT, newest first, each with the TypeScript as authored.
   ///
-  /// Lists the plugins the caller's org BUILT, newest first, each with the TypeScript as authored. That is a different set with a different lifecycle from GET /v1/tools/plugins, which reports the subsystems this deployment mounted. The bundled CommonJS the runtime executes is never included, and neither is any credential — a plugin names the connectors provider it needs and reads the credential from ctx.auth at run time.
+  /// Lists the plugins the caller's org BUILT, newest first, each with the TypeScript as authored. That is a different set with a different lifecycle from GET /v1/tool/plugins, which reports the subsystems this deployment mounted. The bundled CommonJS the runtime executes is never included, and neither is any credential — a plugin names the connectors provider it needs and reads the credential from ctx.auth at run time.
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getToolsPluginsAuthoredWithHttpInfo() async {
+  Future<Response> getToolPluginsAuthoredWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/tools/plugins/authored';
+    final path = r'/v1/tool/plugins/authored';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -603,9 +603,9 @@ class ToolsApi {
 
   /// Lists the plugins the caller's org BUILT, newest first, each with the TypeScript as authored.
   ///
-  /// Lists the plugins the caller's org BUILT, newest first, each with the TypeScript as authored. That is a different set with a different lifecycle from GET /v1/tools/plugins, which reports the subsystems this deployment mounted. The bundled CommonJS the runtime executes is never included, and neither is any credential — a plugin names the connectors provider it needs and reads the credential from ctx.auth at run time.
-  Future<AuthoredPluginList?> getToolsPluginsAuthored() async {
-    final response = await getToolsPluginsAuthoredWithHttpInfo();
+  /// Lists the plugins the caller's org BUILT, newest first, each with the TypeScript as authored. That is a different set with a different lifecycle from GET /v1/tool/plugins, which reports the subsystems this deployment mounted. The bundled CommonJS the runtime executes is never included, and neither is any credential — a plugin names the connectors provider it needs and reads the credential from ctx.auth at run time.
+  Future<AuthoredPluginList?> getToolPluginsAuthored() async {
+    final response = await getToolPluginsAuthoredWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -621,7 +621,7 @@ class ToolsApi {
 
   /// Lists the skills the caller's org can reach — the brand's embedded catalogue plus the org's own authored ones — with each one's activation flag.
   ///
-  /// Lists the skills the caller's org can reach — the brand's embedded catalogue plus the org's own authored ones — with each one's activation flag. A skill is discovery and activation metadata attached to an agent, never called directly, so every entry here is non-dispatchable. It is GET /v1/tools narrowed to one source, not a second store: a name a caller sees here is the same entry, with the same activation state, that discovery reports.
+  /// Lists the skills the caller's org can reach — the brand's embedded catalogue plus the org's own authored ones — with each one's activation flag. A skill is discovery and activation metadata attached to an agent, never called directly, so every entry here is non-dispatchable. It is GET /v1/tool narrowed to one source, not a second store: a name a caller sees here is the same entry, with the same activation state, that discovery reports.
   ///
   /// Note: This method returns the HTTP [Response].
   ///
@@ -629,9 +629,9 @@ class ToolsApi {
   ///
   /// * [String] activated:
   ///   Activated keeps only the tools activated for the caller's org and project, and only when it is exactly the string \"true\".
-  Future<Response> getToolsSkillsWithHttpInfo({ String? activated, }) async {
+  Future<Response> getToolSkillsWithHttpInfo({ String? activated, }) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/tools/skills';
+    final path = r'/v1/tool/skills';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -660,14 +660,14 @@ class ToolsApi {
 
   /// Lists the skills the caller's org can reach — the brand's embedded catalogue plus the org's own authored ones — with each one's activation flag.
   ///
-  /// Lists the skills the caller's org can reach — the brand's embedded catalogue plus the org's own authored ones — with each one's activation flag. A skill is discovery and activation metadata attached to an agent, never called directly, so every entry here is non-dispatchable. It is GET /v1/tools narrowed to one source, not a second store: a name a caller sees here is the same entry, with the same activation state, that discovery reports.
+  /// Lists the skills the caller's org can reach — the brand's embedded catalogue plus the org's own authored ones — with each one's activation flag. A skill is discovery and activation metadata attached to an agent, never called directly, so every entry here is non-dispatchable. It is GET /v1/tool narrowed to one source, not a second store: a name a caller sees here is the same entry, with the same activation state, that discovery reports.
   ///
   /// Parameters:
   ///
   /// * [String] activated:
   ///   Activated keeps only the tools activated for the caller's org and project, and only when it is exactly the string \"true\".
-  Future<SourceToolList?> getToolsSkills({ String? activated, }) async {
-    final response = await getToolsSkillsWithHttpInfo( activated: activated, );
+  Future<SourceToolList?> getToolSkills({ String? activated, }) async {
+    final response = await getToolSkillsWithHttpInfo( activated: activated, );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -683,12 +683,12 @@ class ToolsApi {
 
   /// Lists the caller org's OWN skills with their SKILL.md bodies.
   ///
-  /// Lists the caller org's OWN skills with their SKILL.md bodies. GET /v1/tools/skills is the registry view — the brand's catalogue plus this org's, with activation flags and no bodies; this is the EDITABLE set, so it carries the content that view omits and nothing the org did not write.
+  /// Lists the caller org's OWN skills with their SKILL.md bodies. GET /v1/tool/skills is the registry view — the brand's catalogue plus this org's, with activation flags and no bodies; this is the EDITABLE set, so it carries the content that view omits and nothing the org did not write.
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getToolsSkillsAuthoredWithHttpInfo() async {
+  Future<Response> getToolSkillsAuthoredWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/tools/skills/authored';
+    final path = r'/v1/tool/skills/authored';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -713,9 +713,9 @@ class ToolsApi {
 
   /// Lists the caller org's OWN skills with their SKILL.md bodies.
   ///
-  /// Lists the caller org's OWN skills with their SKILL.md bodies. GET /v1/tools/skills is the registry view — the brand's catalogue plus this org's, with activation flags and no bodies; this is the EDITABLE set, so it carries the content that view omits and nothing the org did not write.
-  Future<AuthoredSkillList?> getToolsSkillsAuthored() async {
-    final response = await getToolsSkillsAuthoredWithHttpInfo();
+  /// Lists the caller org's OWN skills with their SKILL.md bodies. GET /v1/tool/skills is the registry view — the brand's catalogue plus this org's, with activation flags and no bodies; this is the EDITABLE set, so it carries the content that view omits and nothing the org did not write.
+  Future<AuthoredSkillList?> getToolSkillsAuthored() async {
+    final response = await getToolSkillsAuthoredWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -741,9 +741,9 @@ class ToolsApi {
   ///   ID is the listing to curate, from the path.
   ///
   /// * [CurateReq] curateReq (required):
-  Future<Response> patchToolsCatalogByIdWithHttpInfo(String id, CurateReq curateReq,) async {
+  Future<Response> patchToolCatalogByIdWithHttpInfo(String id, CurateReq curateReq,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/tools/catalog/{id}'
+    final path = r'/v1/tool/catalog/{id}'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -777,8 +777,8 @@ class ToolsApi {
   ///   ID is the listing to curate, from the path.
   ///
   /// * [CurateReq] curateReq (required):
-  Future<MCPListing?> patchToolsCatalogById(String id, CurateReq curateReq,) async {
-    final response = await patchToolsCatalogByIdWithHttpInfo(id, curateReq,);
+  Future<MCPListing?> patchToolCatalogById(String id, CurateReq curateReq,) async {
+    final response = await patchToolCatalogByIdWithHttpInfo(id, curateReq,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -794,16 +794,16 @@ class ToolsApi {
 
   /// Runs one of the caller's activated tools and answers with its output.
   ///
-  /// Runs one of the caller's activated tools and answers with its output.  This is the endpoint onto the tool plane's DYNAMIC half — the half no build-time catalogue can hold, because it is per-tenant: an org's connected connector actions, its authored skills, its agents and functions, and the tools of every external MCP server it registered. A tool's existence, its price and its activation are all rows, not code, so they cannot be known until the caller is.  One policy, the registry's: resolve by precedence, refuse an unactivated tool 403, settle a priced one through the x402 client or fail closed 402, then dispatch to the winning source bound to the caller's own (org, project). One metered unit, one audit record. A caller can only ever dispatch its own tools.  Discovery is GET /v1/tools — ?activated=true for the callable set.
+  /// Runs one of the caller's activated tools and answers with its output.  This is the endpoint onto the tool plane's DYNAMIC half — the half no build-time catalogue can hold, because it is per-tenant: an org's connected connector actions, its authored skills, its agents and functions, and the tools of every external MCP server it registered. A tool's existence, its price and its activation are all rows, not code, so they cannot be known until the caller is.  One policy, the registry's: resolve by precedence, refuse an unactivated tool 403, settle a priced one through the x402 client or fail closed 402, then dispatch to the winning source bound to the caller's own (org, project). One metered unit, one audit record. A caller can only ever dispatch its own tools.  Discovery is GET /v1/tool — ?activated=true for the callable set.
   ///
   /// Note: This method returns the HTTP [Response].
   ///
   /// Parameters:
   ///
   /// * [ToolCall] toolCall (required):
-  Future<Response> postToolsCallWithHttpInfo(ToolCall toolCall,) async {
+  Future<Response> postToolCallWithHttpInfo(ToolCall toolCall,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/tools/call';
+    final path = r'/v1/tool/call';
 
     // ignore: prefer_final_locals
     Object? postBody = toolCall;
@@ -828,13 +828,13 @@ class ToolsApi {
 
   /// Runs one of the caller's activated tools and answers with its output.
   ///
-  /// Runs one of the caller's activated tools and answers with its output.  This is the endpoint onto the tool plane's DYNAMIC half — the half no build-time catalogue can hold, because it is per-tenant: an org's connected connector actions, its authored skills, its agents and functions, and the tools of every external MCP server it registered. A tool's existence, its price and its activation are all rows, not code, so they cannot be known until the caller is.  One policy, the registry's: resolve by precedence, refuse an unactivated tool 403, settle a priced one through the x402 client or fail closed 402, then dispatch to the winning source bound to the caller's own (org, project). One metered unit, one audit record. A caller can only ever dispatch its own tools.  Discovery is GET /v1/tools — ?activated=true for the callable set.
+  /// Runs one of the caller's activated tools and answers with its output.  This is the endpoint onto the tool plane's DYNAMIC half — the half no build-time catalogue can hold, because it is per-tenant: an org's connected connector actions, its authored skills, its agents and functions, and the tools of every external MCP server it registered. A tool's existence, its price and its activation are all rows, not code, so they cannot be known until the caller is.  One policy, the registry's: resolve by precedence, refuse an unactivated tool 403, settle a priced one through the x402 client or fail closed 402, then dispatch to the winning source bound to the caller's own (org, project). One metered unit, one audit record. A caller can only ever dispatch its own tools.  Discovery is GET /v1/tool — ?activated=true for the callable set.
   ///
   /// Parameters:
   ///
   /// * [ToolCall] toolCall (required):
-  Future<ToolResult?> postToolsCall(ToolCall toolCall,) async {
-    final response = await postToolsCallWithHttpInfo(toolCall,);
+  Future<ToolResult?> postToolCall(ToolCall toolCall,) async {
+    final response = await postToolCallWithHttpInfo(toolCall,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -853,9 +853,9 @@ class ToolsApi {
   /// Pulls the public MCP registry into our canonical copy and reports what changed. SuperAdmin only; every other caller is refused.  It is IDEMPOTENT: a listing is keyed by the publisher's own reverse-DNS name, so a second pass over an unchanged registry rewrites the same rows and reports added=0, updated=0. It never deletes — a listing that vanishes upstream may be one an org has already enabled, and dropping its description would not drop its server. And it never touches CURATION: hidden, featured, an admin-set official and a logo survive every sync, because the write does not name those columns.
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> postToolsCatalogSyncWithHttpInfo() async {
+  Future<Response> postToolCatalogSyncWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/tools/catalog/sync';
+    final path = r'/v1/tool/catalog/sync';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -881,8 +881,8 @@ class ToolsApi {
   /// Pulls the public MCP registry into our canonical copy and reports what changed.
   ///
   /// Pulls the public MCP registry into our canonical copy and reports what changed. SuperAdmin only; every other caller is refused.  It is IDEMPOTENT: a listing is keyed by the publisher's own reverse-DNS name, so a second pass over an unchanged registry rewrites the same rows and reports added=0, updated=0. It never deletes — a listing that vanishes upstream may be one an org has already enabled, and dropping its description would not drop its server. And it never touches CURATION: hidden, featured, an admin-set official and a logo survive every sync, because the write does not name those columns.
-  Future<McpCatalogSync?> postToolsCatalogSync() async {
-    final response = await postToolsCatalogSyncWithHttpInfo();
+  Future<McpCatalogSync?> postToolCatalogSync() async {
+    final response = await postToolCatalogSyncWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -905,9 +905,9 @@ class ToolsApi {
   /// Parameters:
   ///
   /// * [CreateServerReq] createServerReq (required):
-  Future<Response> postToolsMcpServersWithHttpInfo(CreateServerReq createServerReq,) async {
+  Future<Response> postToolMcpServersWithHttpInfo(CreateServerReq createServerReq,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/tools/mcp/servers';
+    final path = r'/v1/tool/mcp/servers';
 
     // ignore: prefer_final_locals
     Object? postBody = createServerReq;
@@ -937,8 +937,8 @@ class ToolsApi {
   /// Parameters:
   ///
   /// * [CreateServerReq] createServerReq (required):
-  Future<MCPServer?> postToolsMcpServers(CreateServerReq createServerReq,) async {
-    final response = await postToolsMcpServersWithHttpInfo(createServerReq,);
+  Future<MCPServer?> postToolMcpServers(CreateServerReq createServerReq,) async {
+    final response = await postToolMcpServersWithHttpInfo(createServerReq,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -961,9 +961,9 @@ class ToolsApi {
   /// Parameters:
   ///
   /// * [BuildRequest] buildRequest (required):
-  Future<Response> postToolsPluginsBuildWithHttpInfo(BuildRequest buildRequest,) async {
+  Future<Response> postToolPluginsBuildWithHttpInfo(BuildRequest buildRequest,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/tools/plugins/build';
+    final path = r'/v1/tool/plugins/build';
 
     // ignore: prefer_final_locals
     Object? postBody = buildRequest;
@@ -993,8 +993,8 @@ class ToolsApi {
   /// Parameters:
   ///
   /// * [BuildRequest] buildRequest (required):
-  Future<BuildOut?> postToolsPluginsBuild(BuildRequest buildRequest,) async {
-    final response = await postToolsPluginsBuildWithHttpInfo(buildRequest,);
+  Future<BuildOut?> postToolPluginsBuild(BuildRequest buildRequest,) async {
+    final response = await postToolPluginsBuildWithHttpInfo(buildRequest,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1017,9 +1017,9 @@ class ToolsApi {
   /// Parameters:
   ///
   /// * [SkillIn] skillIn (required):
-  Future<Response> postToolsSkillsWithHttpInfo(SkillIn skillIn,) async {
+  Future<Response> postToolSkillsWithHttpInfo(SkillIn skillIn,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/tools/skills';
+    final path = r'/v1/tool/skills';
 
     // ignore: prefer_final_locals
     Object? postBody = skillIn;
@@ -1049,8 +1049,8 @@ class ToolsApi {
   /// Parameters:
   ///
   /// * [SkillIn] skillIn (required):
-  Future<SkillWritten?> postToolsSkills(SkillIn skillIn,) async {
-    final response = await postToolsSkillsWithHttpInfo(skillIn,);
+  Future<SkillWritten?> postToolSkills(SkillIn skillIn,) async {
+    final response = await postToolSkillsWithHttpInfo(skillIn,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1073,9 +1073,9 @@ class ToolsApi {
   /// Parameters:
   ///
   /// * [ActivationReq] activationReq (required):
-  Future<Response> putToolsActivationWithHttpInfo(ActivationReq activationReq,) async {
+  Future<Response> putToolActivationWithHttpInfo(ActivationReq activationReq,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/tools/activation';
+    final path = r'/v1/tool/activation';
 
     // ignore: prefer_final_locals
     Object? postBody = activationReq;
@@ -1105,8 +1105,8 @@ class ToolsApi {
   /// Parameters:
   ///
   /// * [ActivationReq] activationReq (required):
-  Future<ActivationSet?> putToolsActivation(ActivationReq activationReq,) async {
-    final response = await putToolsActivationWithHttpInfo(activationReq,);
+  Future<ActivationSet?> putToolActivation(ActivationReq activationReq,) async {
+    final response = await putToolActivationWithHttpInfo(activationReq,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }

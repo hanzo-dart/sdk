@@ -10,9 +10,9 @@
 
 part of hanzoai.cloud;
 
-class PushPusher {
-  /// Returns a new [PushPusher] instance.
-  PushPusher({
+class ForgeJobRepositoryOwner {
+  /// Returns a new [ForgeJobRepositoryOwner] instance.
+  ForgeJobRepositoryOwner({
     this.login,
     this.username,
   });
@@ -33,7 +33,7 @@ class PushPusher {
   String? username;
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is PushPusher &&
+  bool operator ==(Object other) => identical(this, other) || other is ForgeJobRepositoryOwner &&
     other.login == login &&
     other.username == username;
 
@@ -44,7 +44,7 @@ class PushPusher {
     (username == null ? 0 : username!.hashCode);
 
   @override
-  String toString() => 'PushPusher[login=$login, username=$username]';
+  String toString() => 'ForgeJobRepositoryOwner[login=$login, username=$username]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -61,10 +61,10 @@ class PushPusher {
     return json;
   }
 
-  /// Returns a new [PushPusher] instance and imports its values from
+  /// Returns a new [ForgeJobRepositoryOwner] instance and imports its values from
   /// [value] if it's a [Map], null otherwise.
   // ignore: prefer_constructors_over_static_methods
-  static PushPusher? fromJson(dynamic value) {
+  static ForgeJobRepositoryOwner? fromJson(dynamic value) {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
 
@@ -73,13 +73,13 @@ class PushPusher {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key), 'Required key "PushPusher[$key]" is missing from JSON.');
-          assert(json[key] != null, 'Required key "PushPusher[$key]" has a null value in JSON.');
+          assert(json.containsKey(key), 'Required key "ForgeJobRepositoryOwner[$key]" is missing from JSON.');
+          assert(json[key] != null, 'Required key "ForgeJobRepositoryOwner[$key]" has a null value in JSON.');
         });
         return true;
       }());
 
-      return PushPusher(
+      return ForgeJobRepositoryOwner(
         login: mapValueOfType<String>(json, r'login'),
         username: mapValueOfType<String>(json, r'username'),
       );
@@ -87,11 +87,11 @@ class PushPusher {
     return null;
   }
 
-  static List<PushPusher> listFromJson(dynamic json, {bool growable = false,}) {
-    final result = <PushPusher>[];
+  static List<ForgeJobRepositoryOwner> listFromJson(dynamic json, {bool growable = false,}) {
+    final result = <ForgeJobRepositoryOwner>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
-        final value = PushPusher.fromJson(row);
+        final value = ForgeJobRepositoryOwner.fromJson(row);
         if (value != null) {
           result.add(value);
         }
@@ -100,12 +100,12 @@ class PushPusher {
     return result.toList(growable: growable);
   }
 
-  static Map<String, PushPusher> mapFromJson(dynamic json) {
-    final map = <String, PushPusher>{};
+  static Map<String, ForgeJobRepositoryOwner> mapFromJson(dynamic json) {
+    final map = <String, ForgeJobRepositoryOwner>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = PushPusher.fromJson(entry.value);
+        final value = ForgeJobRepositoryOwner.fromJson(entry.value);
         if (value != null) {
           map[entry.key] = value;
         }
@@ -114,14 +114,14 @@ class PushPusher {
     return map;
   }
 
-  // maps a json object with a list of PushPusher-objects as value to a dart map
-  static Map<String, List<PushPusher>> mapListFromJson(dynamic json, {bool growable = false,}) {
-    final map = <String, List<PushPusher>>{};
+  // maps a json object with a list of ForgeJobRepositoryOwner-objects as value to a dart map
+  static Map<String, List<ForgeJobRepositoryOwner>> mapListFromJson(dynamic json, {bool growable = false,}) {
+    final map = <String, List<ForgeJobRepositoryOwner>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = PushPusher.listFromJson(entry.value, growable: growable,);
+        map[entry.key] = ForgeJobRepositoryOwner.listFromJson(entry.value, growable: growable,);
       }
     }
     return map;

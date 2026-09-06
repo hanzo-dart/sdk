@@ -10,14 +10,13 @@
 
 part of hanzoai.cloud;
 
-class Push {
-  /// Returns a new [Push] instance.
-  Push({
-    this.after,
-    this.before,
-    this.pusher,
-    this.ref,
-    this.repository,
+class ForgeLaunched {
+  /// Returns a new [ForgeLaunched] instance.
+  ForgeLaunched({
+    this.job,
+    this.org,
+    this.repo,
+    this.runner,
   });
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
@@ -25,7 +24,7 @@ class Push {
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  String? after;
+  int? job;
 
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
@@ -33,7 +32,7 @@ class Push {
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  String? before;
+  String? org;
 
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
@@ -41,7 +40,7 @@ class Push {
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  PushPusher? pusher;
+  String? repo;
 
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
@@ -49,70 +48,55 @@ class Push {
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  String? ref;
-
-  ///
-  /// Please note: This property should have been non-nullable! Since the specification file
-  /// does not include a default value (using the "default:" property), however, the generated
-  /// source code must fall back to having a nullable type.
-  /// Consider adding a "default:" property in the specification file to hide this note.
-  ///
-  PushRepository? repository;
+  String? runner;
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is Push &&
-    other.after == after &&
-    other.before == before &&
-    other.pusher == pusher &&
-    other.ref == ref &&
-    other.repository == repository;
+  bool operator ==(Object other) => identical(this, other) || other is ForgeLaunched &&
+    other.job == job &&
+    other.org == org &&
+    other.repo == repo &&
+    other.runner == runner;
 
   @override
   int get hashCode =>
     // ignore: unnecessary_parenthesis
-    (after == null ? 0 : after!.hashCode) +
-    (before == null ? 0 : before!.hashCode) +
-    (pusher == null ? 0 : pusher!.hashCode) +
-    (ref == null ? 0 : ref!.hashCode) +
-    (repository == null ? 0 : repository!.hashCode);
+    (job == null ? 0 : job!.hashCode) +
+    (org == null ? 0 : org!.hashCode) +
+    (repo == null ? 0 : repo!.hashCode) +
+    (runner == null ? 0 : runner!.hashCode);
 
   @override
-  String toString() => 'Push[after=$after, before=$before, pusher=$pusher, ref=$ref, repository=$repository]';
+  String toString() => 'ForgeLaunched[job=$job, org=$org, repo=$repo, runner=$runner]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (this.after != null) {
-      json[r'after'] = this.after;
+    if (this.job != null) {
+      json[r'job'] = this.job;
     } else {
-      json[r'after'] = null;
+      json[r'job'] = null;
     }
-    if (this.before != null) {
-      json[r'before'] = this.before;
+    if (this.org != null) {
+      json[r'org'] = this.org;
     } else {
-      json[r'before'] = null;
+      json[r'org'] = null;
     }
-    if (this.pusher != null) {
-      json[r'pusher'] = this.pusher;
+    if (this.repo != null) {
+      json[r'repo'] = this.repo;
     } else {
-      json[r'pusher'] = null;
+      json[r'repo'] = null;
     }
-    if (this.ref != null) {
-      json[r'ref'] = this.ref;
+    if (this.runner != null) {
+      json[r'runner'] = this.runner;
     } else {
-      json[r'ref'] = null;
-    }
-    if (this.repository != null) {
-      json[r'repository'] = this.repository;
-    } else {
-      json[r'repository'] = null;
+      json[r'runner'] = null;
     }
     return json;
   }
 
-  /// Returns a new [Push] instance and imports its values from
+  /// Returns a new [ForgeLaunched] instance and imports its values from
   /// [value] if it's a [Map], null otherwise.
   // ignore: prefer_constructors_over_static_methods
-  static Push? fromJson(dynamic value) {
+  static ForgeLaunched? fromJson(dynamic value) {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
 
@@ -121,28 +105,27 @@ class Push {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key), 'Required key "Push[$key]" is missing from JSON.');
-          assert(json[key] != null, 'Required key "Push[$key]" has a null value in JSON.');
+          assert(json.containsKey(key), 'Required key "ForgeLaunched[$key]" is missing from JSON.');
+          assert(json[key] != null, 'Required key "ForgeLaunched[$key]" has a null value in JSON.');
         });
         return true;
       }());
 
-      return Push(
-        after: mapValueOfType<String>(json, r'after'),
-        before: mapValueOfType<String>(json, r'before'),
-        pusher: PushPusher.fromJson(json[r'pusher']),
-        ref: mapValueOfType<String>(json, r'ref'),
-        repository: PushRepository.fromJson(json[r'repository']),
+      return ForgeLaunched(
+        job: mapValueOfType<int>(json, r'job'),
+        org: mapValueOfType<String>(json, r'org'),
+        repo: mapValueOfType<String>(json, r'repo'),
+        runner: mapValueOfType<String>(json, r'runner'),
       );
     }
     return null;
   }
 
-  static List<Push> listFromJson(dynamic json, {bool growable = false,}) {
-    final result = <Push>[];
+  static List<ForgeLaunched> listFromJson(dynamic json, {bool growable = false,}) {
+    final result = <ForgeLaunched>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
-        final value = Push.fromJson(row);
+        final value = ForgeLaunched.fromJson(row);
         if (value != null) {
           result.add(value);
         }
@@ -151,12 +134,12 @@ class Push {
     return result.toList(growable: growable);
   }
 
-  static Map<String, Push> mapFromJson(dynamic json) {
-    final map = <String, Push>{};
+  static Map<String, ForgeLaunched> mapFromJson(dynamic json) {
+    final map = <String, ForgeLaunched>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = Push.fromJson(entry.value);
+        final value = ForgeLaunched.fromJson(entry.value);
         if (value != null) {
           map[entry.key] = value;
         }
@@ -165,14 +148,14 @@ class Push {
     return map;
   }
 
-  // maps a json object with a list of Push-objects as value to a dart map
-  static Map<String, List<Push>> mapListFromJson(dynamic json, {bool growable = false,}) {
-    final map = <String, List<Push>>{};
+  // maps a json object with a list of ForgeLaunched-objects as value to a dart map
+  static Map<String, List<ForgeLaunched>> mapListFromJson(dynamic json, {bool growable = false,}) {
+    final map = <String, List<ForgeLaunched>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = Push.listFromJson(entry.value, growable: growable,);
+        map[entry.key] = ForgeLaunched.listFromJson(entry.value, growable: growable,);
       }
     }
     return map;

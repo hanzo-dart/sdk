@@ -10,11 +10,12 @@
 
 part of hanzoai.cloud;
 
-class PushRepository {
-  /// Returns a new [PushRepository] instance.
-  PushRepository({
-    this.name,
-    this.owner,
+class ForgeJob {
+  /// Returns a new [ForgeJob] instance.
+  ForgeJob({
+    this.action,
+    this.repository,
+    this.workflowJob,
   });
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
@@ -22,7 +23,7 @@ class PushRepository {
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  String? name;
+  String? action;
 
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
@@ -30,41 +31,56 @@ class PushRepository {
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  PushPusher? owner;
+  ForgeJobRepository? repository;
+
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  ForgeJobWorkflowJob? workflowJob;
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is PushRepository &&
-    other.name == name &&
-    other.owner == owner;
+  bool operator ==(Object other) => identical(this, other) || other is ForgeJob &&
+    other.action == action &&
+    other.repository == repository &&
+    other.workflowJob == workflowJob;
 
   @override
   int get hashCode =>
     // ignore: unnecessary_parenthesis
-    (name == null ? 0 : name!.hashCode) +
-    (owner == null ? 0 : owner!.hashCode);
+    (action == null ? 0 : action!.hashCode) +
+    (repository == null ? 0 : repository!.hashCode) +
+    (workflowJob == null ? 0 : workflowJob!.hashCode);
 
   @override
-  String toString() => 'PushRepository[name=$name, owner=$owner]';
+  String toString() => 'ForgeJob[action=$action, repository=$repository, workflowJob=$workflowJob]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (this.name != null) {
-      json[r'name'] = this.name;
+    if (this.action != null) {
+      json[r'action'] = this.action;
     } else {
-      json[r'name'] = null;
+      json[r'action'] = null;
     }
-    if (this.owner != null) {
-      json[r'owner'] = this.owner;
+    if (this.repository != null) {
+      json[r'repository'] = this.repository;
     } else {
-      json[r'owner'] = null;
+      json[r'repository'] = null;
+    }
+    if (this.workflowJob != null) {
+      json[r'workflow_job'] = this.workflowJob;
+    } else {
+      json[r'workflow_job'] = null;
     }
     return json;
   }
 
-  /// Returns a new [PushRepository] instance and imports its values from
+  /// Returns a new [ForgeJob] instance and imports its values from
   /// [value] if it's a [Map], null otherwise.
   // ignore: prefer_constructors_over_static_methods
-  static PushRepository? fromJson(dynamic value) {
+  static ForgeJob? fromJson(dynamic value) {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
 
@@ -73,25 +89,26 @@ class PushRepository {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key), 'Required key "PushRepository[$key]" is missing from JSON.');
-          assert(json[key] != null, 'Required key "PushRepository[$key]" has a null value in JSON.');
+          assert(json.containsKey(key), 'Required key "ForgeJob[$key]" is missing from JSON.');
+          assert(json[key] != null, 'Required key "ForgeJob[$key]" has a null value in JSON.');
         });
         return true;
       }());
 
-      return PushRepository(
-        name: mapValueOfType<String>(json, r'name'),
-        owner: PushPusher.fromJson(json[r'owner']),
+      return ForgeJob(
+        action: mapValueOfType<String>(json, r'action'),
+        repository: ForgeJobRepository.fromJson(json[r'repository']),
+        workflowJob: ForgeJobWorkflowJob.fromJson(json[r'workflow_job']),
       );
     }
     return null;
   }
 
-  static List<PushRepository> listFromJson(dynamic json, {bool growable = false,}) {
-    final result = <PushRepository>[];
+  static List<ForgeJob> listFromJson(dynamic json, {bool growable = false,}) {
+    final result = <ForgeJob>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
-        final value = PushRepository.fromJson(row);
+        final value = ForgeJob.fromJson(row);
         if (value != null) {
           result.add(value);
         }
@@ -100,12 +117,12 @@ class PushRepository {
     return result.toList(growable: growable);
   }
 
-  static Map<String, PushRepository> mapFromJson(dynamic json) {
-    final map = <String, PushRepository>{};
+  static Map<String, ForgeJob> mapFromJson(dynamic json) {
+    final map = <String, ForgeJob>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = PushRepository.fromJson(entry.value);
+        final value = ForgeJob.fromJson(entry.value);
         if (value != null) {
           map[entry.key] = value;
         }
@@ -114,14 +131,14 @@ class PushRepository {
     return map;
   }
 
-  // maps a json object with a list of PushRepository-objects as value to a dart map
-  static Map<String, List<PushRepository>> mapListFromJson(dynamic json, {bool growable = false,}) {
-    final map = <String, List<PushRepository>>{};
+  // maps a json object with a list of ForgeJob-objects as value to a dart map
+  static Map<String, List<ForgeJob>> mapListFromJson(dynamic json, {bool growable = false,}) {
+    final map = <String, List<ForgeJob>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = PushRepository.listFromJson(entry.value, growable: growable,);
+        map[entry.key] = ForgeJob.listFromJson(entry.value, growable: growable,);
       }
     }
     return map;

@@ -11,14 +11,14 @@
 part of hanzoai.cloud;
 
 
-class VisorApi {
-  VisorApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
+class ComputeApi {
+  ComputeApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
 
   final ApiClient apiClient;
 
-  /// Attaches a BYO cluster to the caller's org — the kubeconfig is validated, KMS-sealed and added to the fleet — and answers 201 with the cluster as it now appears on GET /v1/visor/clusters.
+  /// Attaches a BYO cluster to the caller's org — the kubeconfig is validated, KMS-sealed and added to the fleet — and answers 201 with the cluster as it now appears on GET /v1/compute/clusters.
   ///
-  /// Attaches a BYO cluster to the caller's org — the kubeconfig is validated, KMS-sealed and added to the fleet — and answers 201 with the cluster as it now appears on GET /v1/visor/clusters. Billed the nominal management fee: the customer brings the compute, Hanzo meters the management plane.
+  /// Attaches a BYO cluster to the caller's org — the kubeconfig is validated, KMS-sealed and added to the fleet — and answers 201 with the cluster as it now appears on GET /v1/compute/clusters. Billed the nominal management fee: the customer brings the compute, Hanzo meters the management plane.
   ///
   /// Note: This method returns the HTTP [Response].
   ///
@@ -27,7 +27,7 @@ class VisorApi {
   /// * [ClusterAttach] clusterAttach (required):
   Future<Response> attachClusterWithHttpInfo(ClusterAttach clusterAttach,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/clusters';
+    final path = r'/v1/compute/clusters';
 
     // ignore: prefer_final_locals
     Object? postBody = clusterAttach;
@@ -50,9 +50,9 @@ class VisorApi {
     );
   }
 
-  /// Attaches a BYO cluster to the caller's org — the kubeconfig is validated, KMS-sealed and added to the fleet — and answers 201 with the cluster as it now appears on GET /v1/visor/clusters.
+  /// Attaches a BYO cluster to the caller's org — the kubeconfig is validated, KMS-sealed and added to the fleet — and answers 201 with the cluster as it now appears on GET /v1/compute/clusters.
   ///
-  /// Attaches a BYO cluster to the caller's org — the kubeconfig is validated, KMS-sealed and added to the fleet — and answers 201 with the cluster as it now appears on GET /v1/visor/clusters. Billed the nominal management fee: the customer brings the compute, Hanzo meters the management plane.
+  /// Attaches a BYO cluster to the caller's org — the kubeconfig is validated, KMS-sealed and added to the fleet — and answers 201 with the cluster as it now appears on GET /v1/compute/clusters. Billed the nominal management fee: the customer brings the compute, Hanzo meters the management plane.
   ///
   /// Parameters:
   ///
@@ -86,7 +86,7 @@ class VisorApi {
   /// * [BindAgentReq] bindAgentReq (required):
   Future<Response> bindMachineAgentWithHttpInfo(String id, BindAgentReq bindAgentReq,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/machines/{id}/agent'
+    final path = r'/v1/compute/machines/{id}/agent'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -149,7 +149,7 @@ class VisorApi {
   /// * [JobCancel] jobCancel (required):
   Future<Response> cancelFleetJobWithHttpInfo(String id, JobCancel jobCancel,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/fleet/jobs/{id}/cancel'
+    final path = r'/v1/compute/fleet/jobs/{id}/cancel'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -209,7 +209,7 @@ class VisorApi {
   /// * [CreateClusterReq] createClusterReq (required):
   Future<Response> createKubernetesClusterWithHttpInfo(CreateClusterReq createClusterReq,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/k8s/clusters';
+    final path = r'/v1/compute/k8s/clusters';
 
     // ignore: prefer_final_locals
     Object? postBody = createClusterReq;
@@ -268,7 +268,7 @@ class VisorApi {
   /// * [PoolCreate] poolCreate (required):
   Future<Response> createNodePoolWithHttpInfo(String clusterId, PoolCreate poolCreate,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/clusters/{clusterId}/pools'
+    final path = r'/v1/compute/clusters/{clusterId}/pools'
       .replaceAll('{clusterId}', clusterId);
 
     // ignore: prefer_final_locals
@@ -317,57 +317,6 @@ class VisorApi {
     return null;
   }
 
-  /// Tears down both halves of a bot: it unbinds the agent (best-effort — a bot with no binding still deletes), then terminates the machine.
-  ///
-  /// Tears down both halves of a bot: it unbinds the agent (best-effort — a bot with no binding still deletes), then terminates the machine. Answers 204.
-  ///
-  /// Note: This method returns the HTTP [Response].
-  ///
-  /// Parameters:
-  ///
-  /// * [String] id (required):
-  ///   ID is the bot machine's id — the same id the machines surface addresses it by. Scoped to the caller's org upstream, so another tenant's id is 404.
-  Future<Response> deleteBotWithHttpInfo(String id,) async {
-    // ignore: prefer_const_declarations
-    final path = r'/v1/visor/compute/bots/{id}'
-      .replaceAll('{id}', id);
-
-    // ignore: prefer_final_locals
-    Object? postBody;
-
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{};
-    final formParams = <String, String>{};
-
-    const contentTypes = <String>[];
-
-
-    return apiClient.invokeAPI(
-      path,
-      'DELETE',
-      queryParams,
-      postBody,
-      headerParams,
-      formParams,
-      contentTypes.isEmpty ? null : contentTypes.first,
-    );
-  }
-
-  /// Tears down both halves of a bot: it unbinds the agent (best-effort — a bot with no binding still deletes), then terminates the machine.
-  ///
-  /// Tears down both halves of a bot: it unbinds the agent (best-effort — a bot with no binding still deletes), then terminates the machine. Answers 204.
-  ///
-  /// Parameters:
-  ///
-  /// * [String] id (required):
-  ///   ID is the bot machine's id — the same id the machines surface addresses it by. Scoped to the caller's org upstream, so another tenant's id is 404.
-  Future<void> deleteBot(String id,) async {
-    final response = await deleteBotWithHttpInfo(id,);
-    if (response.statusCode >= HttpStatus.badRequest) {
-      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
-    }
-  }
-
   /// Destroys a DOKS cluster by id and answers 204.
   ///
   /// Destroys a DOKS cluster by id and answers 204. ADMIN-GATED, like create. Visor scopes the delete to the org (refuses a foreign id), so this can only ever remove the caller org's own cluster.
@@ -380,7 +329,7 @@ class VisorApi {
   ///   ID is the provider's DOKS cluster id. Visor scopes the lookup to the caller's org, so another tenant's id resolves to not-found rather than their cluster.
   Future<Response> deleteKubernetesClusterWithHttpInfo(String id,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/k8s/clusters/{id}'
+    final path = r'/v1/compute/k8s/clusters/{id}'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -431,7 +380,7 @@ class VisorApi {
   ///   ID is the machine's org-scoped NAME — the stable key Visor addresses a machine by (owner/name), not the ephemeral provider id.
   Future<Response> deleteMachineWithHttpInfo(String id,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/machines/{id}'
+    final path = r'/v1/compute/machines/{id}'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -487,7 +436,7 @@ class VisorApi {
   ///   Provider is the cloud the cluster lives on, from ?provider=. Required.
   Future<Response> deleteNodePoolWithHttpInfo(String clusterId, String poolId, { String? provider, }) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/clusters/{clusterId}/pools/{poolId}'
+    final path = r'/v1/compute/clusters/{clusterId}/pools/{poolId}'
       .replaceAll('{clusterId}', clusterId)
       .replaceAll('{poolId}', poolId);
 
@@ -548,7 +497,7 @@ class VisorApi {
   ///   ID is the cluster's fleet name (the `name` it was attached under), matched lower-cased.
   Future<Response> detachClusterWithHttpInfo(String id,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/clusters/{id}'
+    final path = r'/v1/compute/clusters/{id}'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -595,20 +544,14 @@ class VisorApi {
     return null;
   }
 
-  /// Returns one of the caller org's bot machines with its agent binding.
+  /// Regions lists the regions a machine can be launched in.
   ///
-  /// Returns one of the caller org's bot machines with its agent binding.  A machine counts as a Bot if it carries the hanzo-kind:bot tag OR has an agent binding — either signal is authoritative, so a bot resolves even before its cloud-init has stamped every tag. A machine that is neither is 404: this route answers for bots, not for machines.
+  /// Regions lists the regions a machine can be launched in.  The catalog is GLOBAL — identical for every tenant — so no owner is forwarded upstream. It is still org-gated, because a catalog is a map of what this deployment can spend money in and an anonymous caller has no business reading it.
   ///
   /// Note: This method returns the HTTP [Response].
-  ///
-  /// Parameters:
-  ///
-  /// * [String] id (required):
-  ///   ID is the bot machine's id — the same id the machines surface addresses it by. Scoped to the caller's org upstream, so another tenant's id is 404.
-  Future<Response> getBotWithHttpInfo(String id,) async {
+  Future<Response> getComputeRegionsWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/compute/bots/{id}'
-      .replaceAll('{id}', id);
+    final path = r'/v1/compute/regions';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -631,16 +574,11 @@ class VisorApi {
     );
   }
 
-  /// Returns one of the caller org's bot machines with its agent binding.
+  /// Regions lists the regions a machine can be launched in.
   ///
-  /// Returns one of the caller org's bot machines with its agent binding.  A machine counts as a Bot if it carries the hanzo-kind:bot tag OR has an agent binding — either signal is authoritative, so a bot resolves even before its cloud-init has stamped every tag. A machine that is neither is 404: this route answers for bots, not for machines.
-  ///
-  /// Parameters:
-  ///
-  /// * [String] id (required):
-  ///   ID is the bot machine's id — the same id the machines surface addresses it by. Scoped to the caller's org upstream, so another tenant's id is 404.
-  Future<BotView?> getBot(String id,) async {
-    final response = await getBotWithHttpInfo(id,);
+  /// Regions lists the regions a machine can be launched in.  The catalog is GLOBAL — identical for every tenant — so no owner is forwarded upstream. It is still org-gated, because a catalog is a map of what this deployment can spend money in and an anonymous caller has no business reading it.
+  Future<Object?> getComputeRegions() async {
+    final response = await getComputeRegionsWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -648,7 +586,55 @@ class VisorApi {
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'BotView',) as BotView;
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'Object',) as Object;
+    
+    }
+    return null;
+  }
+
+  /// Sizes lists the machine sizes available to launch, with their specifications.
+  ///
+  /// Sizes lists the machine sizes available to launch, with their specifications.  Global and org-gated, exactly as the region catalog is, and for the same reasons.
+  ///
+  /// Note: This method returns the HTTP [Response].
+  Future<Response> getComputeSizesWithHttpInfo() async {
+    // ignore: prefer_const_declarations
+    final path = r'/v1/compute/sizes';
+
+    // ignore: prefer_final_locals
+    Object? postBody;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    const contentTypes = <String>[];
+
+
+    return apiClient.invokeAPI(
+      path,
+      'GET',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  /// Sizes lists the machine sizes available to launch, with their specifications.
+  ///
+  /// Sizes lists the machine sizes available to launch, with their specifications.  Global and org-gated, exactly as the region catalog is, and for the same reasons.
+  Future<Object?> getComputeSizes() async {
+    final response = await getComputeSizesWithHttpInfo();
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'Object',) as Object;
     
     }
     return null;
@@ -666,7 +652,7 @@ class VisorApi {
   ///   ID is the provider's DOKS cluster id. Visor scopes the lookup to the caller's org, so another tenant's id resolves to not-found rather than their cluster.
   Future<Response> getKubernetesClusterWithHttpInfo(String id,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/k8s/clusters/{id}'
+    final path = r'/v1/compute/k8s/clusters/{id}'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -725,7 +711,7 @@ class VisorApi {
   ///   ID is the machine's org-scoped NAME — the stable key Visor addresses a machine by (owner/name), not the ephemeral provider id.
   Future<Response> getMachineWithHttpInfo(String id,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/machines/{id}'
+    final path = r'/v1/compute/machines/{id}'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -784,7 +770,7 @@ class VisorApi {
   ///   ID is the machine's org-scoped NAME — the stable key Visor addresses a machine by (owner/name), not the ephemeral provider id.
   Future<Response> getMachineAgentWithHttpInfo(String id,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/machines/{id}/agent'
+    final path = r'/v1/compute/machines/{id}/agent'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals
@@ -831,150 +817,6 @@ class VisorApi {
     return null;
   }
 
-  /// Regions lists the regions a machine can be launched in.
-  ///
-  /// Regions lists the regions a machine can be launched in.  The catalog is GLOBAL — identical for every tenant — so no owner is forwarded upstream. It is still org-gated, because a catalog is a map of what this deployment can spend money in and an anonymous caller has no business reading it.
-  ///
-  /// Note: This method returns the HTTP [Response].
-  Future<Response> getVisorComputeRegionsWithHttpInfo() async {
-    // ignore: prefer_const_declarations
-    final path = r'/v1/visor/compute/regions';
-
-    // ignore: prefer_final_locals
-    Object? postBody;
-
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{};
-    final formParams = <String, String>{};
-
-    const contentTypes = <String>[];
-
-
-    return apiClient.invokeAPI(
-      path,
-      'GET',
-      queryParams,
-      postBody,
-      headerParams,
-      formParams,
-      contentTypes.isEmpty ? null : contentTypes.first,
-    );
-  }
-
-  /// Regions lists the regions a machine can be launched in.
-  ///
-  /// Regions lists the regions a machine can be launched in.  The catalog is GLOBAL — identical for every tenant — so no owner is forwarded upstream. It is still org-gated, because a catalog is a map of what this deployment can spend money in and an anonymous caller has no business reading it.
-  Future<Object?> getVisorComputeRegions() async {
-    final response = await getVisorComputeRegionsWithHttpInfo();
-    if (response.statusCode >= HttpStatus.badRequest) {
-      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
-    }
-    // When a remote server returns no body with a status of 204, we shall not decode it.
-    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
-    // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'Object',) as Object;
-    
-    }
-    return null;
-  }
-
-  /// Sizes lists the machine sizes available to launch, with their specifications.
-  ///
-  /// Sizes lists the machine sizes available to launch, with their specifications.  Global and org-gated, exactly as the region catalog is, and for the same reasons.
-  ///
-  /// Note: This method returns the HTTP [Response].
-  Future<Response> getVisorComputeSizesWithHttpInfo() async {
-    // ignore: prefer_const_declarations
-    final path = r'/v1/visor/compute/sizes';
-
-    // ignore: prefer_final_locals
-    Object? postBody;
-
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{};
-    final formParams = <String, String>{};
-
-    const contentTypes = <String>[];
-
-
-    return apiClient.invokeAPI(
-      path,
-      'GET',
-      queryParams,
-      postBody,
-      headerParams,
-      formParams,
-      contentTypes.isEmpty ? null : contentTypes.first,
-    );
-  }
-
-  /// Sizes lists the machine sizes available to launch, with their specifications.
-  ///
-  /// Sizes lists the machine sizes available to launch, with their specifications.  Global and org-gated, exactly as the region catalog is, and for the same reasons.
-  Future<Object?> getVisorComputeSizes() async {
-    final response = await getVisorComputeSizesWithHttpInfo();
-    if (response.statusCode >= HttpStatus.badRequest) {
-      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
-    }
-    // When a remote server returns no body with a status of 204, we shall not decode it.
-    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
-    // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'Object',) as Object;
-    
-    }
-    return null;
-  }
-
-  /// Returns the caller org's bot machines — the kind=bot machines — each joined with the agent binding that says which cloud Agent it runs.
-  ///
-  /// Returns the caller org's bot machines — the kind=bot machines — each joined with the agent binding that says which cloud Agent it runs.  The bindings are read ONCE and joined by machine id, so the list is O(1) upstream calls, not N+1. A bindings read that fails only costs the reconciled status: a bot still lists without it.
-  ///
-  /// Note: This method returns the HTTP [Response].
-  Future<Response> listBotsWithHttpInfo() async {
-    // ignore: prefer_const_declarations
-    final path = r'/v1/visor/compute/bots';
-
-    // ignore: prefer_final_locals
-    Object? postBody;
-
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{};
-    final formParams = <String, String>{};
-
-    const contentTypes = <String>[];
-
-
-    return apiClient.invokeAPI(
-      path,
-      'GET',
-      queryParams,
-      postBody,
-      headerParams,
-      formParams,
-      contentTypes.isEmpty ? null : contentTypes.first,
-    );
-  }
-
-  /// Returns the caller org's bot machines — the kind=bot machines — each joined with the agent binding that says which cloud Agent it runs.
-  ///
-  /// Returns the caller org's bot machines — the kind=bot machines — each joined with the agent binding that says which cloud Agent it runs.  The bindings are read ONCE and joined by machine id, so the list is O(1) upstream calls, not N+1. A bindings read that fails only costs the reconciled status: a bot still lists without it.
-  Future<BotList?> listBots() async {
-    final response = await listBotsWithHttpInfo();
-    if (response.statusCode >= HttpStatus.badRequest) {
-      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
-    }
-    // When a remote server returns no body with a status of 204, we shall not decode it.
-    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
-    // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'BotList',) as BotList;
-    
-    }
-    return null;
-  }
-
   /// Returns the caller org's clusters from both sources: the managed clusters projected from Visor's node pools, and the BYO clusters attached to the caller's project.
   ///
   /// Returns the caller org's clusters from both sources: the managed clusters projected from Visor's node pools, and the BYO clusters attached to the caller's project. A Visor outage costs the managed half only — the BYO half still lists, because a page that 502s on an optional provider is worse than a page that shows what it can.
@@ -982,7 +824,7 @@ class VisorApi {
   /// Note: This method returns the HTTP [Response].
   Future<Response> listClustersWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/clusters';
+    final path = r'/v1/compute/clusters';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -1030,7 +872,7 @@ class VisorApi {
   /// Note: This method returns the HTTP [Response].
   Future<Response> listFleetWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/fleet';
+    final path = r'/v1/compute/fleet';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -1086,7 +928,7 @@ class VisorApi {
   ///   Status selects one lifecycle state: queued, running, stalled, completed, failed or canceled.
   Future<Response> listFleetJobsWithHttpInfo({ String? gpu, String? status, }) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/fleet/jobs';
+    final path = r'/v1/compute/fleet/jobs';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -1160,7 +1002,7 @@ class VisorApi {
   ///   Range is the lookback window (e.g. \"1h\", \"24h\", \"7d\"); empty takes the warehouse default.
   Future<Response> listFleetSamplesWithHttpInfo({ String? unit, String? source_, String? range, }) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/fleet/samples';
+    final path = r'/v1/compute/fleet/samples';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -1229,7 +1071,7 @@ class VisorApi {
   /// Note: This method returns the HTTP [Response].
   Future<Response> listFleetWorkersWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/fleet/workers';
+    final path = r'/v1/compute/fleet/workers';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -1277,7 +1119,7 @@ class VisorApi {
   /// Note: This method returns the HTTP [Response].
   Future<Response> listGpuAlertsWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/gpus/alerts';
+    final path = r'/v1/compute/gpus/alerts';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -1325,7 +1167,7 @@ class VisorApi {
   /// Note: This method returns the HTTP [Response].
   Future<Response> listGpusWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/gpus';
+    final path = r'/v1/compute/gpus';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -1373,7 +1215,7 @@ class VisorApi {
   /// Note: This method returns the HTTP [Response].
   Future<Response> listKubernetesClustersWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/k8s/clusters';
+    final path = r'/v1/compute/k8s/clusters';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -1421,7 +1263,7 @@ class VisorApi {
   /// Note: This method returns the HTTP [Response].
   Future<Response> listKubernetesNodesWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/k8s/nodes';
+    final path = r'/v1/compute/k8s/nodes';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -1469,7 +1311,7 @@ class VisorApi {
   /// Note: This method returns the HTTP [Response].
   Future<Response> listMachineAgentsWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/machines/agents';
+    final path = r'/v1/compute/machines/agents';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -1515,9 +1357,13 @@ class VisorApi {
   /// Returns every machine the caller's org has — Visor's registry, the live DigitalOcean droplets and the DOKS worker nodes (deduped into one union), plus the BYO machines that dialed in via `hanzo link` (provider \"byo\").  A source Visor cannot answer for is logged and skipped, never an error: one wedged upstream must not hide the machines the other sources can see.
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> listMachinesWithHttpInfo() async {
+  ///
+  /// Parameters:
+  ///
+  /// * [String] kind:
+  Future<Response> listMachinesWithHttpInfo({ String? kind, }) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/machines';
+    final path = r'/v1/compute/machines';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -1525,6 +1371,10 @@ class VisorApi {
     final queryParams = <QueryParam>[];
     final headerParams = <String, String>{};
     final formParams = <String, String>{};
+
+    if (kind != null) {
+      queryParams.addAll(_queryParams('', 'kind', kind));
+    }
 
     const contentTypes = <String>[];
 
@@ -1543,8 +1393,12 @@ class VisorApi {
   /// Returns every machine the caller's org has — Visor's registry, the live DigitalOcean droplets and the DOKS worker nodes (deduped into one union), plus the BYO machines that dialed in via `hanzo link` (provider \"byo\").
   ///
   /// Returns every machine the caller's org has — Visor's registry, the live DigitalOcean droplets and the DOKS worker nodes (deduped into one union), plus the BYO machines that dialed in via `hanzo link` (provider \"byo\").  A source Visor cannot answer for is logged and skipped, never an error: one wedged upstream must not hide the machines the other sources can see.
-  Future<MachineList?> listMachines() async {
-    final response = await listMachinesWithHttpInfo();
+  ///
+  /// Parameters:
+  ///
+  /// * [String] kind:
+  Future<MachineList?> listMachines({ String? kind, }) async {
+    final response = await listMachinesWithHttpInfo( kind: kind, );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1558,6 +1412,46 @@ class VisorApi {
     return null;
   }
 
+  /// Launch a metered machine for your org, or price one first with dryRun
+  ///
+  /// Provisions a machine owned by the caller's org and answers 201 with the machine. Send `dryRun: true` to get a PRICE QUOTE instead: 200 with the upstream quote passed through verbatim, nothing launched and nothing spent. Two response shapes on one address is the rule to know, and it is why this is not a typed op.  Metering is not this plane's: the launch fronts the compute provider's resell endpoint, which owns the balance gate and the per-hour meter, and cloud only forwards the tenant. Ownership is the validated principal's org and is never read from the body, so a launch always lands in the caller's OWN tenant and the machine it creates is only ever visible to that tenant. Fails closed: a validated principal is required (403 without one) and `size` (or its `instanceType` alias) is required (400).
+  ///
+  /// Note: This method returns the HTTP [Response].
+  Future<Response> postComputeMachinesWithHttpInfo() async {
+    // ignore: prefer_const_declarations
+    final path = r'/v1/compute/machines';
+
+    // ignore: prefer_final_locals
+    Object? postBody;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    const contentTypes = <String>[];
+
+
+    return apiClient.invokeAPI(
+      path,
+      'POST',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  /// Launch a metered machine for your org, or price one first with dryRun
+  ///
+  /// Provisions a machine owned by the caller's org and answers 201 with the machine. Send `dryRun: true` to get a PRICE QUOTE instead: 200 with the upstream quote passed through verbatim, nothing launched and nothing spent. Two response shapes on one address is the rule to know, and it is why this is not a typed op.  Metering is not this plane's: the launch fronts the compute provider's resell endpoint, which owns the balance gate and the per-hour meter, and cloud only forwards the tenant. Ownership is the validated principal's org and is never read from the body, so a launch always lands in the caller's OWN tenant and the machine it creates is only ever visible to that tenant. Fails closed: a validated principal is required (403 without one) and `size` (or its `instanceType` alias) is required (400).
+  Future<void> postComputeMachines() async {
+    final response = await postComputeMachinesWithHttpInfo();
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+  }
+
   /// Message a bot, or stop it, by naming the action in the path
   ///
   /// Dispatches one verb against a bot the caller's org owns. `message` runs the bot's bound agent with the request body as the message and streams the agent's answer back VERBATIM — the upstream body, its content type and its status — so a message is a real agent run, recorded, billed and traced exactly like any other, under the caller's own identity rather than a fabricated one. `stop` and `pause` are the same single honest capability: they halt the runtime by unbinding the agent while LEAVING THE MACHINE UP, so the bot stops answering but keeps costing — rebind to resume, or delete the bot to tear it down. Stopping is idempotent; a bot with no binding still reports stopped.  Org-scoped and fails closed: a validated principal is required (403 without one) and the bot is addressed under the caller's OWN org, so another tenant's id is not reachable. An unknown action is a clean 400 naming the three it accepts, never a silent no-op, and messaging a bot with no bound agent is a 400.
@@ -1569,9 +1463,9 @@ class VisorApi {
   /// * [String] id (required):
   ///
   /// * [String] action (required):
-  Future<Response> postVisorComputeBotsByIdByActionWithHttpInfo(String id, String action,) async {
+  Future<Response> postComputeMachinesByIdByActionWithHttpInfo(String id, String action,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/compute/bots/{id}/{action}'
+    final path = r'/v1/compute/machines/{id}/{action}'
       .replaceAll('{id}', id)
       .replaceAll('{action}', action);
 
@@ -1605,88 +1499,8 @@ class VisorApi {
   /// * [String] id (required):
   ///
   /// * [String] action (required):
-  Future<void> postVisorComputeBotsByIdByAction(String id, String action,) async {
-    final response = await postVisorComputeBotsByIdByActionWithHttpInfo(id, action,);
-    if (response.statusCode >= HttpStatus.badRequest) {
-      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
-    }
-  }
-
-  /// Launch a bot machine — an agent plus the machine that runs it — or price one
-  ///
-  /// Creates BOTH halves of a bot in one call and answers 201 with the bot: the cloud agent it runs, then a bot-kind machine bootstrapped with the bot runtime, then the binding between them, so a launched bot is immediately messageable. Send `dryRun: true` for a price quote instead — 200 with the upstream quote verbatim, no agent created, no machine launched, nothing spent.  The agent is created FIRST and on purpose: it is create-if-absent (an agent that already exists is reused, so a relaunch is fine and several bots may share one explicit `agent`), and doing it before the machine means a bad request — a model that is not in the catalog, say — fails with the real reason BEFORE any metered machine is provisioned. `agent` defaults to the bot's name and an empty `model` takes the deployment default.  Org-scoped and fails closed: a validated principal is required (403 without one), the owning org is that principal's and never a body field, `size` is required (400), and `name` is required for a real launch though not for a quote.
-  ///
-  /// Note: This method returns the HTTP [Response].
-  Future<Response> postVisorComputeBotsLaunchWithHttpInfo() async {
-    // ignore: prefer_const_declarations
-    final path = r'/v1/visor/compute/bots/launch';
-
-    // ignore: prefer_final_locals
-    Object? postBody;
-
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{};
-    final formParams = <String, String>{};
-
-    const contentTypes = <String>[];
-
-
-    return apiClient.invokeAPI(
-      path,
-      'POST',
-      queryParams,
-      postBody,
-      headerParams,
-      formParams,
-      contentTypes.isEmpty ? null : contentTypes.first,
-    );
-  }
-
-  /// Launch a bot machine — an agent plus the machine that runs it — or price one
-  ///
-  /// Creates BOTH halves of a bot in one call and answers 201 with the bot: the cloud agent it runs, then a bot-kind machine bootstrapped with the bot runtime, then the binding between them, so a launched bot is immediately messageable. Send `dryRun: true` for a price quote instead — 200 with the upstream quote verbatim, no agent created, no machine launched, nothing spent.  The agent is created FIRST and on purpose: it is create-if-absent (an agent that already exists is reused, so a relaunch is fine and several bots may share one explicit `agent`), and doing it before the machine means a bad request — a model that is not in the catalog, say — fails with the real reason BEFORE any metered machine is provisioned. `agent` defaults to the bot's name and an empty `model` takes the deployment default.  Org-scoped and fails closed: a validated principal is required (403 without one), the owning org is that principal's and never a body field, `size` is required (400), and `name` is required for a real launch though not for a quote.
-  Future<void> postVisorComputeBotsLaunch() async {
-    final response = await postVisorComputeBotsLaunchWithHttpInfo();
-    if (response.statusCode >= HttpStatus.badRequest) {
-      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
-    }
-  }
-
-  /// Launch a metered machine for your org, or price one first with dryRun
-  ///
-  /// Provisions a machine owned by the caller's org and answers 201 with the machine. Send `dryRun: true` to get a PRICE QUOTE instead: 200 with the upstream quote passed through verbatim, nothing launched and nothing spent. Two response shapes on one address is the rule to know, and it is why this is not a typed op.  Metering is not this plane's: the launch fronts the compute provider's resell endpoint, which owns the balance gate and the per-hour meter, and cloud only forwards the tenant. Ownership is the validated principal's org and is never read from the body, so a launch always lands in the caller's OWN tenant and the machine it creates is only ever visible to that tenant. Fails closed: a validated principal is required (403 without one) and `size` (or its `instanceType` alias) is required (400).
-  ///
-  /// Note: This method returns the HTTP [Response].
-  Future<Response> postVisorMachinesWithHttpInfo() async {
-    // ignore: prefer_const_declarations
-    final path = r'/v1/visor/machines';
-
-    // ignore: prefer_final_locals
-    Object? postBody;
-
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{};
-    final formParams = <String, String>{};
-
-    const contentTypes = <String>[];
-
-
-    return apiClient.invokeAPI(
-      path,
-      'POST',
-      queryParams,
-      postBody,
-      headerParams,
-      formParams,
-      contentTypes.isEmpty ? null : contentTypes.first,
-    );
-  }
-
-  /// Launch a metered machine for your org, or price one first with dryRun
-  ///
-  /// Provisions a machine owned by the caller's org and answers 201 with the machine. Send `dryRun: true` to get a PRICE QUOTE instead: 200 with the upstream quote passed through verbatim, nothing launched and nothing spent. Two response shapes on one address is the rule to know, and it is why this is not a typed op.  Metering is not this plane's: the launch fronts the compute provider's resell endpoint, which owns the balance gate and the per-hour meter, and cloud only forwards the tenant. Ownership is the validated principal's org and is never read from the body, so a launch always lands in the caller's OWN tenant and the machine it creates is only ever visible to that tenant. Fails closed: a validated principal is required (403 without one) and `size` (or its `instanceType` alias) is required (400).
-  Future<void> postVisorMachines() async {
-    final response = await postVisorMachinesWithHttpInfo();
+  Future<void> postComputeMachinesByIdByAction(String id, String action,) async {
+    final response = await postComputeMachinesByIdByActionWithHttpInfo(id, action,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -1703,7 +1517,7 @@ class VisorApi {
   /// * [SampleIngest] sampleIngest (required):
   Future<Response> recordFleetSampleWithHttpInfo(SampleIngest sampleIngest,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/fleet/samples';
+    final path = r'/v1/compute/fleet/samples';
 
     // ignore: prefer_final_locals
     Object? postBody = sampleIngest;
@@ -1765,7 +1579,7 @@ class VisorApi {
   /// * [PoolScale] poolScale (required):
   Future<Response> scaleNodePoolWithHttpInfo(String clusterId, String poolId, PoolScale poolScale,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/clusters/{clusterId}/pools/{poolId}/scale'
+    final path = r'/v1/compute/clusters/{clusterId}/pools/{poolId}/scale'
       .replaceAll('{clusterId}', clusterId)
       .replaceAll('{poolId}', poolId);
 
@@ -1830,7 +1644,7 @@ class VisorApi {
   ///   ID is the machine's org-scoped NAME — the stable key Visor addresses a machine by (owner/name), not the ephemeral provider id.
   Future<Response> unbindMachineAgentWithHttpInfo(String id,) async {
     // ignore: prefer_const_declarations
-    final path = r'/v1/visor/machines/{id}/agent'
+    final path = r'/v1/compute/machines/{id}/agent'
       .replaceAll('{id}', id);
 
     // ignore: prefer_final_locals

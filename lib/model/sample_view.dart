@@ -22,8 +22,8 @@ class SampleView {
     this.host,
     this.kind,
     this.load1,
-    this.load5,
     this.load15,
+    this.load5,
     this.memFree,
     this.memUsed,
     this.memory,
@@ -111,15 +111,6 @@ class SampleView {
   ///
   double? load1;
 
-  /// Load5 is the 5-minute load average, the same units as Load1.
-  ///
-  /// Please note: This property should have been non-nullable! Since the specification file
-  /// does not include a default value (using the "default:" property), however, the generated
-  /// source code must fall back to having a nullable type.
-  /// Consider adding a "default:" property in the specification file to hide this note.
-  ///
-  double? load5;
-
   /// Load15 is the 15-minute load average, the same units as Load1.
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
@@ -128,6 +119,15 @@ class SampleView {
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
   double? load15;
+
+  /// Load5 is the 5-minute load average, the same units as Load1.
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  double? load5;
 
   /// MemFree is host memory available, in BYTES, as reported rather than derived.
   ///
@@ -185,8 +185,8 @@ class SampleView {
     other.host == host &&
     other.kind == kind &&
     other.load1 == load1 &&
-    other.load5 == load5 &&
     other.load15 == load15 &&
+    other.load5 == load5 &&
     other.memFree == memFree &&
     other.memUsed == memUsed &&
     other.memory == memory &&
@@ -205,8 +205,8 @@ class SampleView {
     (host == null ? 0 : host!.hashCode) +
     (kind == null ? 0 : kind!.hashCode) +
     (load1 == null ? 0 : load1!.hashCode) +
-    (load5 == null ? 0 : load5!.hashCode) +
     (load15 == null ? 0 : load15!.hashCode) +
+    (load5 == null ? 0 : load5!.hashCode) +
     (memFree == null ? 0 : memFree!.hashCode) +
     (memUsed == null ? 0 : memUsed!.hashCode) +
     (memory == null ? 0 : memory!.hashCode) +
@@ -214,7 +214,7 @@ class SampleView {
     (unit == null ? 0 : unit!.hashCode);
 
   @override
-  String toString() => 'SampleView[at=$at, costCents=$costCents, cpus=$cpus, gpuModel=$gpuModel, gpuUtil=$gpuUtil, gpus=$gpus, host=$host, kind=$kind, load1=$load1, load5=$load5, load15=$load15, memFree=$memFree, memUsed=$memUsed, memory=$memory, source_=$source_, unit=$unit]';
+  String toString() => 'SampleView[at=$at, costCents=$costCents, cpus=$cpus, gpuModel=$gpuModel, gpuUtil=$gpuUtil, gpus=$gpus, host=$host, kind=$kind, load1=$load1, load15=$load15, load5=$load5, memFree=$memFree, memUsed=$memUsed, memory=$memory, source_=$source_, unit=$unit]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -263,15 +263,15 @@ class SampleView {
     } else {
       json[r'load1'] = null;
     }
-    if (this.load5 != null) {
-      json[r'load5'] = this.load5;
-    } else {
-      json[r'load5'] = null;
-    }
     if (this.load15 != null) {
       json[r'load15'] = this.load15;
     } else {
       json[r'load15'] = null;
+    }
+    if (this.load5 != null) {
+      json[r'load5'] = this.load5;
+    } else {
+      json[r'load5'] = null;
     }
     if (this.memFree != null) {
       json[r'memFree'] = this.memFree;
@@ -329,8 +329,8 @@ class SampleView {
         host: mapValueOfType<String>(json, r'host'),
         kind: mapValueOfType<String>(json, r'kind'),
         load1: mapValueOfType<double>(json, r'load1'),
-        load5: mapValueOfType<double>(json, r'load5'),
         load15: mapValueOfType<double>(json, r'load15'),
+        load5: mapValueOfType<double>(json, r'load5'),
         memFree: mapValueOfType<int>(json, r'memFree'),
         memUsed: mapValueOfType<int>(json, r'memUsed'),
         memory: mapValueOfType<int>(json, r'memory'),

@@ -16,8 +16,8 @@ class Metrics {
     this.at,
     this.gpuUtil,
     this.load1,
-    this.load5,
     this.load15,
+    this.load5,
     this.memFree,
     this.memUsed,
   });
@@ -48,15 +48,6 @@ class Metrics {
   ///
   double? load1;
 
-  /// Load5 is the same figure averaged over five minutes.
-  ///
-  /// Please note: This property should have been non-nullable! Since the specification file
-  /// does not include a default value (using the "default:" property), however, the generated
-  /// source code must fall back to having a nullable type.
-  /// Consider adding a "default:" property in the specification file to hide this note.
-  ///
-  double? load5;
-
   /// Load15 is the same figure over fifteen. The three together are what separate a machine that is busy right now from one that has been busy all along — which is the question a dispatcher is really asking.
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
@@ -65,6 +56,15 @@ class Metrics {
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
   double? load15;
+
+  /// Load5 is the same figure averaged over five minutes.
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  double? load5;
 
   /// bytes
   ///
@@ -89,8 +89,8 @@ class Metrics {
     other.at == at &&
     other.gpuUtil == gpuUtil &&
     other.load1 == load1 &&
-    other.load5 == load5 &&
     other.load15 == load15 &&
+    other.load5 == load5 &&
     other.memFree == memFree &&
     other.memUsed == memUsed;
 
@@ -100,13 +100,13 @@ class Metrics {
     (at == null ? 0 : at!.hashCode) +
     (gpuUtil == null ? 0 : gpuUtil!.hashCode) +
     (load1 == null ? 0 : load1!.hashCode) +
-    (load5 == null ? 0 : load5!.hashCode) +
     (load15 == null ? 0 : load15!.hashCode) +
+    (load5 == null ? 0 : load5!.hashCode) +
     (memFree == null ? 0 : memFree!.hashCode) +
     (memUsed == null ? 0 : memUsed!.hashCode);
 
   @override
-  String toString() => 'Metrics[at=$at, gpuUtil=$gpuUtil, load1=$load1, load5=$load5, load15=$load15, memFree=$memFree, memUsed=$memUsed]';
+  String toString() => 'Metrics[at=$at, gpuUtil=$gpuUtil, load1=$load1, load15=$load15, load5=$load5, memFree=$memFree, memUsed=$memUsed]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -125,15 +125,15 @@ class Metrics {
     } else {
       json[r'load1'] = null;
     }
-    if (this.load5 != null) {
-      json[r'load5'] = this.load5;
-    } else {
-      json[r'load5'] = null;
-    }
     if (this.load15 != null) {
       json[r'load15'] = this.load15;
     } else {
       json[r'load15'] = null;
+    }
+    if (this.load5 != null) {
+      json[r'load5'] = this.load5;
+    } else {
+      json[r'load5'] = null;
     }
     if (this.memFree != null) {
       json[r'memFree'] = this.memFree;
@@ -170,8 +170,8 @@ class Metrics {
         at: mapValueOfType<int>(json, r'at'),
         gpuUtil: mapValueOfType<double>(json, r'gpuUtil'),
         load1: mapValueOfType<double>(json, r'load1'),
-        load5: mapValueOfType<double>(json, r'load5'),
         load15: mapValueOfType<double>(json, r'load15'),
+        load5: mapValueOfType<double>(json, r'load5'),
         memFree: mapValueOfType<int>(json, r'memFree'),
         memUsed: mapValueOfType<int>(json, r'memUsed'),
       );
