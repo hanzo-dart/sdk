@@ -4,3 +4,8 @@
 build/
 doc/api/
 pubspec.lock
+
+# Local symlinks to LLM.md
+CLAUDE.md
+AGENTS.md
+GEMINI.md
