@@ -23,7 +23,13 @@ test:
 # `.spec-lock` beside the code, and — only after the `test:` block above has
 # passed over exactly those bytes — commits and cuts a patch.
 client:
+  # WHICH cloud, said out loud: hanzoai/ci defaults to hanzoai/cloud, which now
+  # serves the OSS core and carries no openapi.yaml. The product line is what this
+  # client projects.
+  spec:
+    repo: hanzo-inc/cloud
   generate: ./scripts/generate.sh
-  # NO version: — this client has not had a first release, so there is no patch
-  # for the lane to derive. Its projection still lands and is still gated; the
-  # cut waits for a human.
+  # Where the number lives; the cut writes it into pubspec.yaml and tags it. The
+  # tag does not publish: pub.dev has no ci lane, so .github/workflows/publish.yml
+  # publishes on the push to main, forward only.
+  version: "pubspec.yaml:sed -n 's/^version: //p' pubspec.yaml"
